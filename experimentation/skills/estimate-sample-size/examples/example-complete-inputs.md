@@ -9,13 +9,13 @@ Split ratio: 50/50
 
 ## Expected output
 Sample size per group:
-[estimated value]
+Approximately 58,000 users
 
 Total sample size:
-[estimated value]
+Approximately 116,000 users
 
 Estimated duration:
-[estimated value based on eligible traffic]
+Approximately 6.4 weeks of eligible traffic
 
 Inputs used:
 - Conversion metric
@@ -27,9 +27,10 @@ Inputs used:
 - 18,000 eligible users per week
 
 Assumptions:
-- Stable traffic quality
-- No major distortion from promotions or launches
-- Eligible traffic refers to users who actually reach the tested step
+- Two-variant fixed-horizon A/B test
+- Stable traffic quality across the test period
+- No major distortion from promotions, launches, or traffic source shifts
+- Eligible traffic refers to users who actually reach the tested checkout step
 
 Feasibility warning:
 If only part of the reported traffic actually reaches checkout, the duration estimate must increase.

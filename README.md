@@ -6,6 +6,43 @@ This repository is the foundational knowledge base and playbook for AI agents su
 
 We are building a practical, reusable skill library that helps AI agents contribute across the full product lifecycle—from strategy to execution to scaling operations.
 
+## Who This Is For
+
+- **Product managers and product teams** who want AI agents to assist with experimentation, analytics, strategy, and operations
+- **AI engineers** building agent workflows that require structured product expertise
+- **Organizations** looking for reusable, quality-controlled skill libraries for their AI tooling
+
+## Current Status
+
+| Domain | Status | Skills |
+|--------|--------|--------|
+| Experimentation & Optimization | **Ready** | 8 skills covering the full experiment lifecycle |
+| Product Strategy | Planned | — |
+| Product Discovery & User Research | Planned | — |
+| Product Planning & Execution | Planned | — |
+| UX Research & Design Collaboration | Planned | — |
+| Go-to-Market (GTM) | Planned | — |
+| Data Analytics & Insights | Planned | — |
+| Marketing & Growth | Planned | — |
+| Product Operations | Planned | — |
+| AI Product Management | Planned | — |
+| Technical Product & Platform | Planned | — |
+| Customer Success & Feedback | Planned | — |
+| Business & Commercial Skills | Planned | — |
+| Leadership, Communication & Stakeholders | Planned | — |
+| Risk, Compliance & Responsible Development | Planned | — |
+
+## Usage with Claude Code
+
+Skills are located in `.claude/skills/` and follow the Claude Code skill structure. Each skill has:
+
+- `SKILL.md` — main instructions with YAML frontmatter (`name`, `description`)
+- `REFERENCE.md` — methodology and formulas (for calculation-aware skills)
+- `examples/` — input/output patterns for different context levels
+- `scripts/` — helper scripts (if needed)
+
+The canonical skill source is `experimentation/skills/`; `.claude/skills/` contains symlinks for Claude Code discovery.
+
 ## Skill Directions (Expertise Areas)
 
 Below is the initial map of skill directions this repository will cover.
@@ -100,10 +137,10 @@ Below is the initial map of skill directions this repository will cover.
 - Risk assessment and mitigation planning
 - Responsible AI and governance practices
 
-## Next Step
+## What's Next
 
-In the next iteration, each direction will get:
-1. A dedicated skill specification
+Each direction will get:
+1. A dedicated set of skills in `.claude/skills/`
 2. Standard workflows and checklists
 3. Reusable templates and prompts
 4. Quality criteria for AI agent outputs

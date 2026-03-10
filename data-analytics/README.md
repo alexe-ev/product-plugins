@@ -1,40 +1,26 @@
 # Data Analytics & Insights
 
-This section contains skills for data analytics and insight generation in product work.
-
-The goal is to help an agent support teams in designing metrics, analyzing funnels and cohorts, building decision-ready dashboards, and detecting performance signals.
-
----
-
-## What's inside
-
-This domain covers the key jobs in product data analytics:
-
-```text
-metrics design & instrumentation
-    ↓
-funnel, retention & cohort analysis
-    ↓
-dashboarding & decision support
-    ↓
-signal detection & diagnostics
-```
+Skills for designing metrics, instrumenting products, analyzing funnels and cohorts, building dashboards, and detecting performance signals.
 
 ---
 
 ## Skills in this domain
 
-1. **design-product-metrics**
-   Define a metrics framework for a product area, including primary metrics, secondary metrics, and guardrails.
+**Metrics design & instrumentation**
+1. `design-product-metrics` — Design a product metrics framework from goals to measurements
+2. `plan-event-instrumentation` — Plan the event tracking needed to support analytics
 
-2. **analyze-funnel-retention-cohorts**
-   Analyze funnel drop-off, retention curves, and cohort behavior to identify problems and opportunities.
+**Funnel & retention analysis**
+3. `analyze-funnel-retention-cohorts` — Analyze funnel drop-off, retention curves, and cohort behavior
+4. `run-cohort-analysis` — Structure and interpret cohort analyses over time
 
-3. **build-decision-dashboard**
-   Structure a product dashboard that supports consistent, fast decision-making.
+**Dashboarding & decision support**
+5. `build-decision-dashboard` — Design a metrics dashboard that supports regular product decisions
+6. `design-metric-alert-system` — Design alerting thresholds and escalation paths for critical metrics
 
-4. **detect-performance-signals**
-   Identify and interpret signals of product performance change — including regressions, improvements, and anomalies.
+**Signal detection & diagnostics**
+7. `detect-performance-signals` — Identify and contextualize meaningful metric changes
+8. `diagnose-metric-movement` — Diagnose root causes of unexpected metric movements
 
 ---
 
@@ -45,11 +31,15 @@ data-analytics/
 ├── README.md
 └── skills/
     ├── design-product-metrics/
+    ├── plan-event-instrumentation/
     ├── analyze-funnel-retention-cohorts/
+    ├── run-cohort-analysis/
     ├── build-decision-dashboard/
-    └── detect-performance-signals/
+    ├── design-metric-alert-system/
+    ├── detect-performance-signals/
+    └── diagnose-metric-movement/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

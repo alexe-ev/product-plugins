@@ -1,40 +1,26 @@
 # Product Operations (Product Ops)
 
-This section contains skills for product operations work.
-
-The goal is to help an agent support teams in designing operating cadences, managing tooling and documentation, aligning cross-team communication, and automating workflows.
-
----
-
-## What's inside
-
-This domain covers the key jobs in product operations:
-
-```text
-operating cadence & process design
-    ↓
-tooling, documentation & knowledge management
-    ↓
-cross-team alignment & communication systems
-    ↓
-workflow automation & governance
-```
+Skills for designing operating cadences, managing tooling and documentation, aligning cross-functional teams, and automating product workflows.
 
 ---
 
 ## Skills in this domain
 
-1. **design-operating-cadence**
-   Design or improve the operating rhythm for a product team: meetings, reviews, reporting, and planning cycles.
+**Operating cadence & process**
+1. `design-operating-cadence` — Design a recurring cadence of meetings and rituals for the product team
+2. `design-planning-process` — Design a repeatable planning process from strategy to sprint
 
-2. **manage-tooling-documentation**
-   Establish or audit tooling stacks and documentation practices for product teams.
+**Tooling & documentation**
+3. `manage-tooling-documentation` — Manage product tooling and documentation standards
+4. `build-product-wiki` — Design and maintain a product knowledge base that is actually used
 
-3. **align-cross-team-communication**
-   Design communication systems and rituals that keep product, engineering, design, and business aligned.
+**Cross-team alignment**
+5. `align-cross-team-communication` — Design communication systems that keep cross-functional teams aligned
+6. `run-cross-functional-review` — Structure and facilitate cross-functional product reviews
 
-4. **automate-workflow-governance**
-   Identify automation opportunities in product workflows and establish governance standards.
+**Workflow & governance**
+7. `automate-workflow-governance` — Identify automation opportunities and establish governance standards
+8. `audit-product-process` — Audit product processes to identify bottlenecks and improvement opportunities
 
 ---
 
@@ -45,11 +31,15 @@ product-ops/
 ├── README.md
 └── skills/
     ├── design-operating-cadence/
+    ├── design-planning-process/
     ├── manage-tooling-documentation/
+    ├── build-product-wiki/
     ├── align-cross-team-communication/
-    └── automate-workflow-governance/
+    ├── run-cross-functional-review/
+    ├── automate-workflow-governance/
+    └── audit-product-process/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

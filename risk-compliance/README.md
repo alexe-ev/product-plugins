@@ -1,40 +1,26 @@
 # Risk, Compliance & Responsible Product Development
 
-This section contains skills for risk, compliance, and responsible product development.
-
-The goal is to help an agent support teams in assessing privacy and regulatory risks, applying ethical decision frameworks, planning risk mitigation, and governing responsible AI development.
-
----
-
-## What's inside
-
-This domain covers the key jobs in risk and responsible development:
-
-```text
-privacy, security & regulatory awareness
-    ↓
-ethical product decision frameworks
-    ↓
-risk assessment & mitigation planning
-    ↓
-responsible AI & governance practices
-```
+Skills for assessing privacy and regulatory risks, applying ethical frameworks, planning risk mitigation, governing responsible AI, and running audits.
 
 ---
 
 ## Skills in this domain
 
-1. **assess-privacy-security-regulatory**
-   Identify and assess privacy, security, and regulatory risks in product decisions and features.
+**Privacy, security & regulatory**
+1. `assess-privacy-security-regulatory` — Identify and assess privacy, security, and regulatory risks
+2. `run-privacy-impact-assessment` — Conduct a structured PIA for features that handle personal data
 
-2. **apply-ethical-decision-framework**
-   Apply structured ethical frameworks to evaluate product decisions and identify potential harms.
+**Ethical decision frameworks**
+3. `apply-ethical-decision-framework` — Apply structured ethical frameworks to product decisions
+4. `run-pre-mortem` — Identify ways an initiative could fail before committing to execution
 
-3. **plan-risk-mitigation**
-   Identify product risks and develop mitigation plans with owners, triggers, and contingencies.
+**Risk assessment & mitigation**
+5. `plan-risk-mitigation` — Identify product risks and develop mitigation plans with owners
+6. `design-risk-register` — Design and maintain a risk register with ongoing tracking and escalation
 
-4. **govern-responsible-ai**
-   Establish governance practices for responsible AI development including fairness, transparency, and accountability.
+**Responsible AI governance**
+7. `govern-responsible-ai` — Establish governance practices for responsible AI development
+8. `conduct-ai-audit` — Audit a deployed AI system against responsible AI standards
 
 ---
 
@@ -45,11 +31,15 @@ risk-compliance/
 ├── README.md
 └── skills/
     ├── assess-privacy-security-regulatory/
+    ├── run-privacy-impact-assessment/
     ├── apply-ethical-decision-framework/
+    ├── run-pre-mortem/
     ├── plan-risk-mitigation/
-    └── govern-responsible-ai/
+    ├── design-risk-register/
+    ├── govern-responsible-ai/
+    └── conduct-ai-audit/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

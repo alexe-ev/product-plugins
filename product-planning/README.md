@@ -1,40 +1,26 @@
 # Product Planning & Execution
 
-This section contains skills for product planning and execution work.
-
-The goal is to help an agent support teams in setting goals, building roadmaps, writing requirements, and coordinating delivery.
-
----
-
-## What's inside
-
-This domain covers the key jobs in product planning and execution:
-
-```text
-goal setting (OKRs, KPIs)
-    ↓
-roadmapping & prioritization
-    ↓
-requirements definition
-    ↓
-delivery planning & cross-functional coordination
-```
+Skills for setting goals, building roadmaps, writing requirements, and coordinating delivery across product, engineering, and design.
 
 ---
 
 ## Skills in this domain
 
-1. **set-goals-okrs-kpis**
-   Help teams define and structure goals using OKRs, KPIs, and related frameworks.
+**Goal setting**
+1. `set-goals-okrs-kpis` — Define OKRs and KPIs that connect to strategy
+2. `align-goals-to-strategy` — Verify and strengthen alignment between team goals and company strategy
 
-2. **build-roadmap-prioritization**
-   Build and prioritize a feature or initiative roadmap using structured frameworks.
+**Roadmapping & prioritization**
+3. `build-roadmap-prioritization` — Build a prioritized roadmap with explicit trade-offs
+4. `apply-prioritization-framework` — Apply RICE, MoSCoW, ICE, or opportunity scoring to a backlog
 
-3. **write-requirements-prd**
-   Write clear, complete product requirements documents and user stories.
+**Requirements definition**
+5. `write-requirements-prd` — Write clear product requirements documents
+6. `write-user-stories` — Break features into development-ready user stories with acceptance criteria
 
-4. **plan-delivery-collaboration**
-   Structure delivery planning, cross-functional alignment, and sprint/milestone planning.
+**Delivery planning**
+7. `plan-delivery-collaboration` — Structure delivery milestones, dependencies, and cross-functional coordination
+8. `run-retrospective` — Facilitate retrospectives that produce honest reflection and real action
 
 ---
 
@@ -45,11 +31,15 @@ product-planning/
 ├── README.md
 └── skills/
     ├── set-goals-okrs-kpis/
+    ├── align-goals-to-strategy/
     ├── build-roadmap-prioritization/
+    ├── apply-prioritization-framework/
     ├── write-requirements-prd/
-    └── plan-delivery-collaboration/
+    ├── write-user-stories/
+    ├── plan-delivery-collaboration/
+    └── run-retrospective/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

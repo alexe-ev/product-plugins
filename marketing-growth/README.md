@@ -1,40 +1,26 @@
 # Marketing & Growth
 
-This section contains skills for marketing and growth work.
-
-The goal is to help an agent support teams in designing growth models, planning lifecycle strategies, running channel experiments, and optimizing conversion and growth loops.
-
----
-
-## What's inside
-
-This domain covers the key jobs in marketing and growth:
-
-```text
-growth model design (AARRR)
-    ↓
-lifecycle & engagement strategy
-    ↓
-channel strategy & campaign experimentation
-    ↓
-conversion & growth loop optimization
-```
+Skills for designing growth models, planning lifecycle engagement, running channel experiments, and optimizing conversion and growth loops.
 
 ---
 
 ## Skills in this domain
 
-1. **design-growth-model**
-   Build or assess a growth model covering acquisition, activation, retention, referral, and revenue.
+**Growth model design**
+1. `design-growth-model` — Build or assess a growth model across acquisition, activation, retention, referral, revenue
+2. `map-acquisition-funnel` — Map the acquisition-to-activation funnel and identify conversion gaps
 
-2. **plan-lifecycle-engagement**
-   Design a lifecycle engagement strategy including onboarding, nurture, and re-engagement flows.
+**Lifecycle & engagement**
+3. `plan-lifecycle-engagement` — Design lifecycle engagement covering onboarding, nurture, and re-engagement
+4. `design-onboarding-flow` — Design an onboarding flow that minimizes time-to-value
 
-3. **strategize-channel-campaigns**
-   Develop a channel strategy and campaign experimentation plan to test and scale growth.
+**Channel strategy**
+5. `strategize-channel-campaigns` — Develop a channel portfolio strategy and experimentation plan
+6. `design-channel-experiment` — Design a structured experiment to validate a new acquisition channel
 
-4. **optimize-conversion-growth-loops**
-   Identify and optimize conversion bottlenecks and reinforce compounding growth loops.
+**Conversion & growth loops**
+7. `optimize-conversion-growth-loops` — Identify and optimize conversion bottlenecks
+8. `identify-growth-loop` — Map and assess the compounding growth loops embedded in the product
 
 ---
 
@@ -45,11 +31,15 @@ marketing-growth/
 ├── README.md
 └── skills/
     ├── design-growth-model/
+    ├── map-acquisition-funnel/
     ├── plan-lifecycle-engagement/
+    ├── design-onboarding-flow/
     ├── strategize-channel-campaigns/
-    └── optimize-conversion-growth-loops/
+    ├── design-channel-experiment/
+    ├── optimize-conversion-growth-loops/
+    └── identify-growth-loop/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

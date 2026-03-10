@@ -1,40 +1,26 @@
 # AI Product Management
 
-This section contains skills for AI product management work.
-
-The goal is to help an agent support teams in ideating AI features, assessing model capabilities, designing human-in-the-loop workflows, and evaluating and monitoring AI quality.
-
----
-
-## What's inside
-
-This domain covers the key jobs in AI product management:
-
-```text
-AI feature ideation & value framing
-    ↓
-model capability assessment & trade-offs
-    ↓
-human-in-the-loop workflow design
-    ↓
-AI quality evaluation, monitoring & iteration
-```
+Skills for ideating AI features, assessing model capabilities, designing human-in-the-loop workflows, and evaluating AI quality and governance.
 
 ---
 
 ## Skills in this domain
 
-1. **ideate-ai-features**
-   Generate and frame AI feature ideas with clear value propositions and feasibility considerations.
+**AI feature ideation & value**
+1. `ideate-ai-features` — Generate and evaluate AI feature ideas grounded in user problems
+2. `frame-ai-product-value` — Frame AI capability in terms of user outcomes and business impact
 
-2. **assess-model-capabilities**
-   Evaluate AI model capabilities, limitations, and trade-offs relevant to a product decision.
+**Model capabilities & trade-offs**
+3. `assess-model-capabilities` — Assess AI model capabilities, limitations, and suitability for a use case
+4. `make-model-tradeoff-decision` — Structure the decision between AI models or approaches
 
-3. **design-human-in-loop-workflow**
-   Design workflows that appropriately balance AI automation with human oversight and intervention.
+**Human-in-the-loop & evaluation**
+5. `design-human-in-loop-workflow` — Design workflows that balance AI automation with human oversight
+6. `run-ai-prototype-evaluation` — Evaluate an AI prototype before committing to development
 
-4. **evaluate-ai-quality-monitoring**
-   Define quality criteria for AI features and set up monitoring, evaluation, and iteration loops.
+**AI quality & metrics**
+7. `evaluate-ai-quality-monitoring` — Define quality criteria and set up production monitoring
+8. `define-ai-success-metrics` — Define success metrics covering quality, UX, business impact, and safety
 
 ---
 
@@ -45,11 +31,15 @@ ai-product/
 ├── README.md
 └── skills/
     ├── ideate-ai-features/
+    ├── frame-ai-product-value/
     ├── assess-model-capabilities/
+    ├── make-model-tradeoff-decision/
     ├── design-human-in-loop-workflow/
-    └── evaluate-ai-quality-monitoring/
+    ├── run-ai-prototype-evaluation/
+    ├── evaluate-ai-quality-monitoring/
+    └── define-ai-success-metrics/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

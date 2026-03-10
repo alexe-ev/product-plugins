@@ -1,40 +1,26 @@
 # UX Research & Design Collaboration
 
-This section contains skills for UX research and design collaboration work.
-
-The goal is to help an agent support teams in planning research, running usability studies, assessing experience quality, and managing product-design handoffs.
-
----
-
-## What's inside
-
-This domain covers the key jobs in UX research and design collaboration:
-
-```text
-UX research planning
-    ↓
-usability testing & feedback
-    ↓
-experience quality assessment
-    ↓
-product/design handoff & iteration
-```
+Skills for planning research, running usability studies, assessing experience quality, and managing product-design handoffs.
 
 ---
 
 ## Skills in this domain
 
-1. **plan-ux-research**
-   Define a UX research plan including methods, participants, goals, and timeline.
+**UX research planning**
+1. `plan-ux-research` — Define a UX research plan with methods, participants, and goals
+2. `design-research-study` — Design a structured study with protocol, stimuli, and success criteria
 
-2. **run-usability-testing**
-   Structure and synthesize usability testing sessions and feedback loops.
+**Usability testing**
+3. `run-usability-testing` — Structure and run usability testing sessions
+4. `analyze-usability-findings` — Turn session observations into prioritized design recommendations
 
-3. **assess-experience-quality**
-   Evaluate the quality of a user experience and identify friction, confusion, or drop-off patterns.
+**Experience quality**
+5. `map-user-journey` — Map the end-to-end user experience to surface gaps and friction
+6. `assess-experience-quality` — Evaluate experience quality and identify friction patterns
 
-4. **manage-design-handoff**
-   Structure the product-to-design handoff process and iteration workflows.
+**Design collaboration**
+7. `write-design-brief` — Write a brief that gives designers clear problem framing without prescribing solutions
+8. `manage-design-handoff` — Structure the product-to-design and design-to-engineering handoff
 
 ---
 
@@ -45,11 +31,15 @@ ux-research/
 ├── README.md
 └── skills/
     ├── plan-ux-research/
+    ├── design-research-study/
     ├── run-usability-testing/
+    ├── analyze-usability-findings/
+    ├── map-user-journey/
     ├── assess-experience-quality/
+    ├── write-design-brief/
     └── manage-design-handoff/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

@@ -1,40 +1,26 @@
 # Business & Commercial Skills
 
-This section contains skills for business and commercial product work.
-
-The goal is to help an agent support teams in building business cases, analyzing unit economics, running forecasting and scenario planning, and aligning product decisions with revenue strategy.
-
----
-
-## What's inside
-
-This domain covers the key jobs in business and commercial product management:
-
-```text
-business case development
-    ↓
-unit economics & profitability analysis
-    ↓
-forecasting & scenario planning
-    ↓
-revenue strategy alignment
-```
+Skills for building business cases, analyzing unit economics, running forecasts, and aligning product decisions with revenue strategy.
 
 ---
 
 ## Skills in this domain
 
-1. **build-business-case**
-   Develop a structured business case for a product investment, including ROI, costs, risks, and expected outcomes.
+**Business case development**
+1. `build-business-case` — Build a structured business case for a product investment
+2. `frame-roi-analysis` — Frame a return-on-investment analysis for a product initiative
 
-2. **analyze-unit-economics**
-   Analyze unit economics (CAC, LTV, payback period, gross margin) to assess product and business health.
+**Unit economics**
+3. `analyze-unit-economics` — Analyze contribution margin, CAC, and business model efficiency
+4. `model-ltv-cac` — Model LTV:CAC ratio to assess growth sustainability
 
-3. **run-forecasting-scenarios**
-   Build and compare forecasting scenarios to support product and business planning decisions.
+**Forecasting & scenario planning**
+5. `run-forecasting-scenarios` — Build base, upside, and downside scenario forecasts
+6. `run-sensitivity-analysis` — Identify which assumptions drive the most outcome variance
 
-4. **align-revenue-strategy**
-   Ensure product decisions are aligned with the revenue model, pricing strategy, and commercial goals.
+**Revenue strategy**
+7. `align-revenue-strategy` — Ensure product decisions align with revenue model and commercial goals
+8. `evaluate-pricing-model` — Evaluate the current pricing model against value delivery and growth goals
 
 ---
 
@@ -45,11 +31,15 @@ business-commercial/
 ├── README.md
 └── skills/
     ├── build-business-case/
+    ├── frame-roi-analysis/
     ├── analyze-unit-economics/
+    ├── model-ltv-cac/
     ├── run-forecasting-scenarios/
-    └── align-revenue-strategy/
+    ├── run-sensitivity-analysis/
+    ├── align-revenue-strategy/
+    └── evaluate-pricing-model/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

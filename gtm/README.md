@@ -1,40 +1,26 @@
 # Go-to-Market (GTM)
 
-This section contains skills for go-to-market planning and execution.
-
-The goal is to help an agent support teams in planning launches, developing positioning and messaging, supporting pricing decisions, and enabling sales and customer success teams.
-
----
-
-## What's inside
-
-This domain covers the key jobs in go-to-market:
-
-```text
-launch strategy & readiness
-    ↓
-positioning & messaging
-    ↓
-pricing & packaging support
-    ↓
-sales, CS, and enablement collaboration
-```
+Skills for planning launches, developing positioning and messaging, designing packaging, and enabling sales and customer success teams.
 
 ---
 
 ## Skills in this domain
 
-1. **plan-product-launch**
-   Build a launch plan including readiness criteria, timeline, channels, and stakeholder coordination.
+**Launch strategy**
+1. `plan-product-launch` — Build a launch strategy and release plan
+2. `build-launch-readiness-checklist` — Create a cross-functional launch readiness checklist with go/no-go criteria
 
-2. **develop-positioning-messaging**
-   Develop product positioning and messaging that resonates with target segments.
+**Positioning & messaging**
+3. `develop-positioning-messaging` — Develop a positioning and messaging framework
+4. `craft-value-proposition` — Craft a specific, outcome-oriented value proposition
 
-3. **support-pricing-packaging**
-   Analyze and recommend pricing structures and packaging options aligned with value delivery.
+**Pricing & packaging**
+5. `support-pricing-packaging` — Analyze and recommend pricing structures
+6. `design-packaging-tiers` — Design tiered packaging with clear upgrade paths
 
-4. **enable-sales-cs**
-   Structure sales and customer success enablement materials and collaboration workflows.
+**Sales & CS enablement**
+7. `enable-sales-cs` — Create sales and CS enablement materials and workflows
+8. `create-sales-battlecard` — Build competitive battlecards for sales conversations
 
 ---
 
@@ -45,11 +31,15 @@ gtm/
 ├── README.md
 └── skills/
     ├── plan-product-launch/
+    ├── build-launch-readiness-checklist/
     ├── develop-positioning-messaging/
+    ├── craft-value-proposition/
     ├── support-pricing-packaging/
-    └── enable-sales-cs/
+    ├── design-packaging-tiers/
+    ├── enable-sales-cs/
+    └── create-sales-battlecard/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

@@ -1,40 +1,26 @@
 # Product Discovery & User Research
 
-This section contains skills for product discovery and user research work.
-
-The goal is to help an agent support teams in identifying real problems, synthesizing user insights, developing personas, and framing opportunities for action.
-
----
-
-## What's inside
-
-This domain covers the key jobs in product discovery:
-
-```text
-problem identification
-    ↓
-qualitative research & synthesis
-    ↓
-persona & segment development
-    ↓
-insight framing & opportunity definition
-```
+Skills for discovering real user problems, running qualitative research, building personas, and framing insights as actionable opportunities.
 
 ---
 
 ## Skills in this domain
 
-1. **identify-problem-opportunity**
-   Identify and frame the real product problem or opportunity before jumping to solutions.
+**Problem discovery**
+1. `identify-problem-opportunity` — Identify and frame a product problem worth solving
+2. `scope-discovery-research` — Define the scope, goals, and methods for a discovery initiative
 
-2. **synthesize-qualitative-research**
-   Synthesize user interviews, JTBD analysis, and qualitative data into actionable insights.
+**User research**
+3. `run-user-interviews` — Plan and structure effective user interviews
+4. `apply-jtbd-framework` — Apply Jobs-to-be-Done to understand user motivation
+5. `synthesize-qualitative-research` — Turn raw research into structured themes and patterns
 
-3. **develop-persona-segment**
-   Build and validate user personas and segment definitions grounded in real research.
+**Persona & segment development**
+6. `develop-persona-segment` — Build research-grounded personas and segment definitions
 
-4. **frame-insight-opportunity**
-   Turn raw insights into well-structured opportunity statements ready for prioritization or experiment design.
+**Insight & opportunity framing**
+7. `generate-insights` — Distill observations into specific, actionable product insights
+8. `frame-insight-opportunity` — Turn insights into opportunity statements ready for prioritization
 
 ---
 
@@ -45,11 +31,15 @@ product-discovery/
 ├── README.md
 └── skills/
     ├── identify-problem-opportunity/
+    ├── scope-discovery-research/
+    ├── run-user-interviews/
+    ├── apply-jtbd-framework/
     ├── synthesize-qualitative-research/
     ├── develop-persona-segment/
+    ├── generate-insights/
     └── frame-insight-opportunity/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

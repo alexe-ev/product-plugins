@@ -1,40 +1,26 @@
 # Technical Product & Platform Collaboration
 
-This section contains skills for technical product management and platform collaboration.
-
-The goal is to help an agent support teams in developing platform product thinking, prioritizing with architectural awareness, collaborating with engineering, and assessing reliability and scalability trade-offs.
-
----
-
-## What's inside
-
-This domain covers the key jobs in technical product and platform work:
-
-```text
-API/platform product thinking
-    ↓
-architecture-aware prioritization
-    ↓
-engineering collaboration patterns
-    ↓
-reliability, scalability & performance considerations
-```
+Skills for platform product thinking, architecture-aware prioritization, engineering collaboration, and reliability and scalability considerations.
 
 ---
 
 ## Skills in this domain
 
-1. **develop-platform-product-thinking**
-   Apply platform and API product thinking to define developer experience, extensibility, and ecosystem strategy.
+**Platform & API product thinking**
+1. `develop-platform-product-thinking` — Apply platform and API product thinking to define ecosystem strategy
+2. `design-developer-experience` — Design developer experience for platform, API, or SDK products
 
-2. **prioritize-architecture-aware**
-   Incorporate architectural constraints and technical debt into prioritization decisions.
+**Architecture-aware prioritization**
+3. `prioritize-architecture-aware` — Incorporate architectural constraints and technical debt into prioritization
+4. `manage-technical-debt-tradeoffs` — Structure trade-off decisions between technical debt and feature delivery
 
-3. **collaborate-with-engineering**
-   Structure effective collaboration patterns between product and engineering: discovery, estimation, trade-off decisions.
+**Engineering collaboration**
+5. `collaborate-with-engineering` — Design effective product-engineering collaboration patterns
+6. `run-technical-discovery` — Structure a technical discovery process to resolve engineering unknowns
 
-4. **assess-reliability-scalability**
-   Evaluate reliability, scalability, and performance considerations as part of product decision-making.
+**Reliability & performance**
+7. `assess-reliability-scalability` — Evaluate reliability and scalability implications of product decisions
+8. `define-non-functional-requirements` — Define performance, security, accessibility, and compliance requirements
 
 ---
 
@@ -45,11 +31,15 @@ technical-product/
 ├── README.md
 └── skills/
     ├── develop-platform-product-thinking/
+    ├── design-developer-experience/
     ├── prioritize-architecture-aware/
+    ├── manage-technical-debt-tradeoffs/
     ├── collaborate-with-engineering/
-    └── assess-reliability-scalability/
+    ├── run-technical-discovery/
+    ├── assess-reliability-scalability/
+    └── define-non-functional-requirements/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

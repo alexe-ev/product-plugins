@@ -1,42 +1,26 @@
 # Product Strategy
 
-This section contains skills for product strategy work.
-
-The goal is to help an agent support teams in setting long-term product direction, assessing market fit, structuring portfolios and roadmaps, and shaping competitive positioning.
-
----
-
-## What's inside
-
-This domain covers the key jobs in product strategy:
-
-```text
-vision & mission
-    ↓
-product-market fit assessment
-    ↓
-portfolio & roadmap strategy
-    ↓
-competitive differentiation
-```
-
-Each step is a separate skill that can be used independently or in sequence.
+Skills for setting long-term product direction, assessing market fit, making portfolio decisions, and shaping competitive positioning.
 
 ---
 
 ## Skills in this domain
 
-1. **define-product-vision**
-   Turn organizational goals and user insights into a clear product vision and mission statement.
+**Vision & direction**
+1. `define-product-vision` — Turn organizational goals into a clear product vision
+2. `craft-product-mission` — Write a mission statement specific enough to guide trade-offs
 
-2. **assess-product-market-fit**
-   Evaluate how well a product or feature addresses real market needs and where gaps exist.
+**Market fit & positioning**
+3. `assess-product-market-fit` — Evaluate fit signals and identify gaps
+4. `define-strategic-positioning` — Define where the product plays and who it's for
 
-3. **build-portfolio-roadmap-strategy**
-   Structure product portfolio decisions and translate strategy into a prioritized roadmap.
+**Portfolio & roadmap strategy**
+5. `build-portfolio-roadmap-strategy` — Translate strategy into a prioritized portfolio view
+6. `prioritize-strategic-bets` — Evaluate and sequence high-uncertainty, high-potential bets
 
-4. **frame-competitive-differentiation**
-   Analyze competitive landscape and define a clear positioning and differentiation angle.
+**Competitive strategy**
+7. `analyze-competitive-landscape` — Map competitors and identify strategic implications
+8. `frame-competitive-differentiation` — Define a defensible differentiation position
 
 ---
 
@@ -47,11 +31,15 @@ product-strategy/
 ├── README.md
 └── skills/
     ├── define-product-vision/
+    ├── craft-product-mission/
     ├── assess-product-market-fit/
+    ├── define-strategic-positioning/
     ├── build-portfolio-roadmap-strategy/
+    ├── prioritize-strategic-bets/
+    ├── analyze-competitive-landscape/
     └── frame-competitive-differentiation/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

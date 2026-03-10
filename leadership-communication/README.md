@@ -1,40 +1,26 @@
 # Leadership, Communication & Stakeholder Management
 
-This section contains skills for leadership, communication, and stakeholder management in product work.
-
-The goal is to help an agent support teams in building executive narratives, communicating decisions and trade-offs, mapping and influencing stakeholders, and designing team rituals.
-
----
-
-## What's inside
-
-This domain covers the key jobs in leadership and communication:
-
-```text
-executive communication & narrative building
-    ↓
-decision-making & trade-off communication
-    ↓
-stakeholder mapping & influence
-    ↓
-team rituals & operating discipline
-```
+Skills for building executive narratives, communicating decisions, mapping stakeholders, applying decision frameworks, and designing team operating norms.
 
 ---
 
 ## Skills in this domain
 
-1. **build-executive-narrative**
-   Craft clear, compelling executive-level narratives about product strategy, results, and direction.
+**Executive communication**
+1. `build-executive-narrative` — Craft compelling executive-level narratives about product direction
+2. `write-product-strategy-doc` — Write a concise strategy document that anchors team decisions
 
-2. **communicate-decisions-tradeoffs**
-   Structure and communicate product decisions and trade-offs in a way that builds alignment and trust.
+**Decision-making**
+3. `communicate-decisions-tradeoffs` — Communicate product decisions and trade-offs to build alignment
+4. `apply-decision-framework` — Apply DACI, SPADE, RAPID, or equivalent to make decisions clearly
 
-3. **map-stakeholder-influence**
-   Map key stakeholders, their interests and influence, and develop strategies to align and engage them.
+**Stakeholder management**
+5. `map-stakeholder-influence` — Map stakeholders, their interests, and influence strategies
+6. `run-stakeholder-alignment` — Plan and execute a stakeholder alignment process
 
-4. **design-team-rituals**
-   Design and refine team rituals and operating rhythms that build alignment and operating discipline.
+**Team operating discipline**
+7. `design-team-rituals` — Design team rituals and operating rhythms that build alignment
+8. `build-operating-norms` — Establish explicit working agreements that govern how the team works
 
 ---
 
@@ -45,11 +31,15 @@ leadership-communication/
 ├── README.md
 └── skills/
     ├── build-executive-narrative/
+    ├── write-product-strategy-doc/
     ├── communicate-decisions-tradeoffs/
+    ├── apply-decision-framework/
     ├── map-stakeholder-influence/
-    └── design-team-rituals/
+    ├── run-stakeholder-alignment/
+    ├── design-team-rituals/
+    └── build-operating-norms/
 ```
 
 ## Status
 
-Planned — skills are scaffolded, not yet fully developed.
+Planned — SKILL.md files are complete. Examples in progress.

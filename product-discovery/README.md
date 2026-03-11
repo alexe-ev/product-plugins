@@ -42,4 +42,4 @@ product-discovery/
 
 ## Status
 
-Planned — SKILL.md files are complete. Examples in progress.
+Ready — 8 skills covering the full discovery pipeline from problem framing to opportunity statements.

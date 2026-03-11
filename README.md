@@ -18,7 +18,7 @@ We are building a practical, reusable skill library that helps AI agents contrib
 |--------|--------|--------|
 | Experimentation & Optimization | **Ready** | 8 skills covering the full experiment lifecycle |
 | Product Strategy | Planned | — |
-| Product Discovery & User Research | Planned | — |
+| Product Discovery & User Research | **Ready** | 8 skills covering the full discovery pipeline |
 | Product Planning & Execution | Planned | — |
 | UX Research & Design Collaboration | Planned | — |
 | Go-to-Market (GTM) | Planned | — |
@@ -41,7 +41,7 @@ Skills are located in `.claude/skills/` and follow the Claude Code skill structu
 - `examples/` — input/output patterns for different context levels
 - `scripts/` — helper scripts (if needed)
 
-The canonical skill source is `experimentation/skills/`; `.claude/skills/` contains symlinks for Claude Code discovery.
+Canonical skill sources are domain skill directories (e.g. `experimentation/skills/`, `product-discovery/skills/`); `.claude/skills/` contains symlinks for Claude Code discovery.
 
 ## Skill Directions (Expertise Areas)
 

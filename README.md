@@ -17,7 +17,7 @@ We are building a practical, reusable skill library that helps AI agents contrib
 | Domain | Status | Skills |
 |--------|--------|--------|
 | Experimentation & Optimization | **Ready** | 8 skills covering the full experiment lifecycle |
-| Product Strategy | Planned | — |
+| Product Strategy | **Ready** | 9 skills covering vision, direction, market fit, positioning, portfolio, and competitive strategy |
 | Product Discovery & User Research | **Ready** | 8 skills covering the full discovery pipeline |
 | Product Planning & Execution | Planned | — |
 | UX Research & Design Collaboration | Planned | — |

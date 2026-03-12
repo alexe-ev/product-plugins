@@ -1,4 +1,4 @@
-# AI Product Ops
+# AI Product plugins
 
 Your AI agent doesn't know how to think like a product manager. This library fixes that.
 
@@ -112,7 +112,3 @@ cp -r experimentation/skills/estimate-sample-size ~/.claude/skills/
 ```
 
 ---
-
-## Who built this
-
-[Evgeny Alexeev](https://github.com/alexe-ev), Lead PM. Built this to stop re-explaining product methodology to AI agents on every project.

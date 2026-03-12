@@ -42,4 +42,4 @@ product-planning/
 
 ## Status
 
-Planned — SKILL.md files are complete. Examples in progress.
+Ready

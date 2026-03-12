@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output identifies that extending the test duration from 21 to 25 days because 'results weren't conclusive enough' constitutes flexible stopping — the team acted on interim results",
+      "passed": true,
+      "evidence": "Response explicitly labels this as 'flexible stopping or p-hacking' and states: 'The team observed interim results and made a judgment call to extend the test window' and 'The stopping decision was predicated on observing insufficient clarity, not a pre-specified rule'"
+    },
+    {
+      "text": "Output does NOT give a 'Trust' or 'High confidence' verdict given the stopping decision was outcome-dependent",
+      "passed": true,
+      "evidence": "Overall assessment is 'UNTRUSTWORTHY — Caution Required' and explicitly states 'Do NOT treat final results as having your planned statistical power' and recommends treating 'as a lower-confidence than originally intended'"
+    },
+    {
+      "text": "Output distinguishes between passive daily monitoring (acceptable) and acting on interim results by extending the test window (a validity risk)",
+      "passed": true,
+      "evidence": "Section '2. Distinction Between Passive Monitoring and Acting on Results' explicitly separates the two: 'Acceptable: Daily monitoring dashboards (passive surveillance)' vs 'Problematic: Extending the test window based on observed interim observations' and emphasizes 'The core violation is that the team acted on interim observations'"
+    },
+    {
+      "text": "Output classifies the stopping behaviour as at least a Manageable risk, or stronger — not dismisses it as irrelevant",
+      "passed": true,
+      "evidence": "Classified as 'High Risk' under 'Flexible Stopping' and labeled as 'Critical Issues Identified.' The language used throughout ('fundamentally compromises,' 'inflates false positive rates,' 'invalidates standard statistical inference') indicates strong concern, not a manageable risk"
+    },
+    {
+      "text": "Output recommends 'Treat cautiously' or equivalent, and suggests pre-committing stopping rules in future experiments",
+      "passed": true,
+      "evidence": "Recommendation section states 'Treat Results Cautiously' and explicitly advises: 'For Future Experiments: Pre-commit all stopping rules before the experiment launches' and 'Never extend a test based on observed lack of clarity — this is outcome-dependent stopping'"
+    }
+  ]
+}

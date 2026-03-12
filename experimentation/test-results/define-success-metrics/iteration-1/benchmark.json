@@ -1,0 +1,350 @@
+{
+  "metadata": {
+    "skill_name": "define-success-metrics",
+    "skill_path": "/sessions/laughing-jolly-mayer/mnt/ai-product-ops/experimentation/skills/define-success-metrics",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-03-11T11:30:00Z",
+    "evals_run": [
+      1,
+      2,
+      3
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "rich-context",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 30.7,
+        "tokens": 26819,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output includes a clearly identified primary metric",
+          "passed": true,
+          "evidence": "Section '## Primary Metric' clearly identifies 'First-session lesson start rate' with full definition: 'Percentage of new iOS users who initiate their first lesson within their first session (session window: first 24 hours post-signup)' and detailed justification of why it is primary."
+        },
+        {
+          "text": "Output includes guardrail metrics (at least one related to retention)",
+          "passed": true,
+          "evidence": "Section '## Guardrail Metrics' includes four guardrails, with two explicitly addressing retention: 'Day 1 retention' defined as 'Percentage of new iOS users who return the app on Day 1' and 'Day 7 retention' defined as 'Percentage of new iOS users who return the app by Day 7'."
+        },
+        {
+          "text": "Output includes success threshold or explains it must be defined",
+          "passed": true,
+          "evidence": "Section '## Success Thresholds' provides explicit outcome conditions including 'Success', 'Probable Success', 'Neutral', and 'Failure' with measurable criteria. Additionally, '## What Is Provisional' section acknowledges that 'specific acceptable thresholds (e.g., max tolerable Day 1 retention drop) should be locked with stakeholders before experiment launch'."
+        },
+        {
+          "text": "Output marks minimum meaningful effect as provisional or TBD",
+          "passed": true,
+          "evidence": "Section '## Minimum Meaningful Effect' recommends '3\u20135 percentage point absolute uplift' but explicitly states 'exact threshold should be calibrated with product and business stakeholders based on: Expected implementation cost, Revenue impact per additional activated user, Competitive urgency'. Section '## What Is Provisional' further reinforces this: 'Minimum meaningful effect: Recommended 3\u20135 pp, but must be confirmed with product/business'."
+        },
+        {
+          "text": "Output does NOT default to revenue or generic conversion as primary metric",
+          "passed": true,
+          "evidence": "Primary metric is 'First-session lesson start rate' (line 14), which is specific to the hypothesis and product outcome, not a revenue metric or generic conversion metric."
+        },
+        {
+          "text": "Output provides interpretation notes linking metric choice to hypothesis",
+          "passed": true,
+          "evidence": "Section '## Interpretation Notes' explicitly connects the primary metric to the hypothesis: 'The hypothesis explicitly names lesson start as the outcome' and 'Onboarding friction is a known funnel stage that can affect activation' and 'First-session lesson start is a clear, measurable milestone'."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "rich-context",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.83,
+        "passed": 5,
+        "failed": 1,
+        "total": 6,
+        "time_seconds": 26.5,
+        "tokens": 23737,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output includes a clearly identified primary metric",
+          "passed": true,
+          "evidence": "Section 'Primary Success Metrics' clearly identifies 'First Lesson Start Rate (Primary Activation Metric)' as the primary metric. Also listed are 'Onboarding Completion Rate' and 'Day 1 Retention Rate', with further clarification in the 'Multiple Comparisons' section that 'Day 1 retention + first lesson start rate' are treated as co-primary metrics."
+        },
+        {
+          "text": "Output includes guardrail metrics (at least one related to retention)",
+          "passed": true,
+          "evidence": "Section 'Guardrail Metrics (Must Not Regress)' explicitly lists three guardrails: (1) Premium Conversion Rate, (2) Support Ticket Volume, and (3) First Lesson Completion Rate. While technically separate, the framework also includes 'Day 1 Retention Rate' and 'Day 3 and Day 7 Retention' as secondary metrics that must maintain or improve, functioning as guardrails against retention regression."
+        },
+        {
+          "text": "Output includes success threshold or explains it must be defined",
+          "passed": true,
+          "evidence": "The output provides specific success thresholds throughout: 'recommend 2%+ lift minimum' for first lesson start rate; 'Maintain \u226575% completion rate' for onboarding completion; 'Cannot declare success if Day 1 retention drops >1%'; '15-30% reduction vs. control expected' for time to first lesson; 'No decrease >0.5% vs. control' for premium conversion; 'No increase >10% vs. control' for support tickets; and 'Maintain \u226560% completion rate' for first lesson completion."
+        },
+        {
+          "text": "Output marks minimum meaningful effect as provisional or TBD",
+          "passed": false,
+          "evidence": "The output provides specific numerical thresholds for minimum meaningful effects (2%+ lift, 1% retention threshold, 0.5% conversion threshold, etc.) but does NOT mark these as provisional, TBD, or requiring business definition. The thresholds are presented as recommendations rather than as placeholders awaiting stakeholder input. Notably, the instructions state 'recommend 2%+ lift minimum' and 'Expected' but don't indicate these must be validated with business stakeholders."
+        },
+        {
+          "text": "Output does NOT default to revenue or generic conversion as primary metric",
+          "passed": true,
+          "evidence": "The primary metric is 'First Lesson Start Rate', which directly measures hypothesis-specific activation behavior. While 'Premium Conversion Rate' is included, it is listed under 'Guardrail Metrics' (secondary) rather than as the primary success metric. The framework explicitly avoids making revenue the primary measure of success."
+        },
+        {
+          "text": "Output provides interpretation notes linking metric choice to hypothesis",
+          "evidence": "The output provides strong interpretation notes for each metric: First Lesson Start Rate includes 'Directly measures the hypothesis\u2014does reducing steps increase lesson starts?'; Onboarding Completion Rate notes 'lower completion doesn't necessarily indicate failure if step count decreased'; Day 1 Retention includes 'Core business goal explicitly requires NOT hurting Day 1 retention'; Hypothesis Testing section states 'This framework tests both directional (does onboarding improve activation?) and business-critical (does it preserve retention?) questions simultaneously.' The notes clearly link metric choices to the stated hypothesis.",
+          "passed": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "light-context",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 25.4,
+        "tokens": 26186,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output identifies activation rate as the likely primary metric",
+          "passed": true,
+          "evidence": "Line 8: 'Metric Name: Activation Rate (within 7 days of sign-up)' is explicitly designated as Primary Metric. Lines 13-16 provide clear rationale for why activation is primary, stating 'The hypothesis explicitly targets activation as the outcome' and 'It is the named business goal in the hypothesis.'"
+        },
+        {
+          "text": "Output explicitly marks key parts as provisional due to missing context",
+          "passed": true,
+          "evidence": "Multiple explicit 'PROVISIONAL' markers: Line 66 '[PROVISIONAL - Requires team confirmation]' for minimum meaningful effect. Lines 99-100 state 'Exact activation definition and time window should be confirmed (7 days is provisional)'. Section title at line 115: 'What is Provisional Due to Missing Context' with explicit checklist of items requiring confirmation."
+        },
+        {
+          "text": "Output asks for or notes missing information (activation definition, funnel stage)",
+          "passed": true,
+          "evidence": "Lines 118-119: 'Exact definition of \"activation\" in your product (specific action, milestone, or behavior)' and 'Time window for activation measurement (7 days suggested...)'. Lines 104-105 note key assumptions about product funnel: 'Sign-up is a distinct conversion funnel step before activation' and 'Users who complete sign-up can fail to activate.'"
+        },
+        {
+          "text": "Output includes guardrail metrics",
+          "passed": true,
+          "evidence": "Full section 'Guardrail Metrics' at lines 44-60 includes: Early Retention (Day 1 and Day 7), Support Contacts Related to Registration, and Account Validation / Data Quality Issues. Each includes rationale for why it guards against negative outcomes."
+        },
+        {
+          "text": "Output warns that success threshold must be confirmed before planning",
+          "passed": true,
+          "evidence": "Lines 72-78 define success threshold with guardrails. Lines 139-143 provide explicit next steps: 'Team agrees on activation definition and time window', 'Confirm minimum meaningful effect threshold with stakeholders', 'Validate baseline metrics', then 'Proceed to sample size estimation with confirmed parameters.' Lines 134-137 explicitly state work is 'Not yet ready for: Final sample size calculation, Experiment launch, Success/failure determination.'"
+        },
+        {
+          "text": "Output does NOT confidently lock a single metric as if context were complete",
+          "passed": true,
+          "evidence": "Lines 97-100 frame confidence level as 'Light-context framework' and explicitly state key parameters are 'provisional' and must be 'confirmed.' Line 68 uses tentative language 'Suggest: \u22655% relative improvement' rather than prescriptive language. The entire 'What is Provisional' section (lines 115-123) and 'Readiness for Downstream Work' (lines 127-143) emphasize the framework is conditional, not final."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "light-context",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.33,
+        "passed": 2,
+        "failed": 4,
+        "total": 6,
+        "time_seconds": 19.2,
+        "tokens": 22905,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output identifies activation rate as the likely primary metric",
+          "passed": true,
+          "evidence": "Section 1 explicitly identifies 'Activation Rate' as the Primary Success Metric with clear definition: 'Percentage of users who complete their first meaningful action within 7 days of account creation' and calculation method."
+        },
+        {
+          "text": "Output explicitly marks key parts as provisional due to missing context",
+          "passed": false,
+          "evidence": "Output does not mark any parts as provisional. Metrics are presented with confidence and specific targets (e.g., '15-20% increase', 'Reduce by 30-50%') without caveating them as subject to missing context or stakeholder confirmation."
+        },
+        {
+          "text": "Output asks for or notes missing information (activation definition, funnel stage)",
+          "passed": false,
+          "evidence": "While the output provides its own activation definition, it does not ask stakeholders to confirm it, nor does it explicitly note missing information about what defines activation in their specific context, funnel stages, or other context gaps that should be resolved."
+        },
+        {
+          "text": "Output includes guardrail metrics",
+          "passed": true,
+          "evidence": "Section 3 comprehensively covers Guardrail Metrics with three specific areas: Data Quality Issues (incomplete/invalid profile data), User Retention (Day 7 & Day 30), and Support Tickets (post-sign-up support volume)."
+        },
+        {
+          "text": "Output warns that success threshold must be confirmed before planning",
+          "passed": false,
+          "evidence": "The output presents success thresholds as finalized in the Success Criteria section (e.g., 'Activation rate increases by \u226515%') and includes rollback triggers based on these thresholds, with no warning that these must be confirmed with stakeholders before execution."
+        },
+        {
+          "text": "Output does NOT confidently lock a single metric as if context were complete",
+          "passed": false,
+          "evidence": "The output confidently locks Activation Rate as THE primary metric with specific improvement targets (15-20%), includes it in the Success Criteria with exact thresholds (\u226515%), and provides rollback triggers (>5% decrease). This presents the metric as finalized rather than provisional."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "poor-context",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 39.0,
+        "tokens": 27774,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output offers multiple metric options rather than committing to one",
+          "passed": true,
+          "evidence": "Output presents OPTION A (User Activation), OPTION B (Purchase/Conversion), OPTION C (Retention/Engagement), and OPTION D (Revenue/Monetization) with distinct metric frameworks for each goal."
+        },
+        {
+          "text": "Output lists what must be confirmed before metrics can be locked",
+          "passed": true,
+          "evidence": "Section 'Before Sample Size Estimation Can Proceed' lists 7 required confirmations: (1) Primary metric choice, (2) Minimum meaningful effect, (3) Statistical confidence target, (4) Guardrail thresholds, (5) Success/failure decision rules, (6) Duration estimate, (7) Relevant segments. Also 'Critical Missing Context' section details 5 questions that must be answered."
+        },
+        {
+          "text": "Output does NOT present a single metric as definitively correct",
+          "passed": true,
+          "evidence": "Output explicitly states 'choose the appropriate framework below' (line 51, conditional language), 'All metric choices above are conditional' (line 269), and 'This framework is entirely provisional due to missing context' (line 268). No metric is presented as the correct choice."
+        },
+        {
+          "text": "Output identifies at least 3 different possible goals/contexts",
+          "passed": true,
+          "evidence": "Output identifies four distinct goal contexts: OPTION A (User Activation), OPTION B (Purchase/Conversion), OPTION C (Retention/Engagement), and OPTION D (Revenue/Monetization), with tailored metrics for each."
+        },
+        {
+          "text": "Output explicitly labels all choices as provisional",
+          "passed": true,
+          "evidence": "Output labels choices as provisional multiple times: 'This framework is entirely provisional due to missing context' (line 268), 'Provisional Status Summary' table marks components as 'Provisional' or 'UNKNOWN', and line 269 states 'All metric choices above are conditional'."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "poor-context",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 3,
+        "failed": 2,
+        "total": 5,
+        "time_seconds": 23.6,
+        "tokens": 23456,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output offers multiple metric options rather than committing to one",
+          "passed": true,
+          "evidence": "Output presents multiple metric categories: Business Impact Metrics (Conversion Rate, Revenue Impact, CLV, ROI), User Engagement Metrics (CTR, Time on Page, Feature Adoption, Repeat Usage), and User Experience Metrics (User Satisfaction, Task Completion, Error Rate, User Effort Score). Section 12 provides a template with placeholder metrics rather than specific recommendations."
+        },
+        {
+          "text": "Output lists what must be confirmed before metrics can be locked",
+          "passed": true,
+          "evidence": "Section 9 'Documentation Requirements' explicitly lists required confirmations: Definition (exact calculation method), Owner (who is responsible), Data Source (where collected), Tool/Dashboard (where to find it), Historical Baseline (current performance), and Target (meaningful improvement threshold)."
+        },
+        {
+          "text": "Output does NOT present a single metric as definitively correct",
+          "passed": true,
+          "evidence": "The output avoids definitive metric selection throughout. Line 158 states 'The specific metrics should be tailored to your experiment's context, business goals, and user base.' The output provides a framework template approach rather than prescriptive recommendations."
+        },
+        {
+          "text": "Output identifies at least 3 different possible goals/contexts",
+          "passed": false,
+          "evidence": "The output provides a comprehensive framework but does not explicitly enumerate different experiment contexts or goals. It does not articulate scenarios such as 'If the goal is user adoption...' or 'If the goal is revenue generation...' or 'If the goal is user retention...'. The framework is generic rather than context-specific."
+        },
+        {
+          "text": "Output explicitly labels all choices as provisional",
+          "passed": false,
+          "evidence": "While the output uses some hedging language (e.g., 'typically p < 0.05', 'should be'), it does not explicitly label recommendations as 'provisional', 'pending confirmation', or 'subject to your context'. The language is prescriptive (defining what should be done) rather than explicitly provisional."
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 31.7,
+        "stddev": 6.8549,
+        "min": 25.4,
+        "max": 39.0
+      },
+      "tokens": {
+        "mean": 26926.3333,
+        "stddev": 799.4225,
+        "min": 26186,
+        "max": 27774
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.5867,
+        "stddev": 0.2503,
+        "min": 0.33,
+        "max": 0.83
+      },
+      "time_seconds": {
+        "mean": 23.1,
+        "stddev": 3.6756,
+        "min": 19.2,
+        "max": 26.5
+      },
+      "tokens": {
+        "mean": 23366.0,
+        "stddev": 423.2387,
+        "min": 22905,
+        "max": 23737
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.41",
+      "time_seconds": "+8.6",
+      "tokens": "+3560"
+    }
+  },
+  "notes": [
+    "Skill achieves 100% pass rate across all 3 evals (rich, light, poor context)",
+    "Baseline without skill drops dramatically on light-context (33%) and poor-context (60%) evals",
+    "The biggest skill gain is on light-context: +67pp \u2014 baseline confidently locks metrics without provisional markers",
+    "Rich-context baseline nearly passes (83%) \u2014 the skill adds margin but the gap is smaller",
+    "Key discriminating assertions: 'explicitly marks provisional', 'does NOT confidently lock metric', 'offers multiple options'",
+    "Skill adds ~8s average execution time; token overhead ~3.5k per run \u2014 reasonable cost for the quality gain"
+  ]
+}

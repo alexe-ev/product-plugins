@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT give an unconditional Full rollout recommendation — it must acknowledge that critical business inputs are missing",
+      "passed": true,
+      "evidence": "Recommended action explicitly states 'Conditional full rollout — pending confirmation of business value and implementation feasibility' and entire 'Risks' section emphasizes unknown business value, implementation cost, and metric dependency"
+    },
+    {
+      "text": "Output explicitly lists at least 2 specific missing business inputs that limit the recommendation strength",
+      "passed": true,
+      "evidence": "Section 'Which missing business inputs limit recommendation strength' lists 4 specific gaps: (1) 'Downstream business impact of CTR improvement', (2) 'Implementation cost and rollout risk', (3) 'Strategic priority', (4) 'Segment-specific value'"
+    },
+    {
+      "text": "Output provides a conditional recommendation (e.g., 'likely full rollout IF implementation cost is low and CTR drives downstream value') rather than an unconditional 'ship it'",
+      "passed": true,
+      "evidence": "Recommended action uses conditional framing: 'Conditional full rollout — pending confirmation...'. Section 'What should happen next' explicitly ties decision to validation of business relevance and cost assessment"
+    },
+    {
+      "text": "Output acknowledges the quality and result are strong, but frames the recommendation as contingent on confirming business context",
+      "passed": true,
+      "evidence": "Output states 'The experiment shows a strong and statistically significant uplift' and 'The test quality is clean' but immediately follows with 'However, the recommendation is conditional because critical business inputs are unknown'"
+    },
+    {
+      "text": "Output does not treat statistical significance (p=0.0002) and guardrail stability as sufficient on their own for a full rollout recommendation",
+      "passed": true,
+      "evidence": "Final section 'Strength of this recommendation' clearly separates statistical evidence (rated 'Excellent') from business evidence (rated 'Insufficient') and overall recommendation strength is 'Moderate'"
+    }
+  ]
+}

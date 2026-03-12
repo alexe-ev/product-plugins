@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output correctly reports the primary metric result: +6pp absolute, +9.7% relative, statistically significant (p=0.001), CI +3.8pp to +8.2pp",
+      "passed": true,
+      "evidence": "Day-1 Tutorial Completion: 62.0% → 68.0% (+6.0pp absolute, +9.7% relative) ... With p=0.001 and a 95% CI of +3.8pp to +8.2pp, this result is highly statistically significant"
+    },
+    {
+      "text": "Output explicitly flags the day-7 retention degradation (−4pp, −14% relative) as a material guardrail concern that must be resolved before shipping",
+      "passed": true,
+      "evidence": "However, the Day-7 retention rate tells a concerning story: ... −4.0pp absolute, −14.3% relative decline ... This is not a minor fluctuation — it represents a 14% relative decline in week-1 retention ... This is a material guardrail issue"
+    },
+    {
+      "text": "Output does NOT recommend rolling out or shipping the change before the guardrail issue is investigated and resolved",
+      "passed": true,
+      "evidence": "Recommendation: DO NOT SHIP — Hold for further investigation ... Why Not Ship: A 6pp improvement in tutorial completion paired with a 4pp drop in Day-7 retention suggests this change is **not beneficial to long-term growth** ... Status: Positive primary metric + material guardrail conflict = **Not ready to ship.**"
+    },
+    {
+      "text": "Output classifies the result as something other than a clean positive — e.g., 'Positive with caution', 'Conflicted', or includes an explicit hold recommendation",
+      "passed": true,
+      "evidence": "Recommendation: DO NOT SHIP — Hold for further investigation ... Status: Positive primary metric + material guardrail conflict = **Not ready to ship.**"
+    },
+    {
+      "text": "Output explains the trade-off: tutorial completion improved but players completing the tutorial may be less engaged or retained (easier tutorial may attract lower-intent users)",
+      "passed": true,
+      "evidence": "You've optimized for funnel velocity (tutorial completion) at the expense of engagement quality (retention) ... The easier tutorial appears to be attracting or enabling less-engaged cohorts who don't return ... This suggests that while the reduced tutorial difficulty successfully gets more players through the tutorial, those players may have lower quality or lower intent."
+    }
+  ]
+}

@@ -103,6 +103,8 @@ Collect, when missing:
 - What outcome matters most here?
 - Is there any known funnel stage or metric already used by the team?
 
+In context-poor or context-light situations, explicitly address at least 2–3 of these before writing the hypothesis. Do not invent answers to questions you did not ask — list unresolved items under Missing information instead.
+
 ## Instructions
 1. Identify the core problem, opportunity, or assumption.
 2. Extract the proposed product change or intervention.
@@ -113,7 +115,7 @@ Collect, when missing:
 7. If the input is too vague, explicitly say what is missing.
 8. If multiple changes are mixed together, split them into separate hypotheses.
 9. Do not force numerical uplift assumptions at this stage unless the user already has them.
-10. Add an optional field called `expected impact hypothesis` only if a reasonable directional or quantitative assumption is available.
+10. Add an optional field called `expected impact hypothesis` only if a reasonable directional or quantitative assumption is available — meaning the user cites prior test results, industry benchmarks, or a documented rationale. If the user asserts a number without evidence (e.g. "this should lift conversion by 30%"), do not adopt it. Instead, flag it under Missing information as: "impact assumption needs validation — no evidence basis provided."
 
 ## Hypothesis format
 Use the following structure:
@@ -132,12 +134,13 @@ Provide:
 - Expected impact hypothesis (optional)
 - Missing information, if any
 - Confidence level of the hypothesis framing:
-  - provisional
-  - context-informed
-  - execution-ready candidate
+  - **provisional** — product area, segment, or primary metric is unclear or unconfirmed; the hypothesis is a starting structure, not a validated one
+  - **context-informed** — core inputs are present (change, segment, metric, direction) but some details remain uncertain; hypothesis can move to validation with caveats
+  - **execution-ready candidate** — the specific element being changed is named, the target segment is confirmed, the primary metric is defined and measurable, no critical missing information remains; ready to hand off to validate-hypothesis-quality or design-experiment-plan
 
 ## Risks / caveats
 - Do not present the hypothesis as fact
 - Do not fabricate quantitative impact if the user has no basis for it
 - Do not bundle several unrelated changes into one hypothesis
 - Do not choose a metric just because it is common in other products
+- Do not include experiment design elements — sample size, p-values, test duration, significance thresholds, rollout plans, or traffic splits are out of scope here; those belong in design-experiment-plan

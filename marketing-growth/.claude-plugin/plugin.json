@@ -1,0 +1,18 @@
+{
+  "name": "marketing-growth",
+  "version": "1.0.0",
+  "description": "8-skill library for marketing and growth: growth models, acquisition funnels, lifecycle, and channel strategy.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "marketing",
+    "growth",
+    "acquisition",
+    "lifecycle",
+    "channel"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

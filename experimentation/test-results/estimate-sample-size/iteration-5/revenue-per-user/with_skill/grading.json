@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output identifies the metric as right-skewed or high-variance (CV = SD/mean = 60/20 = 3.0, which is well above 1)",
+      "passed": true,
+      "evidence": "Coefficient of Variation (CV) = $60 / $20 = 3.0' and 'This is a **highly right-skewed, high-variance metric**. A CV of 3.0 is well above the threshold of 1.0'"
+    },
+    {
+      "text": "Output explicitly warns that the sample size estimate may be unreliable or conservative due to skew",
+      "passed": true,
+      "evidence": "**⚠️ Warning:** Both estimates are sensitive to the variance assumption and the assumed distribution shape... The standard formula (6,272/group) is more conservative but may still underestimate if the true SD is higher or the distribution is more extreme than typical."
+    },
+    {
+      "text": "Output recommends outlier capping or winsorization before running or analysing the experiment",
+      "passed": true,
+      "evidence": "**We strongly recommend capping outliers at the 99th percentile before running or analyzing this experiment.** This approach: - Reduces effective variance without losing material signal - Makes the experiment feasible without inflating sample size unnaturally - Preserves detection ability for typical user segments - Is standard practice for monetisation experiments with high skew"
+    },
+    {
+      "text": "Output provides a numerical sample size estimate (any reasonable approach — standard formula or log-normal) rather than refusing to calculate",
+      "passed": true,
+      "evidence": "Two quantitative estimates provided: (1) Standard Continuous Formula: n_per_group ≈ 6,272 users per group, Total sample size: 12,544 users. (2) Log-Normal Formula (Recommended for CV ≥ 1): n_per_group ≈ 1,848 users per group, Total sample size: 3,696 users"
+    },
+    {
+      "text": "Output notes that actual SD should be validated from historical data before committing to the timeline",
+      "passed": true,
+      "evidence": "**Do not rely on either estimate until historical SD is validated.** Before committing to a timeline, ensure that: 1. The $60 SD reflects the actual distribution of recent ARPU data, not an outlier period 2. The distribution shape (log-normal vs. other) is confirmed from recent historical samples 3. You have at least 30–50 days of recent baseline data to validate the assumption"
+    }
+  ]
+}

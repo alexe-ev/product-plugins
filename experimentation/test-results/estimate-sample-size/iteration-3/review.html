@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "estimate-sample-size", "runs": [{"id": "complete-inputs-with_skill", "prompt": "Food delivery: click-to-order rate, baseline 7.8%, MDE +0.8pp, 95%/80%, 35k/week", "eval_id": 1, "outputs": [{"name": "output.md", "type": "text", "content": "# Sample Size Estimation: Food Delivery App Restaurant Card Design\n\n## Executive Summary\n\nFor your A/B test on the new restaurant card design, you need approximately **18,439 users per variant** (36,877 total). With 35,000 eligible users per week, this test can run in approximately **1.05 weeks (7.4 days)**.\n\n---\n\n## Calculation Details\n\n### Inputs Provided\n- **Primary metric type:** Conversion / click-to-order rate\n- **Baseline conversion rate (p1):** 7.8%\n- **Minimum detectable effect:** +0.8 percentage points (absolute)\n- **Target conversion rate (p2):** 8.6% (7.8% + 0.8%)\n- **Confidence level:** 95% (two-sided)\n- **Statistical power:** 80%\n- **Eligible traffic:** 35,000 users per week\n- **Split ratio:** 50/50\n\n### Z-Values Used\n- z_\u03b1/2 (95% confidence, two-sided) = 1.96\n- z_\u03b2 (80% power) = 0.84\n- (z_\u03b1/2 + z_\u03b2)\u00b2 = (1.96 + 0.84)\u00b2 = 2.8\u00b2 = **7.84**\n\n### Explicit Formula Applied\n\nUsing the conversion metric formula from the experimentation reference:\n\n```\nn_per_group = (z_\u03b1/2 + z_\u03b2)\u00b2 \u00d7 (p1\u00d7(1\u2212p1) + p2\u00d7(1\u2212p2)) / (p2 \u2212 p1)\u00b2\n```\n\n### Step-by-Step Calculation\n\n**Step 1:** Calculate variance components\n- p1\u00d7(1\u2212p1) = 0.078 \u00d7 (1 \u2212 0.078) = 0.078 \u00d7 0.922 = **0.071916**\n- p2\u00d7(1\u2212p2) = 0.086 \u00d7 (1 \u2212 0.086) = 0.086 \u00d7 0.914 = **0.078604**\n\n**Step 2:** Sum variance components\n- 0.071916 + 0.078604 = **0.150520**\n\n**Step 3:** Calculate numerator\n- 7.84 \u00d7 0.150520 = **1.180077**\n\n**Step 4:** Calculate effect size squared\n- (p2 \u2212 p1)\u00b2 = (0.086 \u2212 0.078)\u00b2 = 0.008\u00b2 = **0.000064**\n\n**Step 5:** Calculate sample size per group\n- n_per_group = 1.180077 / 0.000064 = **18,439 users**\n\n**Step 6:** Calculate total sample size\n- Total = 18,439 \u00d7 2 = **36,877 users**\n\n**Step 7:** Estimate duration\n- Duration = 36,877 / 35,000 per week = **1.05 weeks** (approximately 7.4 days)\n\n---\n\n## Results\n\n### Sample Size Estimates\n\n| Metric | Value |\n|--------|-------|\n| Sample size per group | 18,439 users |\n| Total sample size | 36,877 users |\n| Estimated test duration | 1.05 weeks (7.4 days) |\n| Traffic saturation | 94.9% of weekly eligible traffic |\n\n---\n\n## Assumptions Used\n\n1. **Two-variant A/B test** with fixed-horizon design (test runs for the full duration)\n2. **Stable traffic quality** across the test period\u2014no major shifts in user behavior, device type, or geography\n3. **No compound effects** from promotions, campaigns, or platform-wide launches during the test\n4. **Eligible traffic** refers to users who actually reach the restaurant browsing surface where the new card design is tested\n5. **Users are assigned once** and remain in their variant for the entire test period\n6. **No interaction effects** between variants (e.g., network effects from other users seeing the design)\n\n---\n\n## Feasibility Assessment\n\n\u2713 **Test is highly feasible**\n\n- **Timeline:** 7.4 days is a short, actionable test window. You can iterate quickly and make launch decisions within a week.\n- **Traffic sufficiency:** Your 35,000 weekly eligible users exceed the required 36,877 total sample by 94.9%, meaning you'll reach required sample size in just over one week.\n- **Statistical power:** At 80% power, you have a 4 in 5 chance of detecting a true +0.8pp uplift if it exists.\n- **Effect size reasonability:** A +0.8pp absolute uplift (10% relative improvement) is meaningful for a product change and justifiable as a minimum effect to detect.\n\n---\n\n## Caveats and Considerations\n\n### If Weekly Traffic Varies\nThe duration estimate assumes stable 35,000 eligible users per week. If your traffic fluctuates seasonally:\n- **Higher traffic weeks:** Test will complete faster\n- **Lower traffic weeks:** Test will need to extend; consider running the test over a full calendar week or two to smooth variation\n\n### If Eligible Traffic Definition Changes\nIf \"eligible traffic\" changes\u2014for example, if more users are added or removed from the test audience mid-run\u2014duration will shift. Validate that all users who browse restaurants are actually eligible.\n\n### If Conversion Rate Differs from Baseline\nThe sample size is calibrated to baseline 7.8%. If your actual baseline is materially different (e.g., 5% or 10%), the sample size calculation should be re-run.\n\n### Multiple Testing / Secondary Metrics\nThis calculation covers your primary metric only. If you are testing secondary metrics as well, you may need additional sample size for secondary metric power.\n\n---\n\n## Recommendation\n\nProceed with this A/B test design. You have:\n- \u2713 Clear primary metric\n- \u2713 Specific, quantified baseline and MDE\n- \u2713 Sufficient weekly traffic to complete the test in ~1 week\n- \u2713 Reasonable statistical rigor (95% confidence, 80% power)\n\nPlan to monitor results after 7\u201310 days. By that point you should have sufficient data to make a confident launch decision.\n\n---\n\n## Next Steps\n\n1. **Confirm eligible traffic definition:** Validate that 35,000/week reflects the true number of unique users who browse restaurant cards in your app.\n2. **Check for seasonality:** If you're running this during a high- or low-demand period, adjust the expected duration.\n3. **Define winning threshold:** Agree in advance whether you will declare a winner on primary metric alone, or require consistency across secondary metrics.\n4. **Prepare diagnostics:** Plan to monitor:\n   - Assignment balance (50/50 split confirmed)\n   - Traffic stability across days\n   - Any anomalies in conversion timing or user segment makeup\n"}], "grading": {"expectations": [{"text": "Output provides sample size per group in the range 15,000\u201322,000 users", "passed": true, "evidence": "18,439 users per group (line 50: 'n_per_group = 1.180077 / 0.000064 = **18,439 users**' and line 66: 'Sample size per group | 18,439 users')"}, {"text": "Output provides total sample size (roughly double the per-group figure)", "passed": true, "evidence": "36,877 total users (line 53: 'Total = 18,439 \u00d7 2 = **36,877 users**' and line 67: 'Total sample size | 36,877 users')"}, {"text": "Output estimates duration using eligible traffic of 35,000/week \u2014 result in range 0.9\u20131.4 weeks", "passed": true, "evidence": "1.05 weeks (line 5: '1.05 weeks (7.4 days)' and line 56: 'Duration = 36,877 / 35,000 per week = **1.05 weeks**')"}, {"text": "Output lists all key inputs: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%", "passed": true, "evidence": "All inputs present (lines 12-19): baseline 7.8%, MDE +0.8pp, 95% confidence, 80% power, 35,000 weekly traffic, 50/50 split"}, {"text": "Output states assumptions used (e.g. two-variant test, stable traffic)", "passed": true, "evidence": "Comprehensive assumptions section (lines 73\u201381) including 'Two-variant A/B test' (line 75), 'Stable traffic quality' (line 76), and five additional assumptions"}, {"text": "Output includes a feasibility note or comment on reliability", "passed": true, "evidence": "Feasibility Assessment section (lines 84\u201392) with '\u2713 **Test is highly feasible**' including timeline, traffic sufficiency, statistical power, and effect size reasonability"}], "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0}, "execution_metrics": {"output_chars": 6287}, "timing": {"executor_duration_seconds": 45.2}, "claims": [], "eval_feedback": {"suggestions": ["Output exceeds expectations: includes detailed step-by-step calculations, explicit formula, and comprehensive caveats", "Numerical precision verified: all calculations are accurate (e.g., z-values, variance components, final sample size)", "Structure is professional and actionable with clear sections, tables, and a recommendation"], "overall": "EXCELLENT. All assertions pass with exact numerical matches. Output demonstrates mathematical rigor, includes all required inputs and assumptions, provides a clear feasibility assessment, and offers actionable next steps. The execution time of 45.2 seconds is acceptable for this complex estimation task."}}}, {"id": "complete-inputs-without_skill", "prompt": "Food delivery: click-to-order rate, baseline 7.8%, MDE +0.8pp, 95%/80%, 35k/week", "eval_id": 1, "outputs": [{"name": "output.md", "type": "text", "content": "# A/B Test Sample Size Estimation\n## Food Delivery App - Restaurant Card Design Test\n\n### Test Objective\nEstimate the required sample size to detect a +0.8 percentage point increase in click-to-order conversion rate at 95% confidence and 80% statistical power.\n\n---\n\n## Input Parameters\n\n| Parameter | Value |\n|-----------|-------|\n| **Primary Metric** | Click-to-order conversion rate |\n| **Baseline Conversion Rate** | 7.8% |\n| **Minimum Detectable Effect (MDE)** | +0.8 percentage points (absolute) |\n| **Target Conversion Rate** | 8.6% (7.8% + 0.8pp) |\n| **Confidence Level** | 95% (\u03b1 = 0.05, two-tailed) |\n| **Statistical Power** | 80% (1 - \u03b2 = 0.80) |\n| **Test Split** | 50/50 (equal allocation) |\n| **Weekly Eligible Traffic** | 35,000 users |\n\n---\n\n## Calculation Details\n\n### Step 1: Critical Values\n- **Z-score for 95% confidence (two-tailed):** z_\u03b1/2 = 1.96\n- **Z-score for 80% power:** z_\u03b2 = 0.84\n\n### Step 2: Pooled Proportion\n- p\u0304 = (p\u2080 + p\u2081) / 2\n- p\u0304 = (0.078 + 0.086) / 2\n- **p\u0304 = 0.082**\n\n### Step 3: Variance Components\n- p\u2080(1 - p\u2080) = 0.078 \u00d7 0.922 = 0.071916\n- p\u2081(1 - p\u2081) = 0.086 \u00d7 0.914 = 0.078604\n- **Sum of variances = 0.15052**\n\n### Step 4: Effect Size\n- (p\u2081 - p\u2080)\u00b2 = (0.086 - 0.078)\u00b2\n- (p\u2081 - p\u2080)\u00b2 = (0.008)\u00b2\n- **(p\u2081 - p\u2080)\u00b2 = 0.000064**\n\n### Step 5: Sample Size Formula\nUsing the two-proportion hypothesis test formula:\n\n```\nn = [(z_\u03b1/2 + z_\u03b2)\u00b2 \u00d7 (p\u2080(1 - p\u2080) + p\u2081(1 - p\u2081))] / (p\u2081 - p\u2080)\u00b2\n```\n\nSubstituting values:\n```\nn = [(1.96 + 0.84)\u00b2 \u00d7 0.15052] / 0.000064\nn = [(2.80)\u00b2 \u00d7 0.15052] / 0.000064\nn = [7.84 \u00d7 0.15052] / 0.000064\nn = 1.17968 / 0.000064\nn = 18,433.75\n```\n\n**Sample size per group: 18,434** (rounded up)\n\n---\n\n## Results Summary\n\n| Metric | Value |\n|--------|-------|\n| **Sample Size Per Group** | 18,434 |\n| **Total Sample Size** | 36,868 |\n| **Traffic Required Per Week** | 35,000 |\n| **Test Duration** | ~1.05 weeks (7-8 days) |\n| **% of Weekly Traffic** | 105.3% |\n\n### Key Findings\n\n1. **Sample Size:** You need 18,434 users in each group (control and treatment) to reliably detect a +0.8 percentage point difference in click-to-order conversion rate.\n\n2. **Total Traffic Required:** 36,868 users total (both groups combined).\n\n3. **Test Duration:** With 35,000 weekly eligible users, you'll need approximately 1.05 weeks (~7-8 days) to reach the required sample size.\n\n4. **Power Analysis:** At this sample size, you have:\n   - 95% confidence that you won't incorrectly reject the null hypothesis (Type I error \u2264 5%)\n   - 80% power to detect the +0.8pp effect if it truly exists (Type II error \u2264 20%)\n\n---\n\n## Recommendations\n\n- **Test Duration:** Plan for 8-10 days to account for traffic variation and ensure you reach the target sample size.\n- **Monitoring:** Use sequential testing or fixed sample size approach depending on your testing infrastructure.\n- **Practical Significance:** Even if the test is statistically significant, the +0.8pp improvement represents approximately a 10.3% relative uplift in conversion (0.8 / 7.8), which is practically meaningful for a food delivery platform.\n- **Multiple Comparisons:** If testing multiple metrics simultaneously, consider adjusting the confidence level using Bonferroni correction or similar methods.\n\n---\n\n## Methodology Notes\n\n- **Formula Used:** Two-proportion hypothesis test with equal sample allocation\n- **Distribution:** Normal approximation to the binomial distribution\n- **Assumptions:**\n  - Samples are independent\n  - Baseline conversion rate is stable during test period\n  - No network effects or user interference\n  - Users are randomly assigned to control/treatment groups\n"}], "grading": {"expectations": [{"text": "Output provides sample size per group in the range 15,000\u201322,000 users", "passed": true, "evidence": "Sample size per group: 18,434 (from line 61 and line 69)"}, {"text": "Output provides total sample size (roughly double the per-group figure)", "passed": true, "evidence": "Total Sample Size: 36,868 (line 70), which is exactly 2\u00d7 per-group figure of 18,434"}, {"text": "Output estimates duration using eligible traffic of 35,000/week \u2014 result in range 0.9\u20131.4 weeks", "passed": true, "evidence": "Test Duration: ~1.05 weeks (7-8 days) (line 72), which falls within 0.9\u20131.4 weeks range"}, {"text": "Output lists all key inputs: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%", "passed": true, "evidence": "All present: Baseline 7.8% (line 14), MDE +0.8pp (line 15), 95% confidence (line 17), 80% power (line 18)"}, {"text": "Output states assumptions used (e.g. two-variant test, stable traffic)", "passed": true, "evidence": "Methodology Notes section (lines 98-107) explicitly lists: 'Formula Used: Two-proportion hypothesis test', 'Baseline conversion rate is stable during test period', plus additional assumptions about independence and random assignment"}, {"text": "Output includes a feasibility note or comment on reliability", "passed": true, "evidence": "Recommendations section (lines 89-94) includes feasibility guidance: 'Plan for 8-10 days to account for traffic variation', power analysis note about Type I/II errors (lines 83-85), and practical significance comment"}], "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0}, "execution_metrics": {"output_chars": 3227}, "timing": {"executor_duration_seconds": 23.4}, "claims": [], "eval_feedback": {"suggestions": [], "overall": "All assertions passed. Output demonstrates solid statistical rigor: precise per-group sample size of 18,434 (within expected range), correct total of 36,868, accurate test duration calculation of 1.05 weeks based on 35,000 weekly traffic, complete input parameter documentation, clear methodology including two-proportion hypothesis test assumptions, and appropriate feasibility recommendations with power analysis context."}}}, {"id": "unsafe-traffic-with_skill", "prompt": "B2B onboarding: baseline 41%, MDE +5pp, 95%/80%, 25k total users but 15% eligible", "eval_id": 3, "outputs": [{"name": "output.md", "type": "text", "content": "# Sample Size Estimation: B2B Onboarding Wizard\n\n## Executive Summary\nFor a B2B project management tool testing a new onboarding wizard, you need approximately **1,537 users per group** (3,074 total users) to reliably detect a +5 percentage point improvement in onboarding completion rate from the baseline of 41% to 46%, at 95% confidence with 80% statistical power.\n\nWith 3,750 eligible new sign-ups per month, the test can be completed in approximately **3.6 weeks**.\n\n---\n\n## Calculation Details\n\n### Inputs Used\n- **Metric type:** Conversion / Rate metric\n- **Primary metric:** Onboarding completion rate\n- **Baseline completion rate (p1):** 41% (0.41)\n- **Minimum detectable effect:** +5 percentage points\n- **Target completion rate (p2):** 46% (0.46)\n- **Confidence level:** 95% (two-sided) \u2192 z_\u03b1/2 = 1.96\n- **Statistical power:** 80% \u2192 z_\u03b2 = 0.84\n- **Eligible traffic:** 3,750 new sign-ups per month (15% of 25,000 registered users)\n- **Split ratio:** 50/50 (assumed)\n\n### Conversion Metric Formula\nUsing the explicit formula from REFERENCE.md:\n\n```\nn_per_group = (z_\u03b1/2 + z_\u03b2)\u00b2 \u00d7 (p1\u00d7(1\u2212p1) + p2\u00d7(1\u2212p2)) / (p2 \u2212 p1)\u00b2\n```\n\n### Step-by-Step Calculation\n\n**Step 1: Calculate z-value sum squared**\n- (z_\u03b1/2 + z_\u03b2)\u00b2 = (1.96 + 0.84)\u00b2 = (2.80)\u00b2 = **7.84**\n\n**Step 2: Calculate variance term for baseline rate (p1)**\n- p1 \u00d7 (1 \u2212 p1) = 0.41 \u00d7 0.59 = **0.2419**\n\n**Step 3: Calculate variance term for target rate (p2)**\n- p2 \u00d7 (1 \u2212 p2) = 0.46 \u00d7 0.54 = **0.2484**\n\n**Step 4: Sum the variance components**\n- 0.2419 + 0.2484 = **0.4903**\n\n**Step 5: Calculate squared effect size**\n- (p2 \u2212 p1)\u00b2 = (0.46 \u2212 0.41)\u00b2 = (0.05)\u00b2 = **0.0025**\n\n**Step 6: Calculate numerator**\n- 7.84 \u00d7 0.4903 = **3.8408**\n\n**Step 7: Calculate sample size per group**\n- n_per_group = 3.8408 / 0.0025 = **1,536.32 \u2248 1,537 users per group**\n\n**Step 8: Calculate total sample size**\n- Total sample = 1,537 \u00d7 2 = **3,074 users total**\n\n**Step 9: Estimate test duration**\n- Eligible new sign-ups per month = 25,000 \u00d7 0.15 = 3,750\n- Duration = 3,074 / 3,750 = **0.82 months \u2248 3.6 weeks**\n\n---\n\n## Results Summary\n\n| Metric | Value |\n|--------|-------|\n| Sample size per group | 1,537 users |\n| Total sample size | 3,074 users |\n| Estimated duration | 3.6 weeks |\n| Eligible traffic per month | 3,750 new sign-ups |\n\n---\n\n## Assumptions Made\n\n1. **Two-variant fixed-horizon A/B test** with even 50/50 split between control and treatment\n2. **Stable traffic quality** throughout the test period (no major shifts in onboarding funnel)\n3. **Eligible traffic** refers specifically to new sign-ups entering the onboarding wizard\u2014not all 25,000 registered users\n4. **Linear behavior:** The onboarding completion behavior remains consistent across the test window\n5. **No confounding factors** such as seasonal variation in onboarding patterns, major product changes, or promotional campaigns that would alter traffic composition during the test period\n6. **Conversion measurement:** Completion rate is measured consistently and without ambiguity\n\n---\n\n## Feasibility Assessment\n\n**Status: Feasible**\n\n- **Traffic sufficiency:** With 3,750 eligible new sign-ups per month, you have sufficient traffic to complete the test in roughly one month. This is well-aligned with typical product development cycles.\n- **Effect size realism:** A +5 percentage point improvement (from 41% to 46%) is a meaningful and realistic business objective for an onboarding improvement.\n- **Duration:** 3.6 weeks is a reasonable test window that fits standard sprint or planning cycles.\n\n**Potential considerations:**\n\n- If new sign-up volume drops during holidays or seasonal troughs, duration may extend.\n- If the onboarding wizard change also affects lower-funnel metrics (e.g., product adoption after completion), consider monitoring those as secondary metrics to understand the full impact.\n- Ensure that the definition of \"completion\" is clear and logged consistently in your analytics.\n\n---\n\n## Missing or Optional Inputs\n\n- **Weekly or daily traffic breakdown:** Not provided; assumed evenly distributed across the month.\n- **Exclusions or segments:** None specified; assumes all eligible new sign-ups are included.\n- **Secondary metrics:** Not specified; recommend monitoring adoption and retention post-onboarding.\n- **Split ratio details:** Assumed 50/50; if a different allocation is preferred, sample sizes per group would adjust accordingly.\n\n---\n\n## Next Steps\n\n1. **Confirm the baseline rate:** Verify that 41% onboarding completion is accurate from recent data.\n2. **Validate traffic assumptions:** Check that 3,750 new sign-ups per month is accurate for your current period.\n3. **Define completion clearly:** Ensure the team agrees on what constitutes a completed onboarding (final step submission, feature adoption, etc.).\n4. **Plan analytics setup:** Ensure you can reliably assign users to variant groups and measure completion status.\n5. **Schedule the test:** With ~3.6 weeks needed, plan to launch at a time that avoids major holidays or planned maintenance windows.\n6. **Set up early-stopping rules (optional):** If your infrastructure supports sequential testing, you may be able to conclude the test earlier if a clear signal emerges.\n\n---\n\n## Trust Caveats\n\n- This estimate assumes the eligible traffic figure (3,750 per month) is accurate and represents users actually entering the onboarding flow.\n- If a significant fraction of new sign-ups bypass or skip the onboarding, the duration will be longer.\n- Results are valid only if the test runs for the full duration without external factors (e.g., major feature launches, competitor actions) that would materially shift user behavior.\n"}], "grading": {"expectations": [{"text": "Output warns that total registered users (25,000) cannot be used as eligible traffic", "passed": true, "evidence": "Eligible traffic refers specifically to new sign-ups entering the onboarding wizard\u2014not all 25,000 registered users"}, {"text": "Output correctly identifies that only new sign-ups are eligible (~15% of 25,000 = ~3,750/month)", "passed": true, "evidence": "Eligible traffic: 3,750 new sign-ups per month (15% of 25,000 registered users)"}, {"text": "Output provides sample size per group in the range 1,400\u20131,700 (correct answer ~1,537-1,538; numbers above ~2,500 indicate a formula error \u2192 FAIL)", "passed": true, "evidence": "n_per_group = 3.8408 / 0.0025 = 1,536.32 \u2248 1,537 users per group"}, {"text": "Output does NOT calculate duration using 25,000 as eligible traffic", "passed": true, "evidence": "Duration = 3,074 / 3,750 = 0.82 months \u2248 3.6 weeks (uses 3,750, not 25,000)"}, {"text": "Output calculates duration using ~3,750/month eligible traffic, giving approximately 3\u20134 weeks", "passed": true, "evidence": "0.82 months \u2248 3.6 weeks"}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}, "execution_metrics": {"output_chars": 4287}, "timing": {"executor_duration_seconds": 38.4}, "claims": [], "eval_feedback": {"suggestions": ["Excellent execution across all assertions", "Per-group sample size of 1,537 is precise and within expected range", "Clear distinction made between total registered users and eligible traffic", "Duration calculation properly derived from eligible monthly traffic (3,750)"], "overall": "PASS - All 5 assertions satisfied. Output correctly implements the sample size formula, properly identifies eligible traffic constraints, and provides accurate duration estimates. Formula validation: 1,537 is well within the acceptable range (1,400\u20131,700), indicating correct implementation."}}}, {"id": "unsafe-traffic-without_skill", "prompt": "B2B onboarding: baseline 41%, MDE +5pp, 95%/80%, 25k total users but 15% eligible", "eval_id": 3, "outputs": [{"name": "output.md", "type": "text", "content": "# Sample Size Estimation: B2B Onboarding Wizard Test\n\n## Problem Statement\nTesting a new onboarding wizard in a B2B project management tool with 25,000 registered users. Need to determine sample size for detecting a 5 percentage point improvement in onboarding completion rate.\n\n## Inputs\n- **Primary Metric:** Onboarding completion rate\n- **Baseline (p\u2080):** 41% = 0.41\n- **Minimum Detectable Effect (MDE):** +5 percentage points\n- **Target Rate (p\u2081):** 46% = 0.46\n- **Confidence Level:** 95% (\u03b1 = 0.05)\n- **Power:** 80% (\u03b2 = 0.20)\n- **Population:** 25,000 registered users; 15% new sign-ups monthly = 3,750 eligible users\n\n## Calculation Steps\n\n### Step 1: Z-Score Determination\nFor a two-tailed test:\n- Z_\u03b1/2 (95% confidence) = **1.96**\n- Z_\u03b2 (80% power) = **0.84**\n\n### Step 2: Pooled Proportion\n```\np\u0304 = (p\u2080 + p\u2081) / 2\np\u0304 = (0.41 + 0.46) / 2\np\u0304 = 0.435\n```\n\n### Step 3: Sample Size Formula Application\nUsing the two-proportion comparison formula:\n```\nn = (Z_\u03b1/2 + Z_\u03b2)\u00b2 \u00d7 [p\u2080(1-p\u2080) + p\u2081(1-p\u2081)] / (p\u2081 - p\u2080)\u00b2\n```\n\n**Numerator Components:**\n- (Z_\u03b1/2 + Z_\u03b2)\u00b2 = (1.96 + 0.84)\u00b2 = (2.80)\u00b2 = **7.84**\n- p\u2080(1-p\u2080) = 0.41 \u00d7 0.59 = **0.2419**\n- p\u2081(1-p\u2081) = 0.46 \u00d7 0.54 = **0.2484**\n- Sum of proportions: **0.4903**\n\n**Denominator:**\n- (p\u2081 - p\u2080)\u00b2 = (0.46 - 0.41)\u00b2 = (0.05)\u00b2 = **0.0025**\n\n**Calculation:**\n```\nn = (7.84 \u00d7 0.4903) / 0.0025\nn = 3.8415 / 0.0025\nn = 1,536.6\n```\n\n### Step 4: Sample Size per Group\n```\nPer-group sample size = 1,537 users (rounded up)\n```\n\n### Step 5: Total Sample Size (Two-Group Test)\n```\nTotal sample size = 1,537 \u00d7 2 = 3,074 users\n```\n\n## Results\n\n| Metric | Value |\n|--------|-------|\n| **Sample size per group** | 1,537 users |\n| **Total sample size** | 3,074 users |\n| **Control group** | 1,537 users |\n| **Treatment group** | 1,537 users |\n\n## Feasibility Assessment\n\n**Population Availability:**\n- Monthly new sign-ups (eligible for onboarding): 3,750 users\n- Required sample size: 3,074 users\n- **Coverage:** 82% of monthly eligible users (feasible within 1 month)\n\n**Timeline Recommendation:**\n- Collect sample within ~1 month of new registrations\n- This provides sufficient sample while maintaining fresh user cohort homogeneity\n\n## Statistical Interpretation\nWith 3,074 total participants (1,537 per group), this test has:\n- 95% confidence that any observed difference is not due to random chance\n- 80% power to detect a true 5 percentage point improvement in completion rate\n- Ability to distinguish between 41% baseline and 46% target rate\n- If the true effect is \u22655pp improvement, there's an 80% chance the test will detect it\n\n## Key Assumptions\n1. Users are randomly assigned to control or treatment groups\n2. Completion rates are independent across users\n3. No significant confounding variables affect completion\n4. Baseline rate remains stable at 41% during test period\n5. New sign-up cohort is representative of typical onboarding population\n"}], "grading": {"expectations": [{"text": "Output warns that total registered users (25,000) cannot be used as eligible traffic", "passed": true, "evidence": "Line 13: 'Population: 25,000 registered users; 15% new sign-ups monthly = 3,750 eligible users' \u2014 clearly distinguishes between total registered users and eligible traffic"}, {"text": "Output correctly identifies that only new sign-ups are eligible (~15% of 25,000 = ~3,750/month)", "passed": true, "evidence": "Line 13: '15% new sign-ups monthly = 3,750 eligible users' and Line 72-73: 'Monthly new sign-ups (eligible for onboarding): 3,750 users'"}, {"text": "Output provides sample size per group in the range 1,400\u20131,700", "passed": true, "evidence": "Line 53: 'Per-group sample size = 1,537 users (rounded up)' and Line 65 table: 'Sample size per group | 1,537 users'. Per-group number: 1,537"}, {"text": "Output does NOT calculate duration using 25,000 as eligible traffic", "passed": true, "evidence": "Lines 72-75 feasibility assessment uses 3,750 monthly new sign-ups as the eligible pool, not 25,000 total registered users"}, {"text": "Output calculates duration using ~3,750/month eligible traffic, giving approximately 3\u20134 weeks", "passed": true, "evidence": "Lines 76-79: 'Collect sample within ~1 month of new registrations' which is approximately 4 weeks, within the 3-4 week range"}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}, "execution_metrics": {"output_chars": 2817}, "timing": {"executor_duration_seconds": 17.5}, "claims": [], "eval_feedback": {"suggestions": [], "overall": "All assertions passed. The output demonstrates strong understanding of eligible traffic constraints (distinguishing 25,000 total users from 3,750 monthly new sign-ups), applies correct statistical formulas for sample size calculation, and provides accurate feasibility assessment using the correct eligible traffic pool."}}}], "previous_feedback": {}, "previous_outputs": {"complete-inputs-with_skill": [{"name": "output.md", "type": "text", "content": "## Sample Size Estimation: Food Delivery App Click-to-Order Test\n\n### Input Summary\n**Primary metric:** Click-to-order conversion rate\n**Baseline:** 7.8%\n**Minimum detectable effect:** +0.8 percentage points (absolute)\n**Confidence level:** 95%\n**Statistical power:** 80%\n**Eligible traffic:** 35,000 users per week\n**Split ratio:** 50/50\n\n---\n\n### Results\n\n**Sample size per group:**\n~18,542 users\n\n**Total sample size:**\n~37,084 users\n\n**Estimated duration:**\nApproximately 1.1 weeks of eligible traffic\n\n---\n\n### Inputs Used\n- Conversion metric (two-variant test)\n- Baseline: 7.8%\n- Target: 8.6% (implied by +0.8pp MDE)\n- Confidence: 95% (\u03b1 = 0.05, two-tailed)\n- Power: 80% (\u03b2 = 0.20)\n- Even split (50/50)\n- Eligible traffic: 35,000 users per week\n\n---\n\n### Assumptions\n- Two-variant fixed-horizon A/B test\n- Stable traffic quality and composition across the test period\n- No major distortion from promotions, app launches, or acquisition source shifts during the test window\n- Eligible traffic refers to users who actually reach and interact with the restaurant card and have an opportunity to click-to-order\n- Traffic is evenly distributed across both variants\n- No interaction or confounding effects from concurrent product experiments\n- Conversion opportunity is independent across users\n\n---\n\n### Calculation Methodology\nUsed the standard two-proportion z-test sample size formula:\n\n```\nn = (Z_\u03b1/2 + Z_\u03b2)\u00b2 \u00d7 (p\u2081(1-p\u2081) + p\u2082(1-p\u2082)) / (p\u2082 - p\u2081)\u00b2\n```\n\nWhere:\n- Z_\u03b1/2 = 1.96 (95% confidence, two-tailed)\n- Z_\u03b2 = 0.84 (80% power)\n- p\u2081 = 0.078 (baseline conversion)\n- p\u2082 = 0.086 (target conversion)\n- Effect size = 0.008 (0.8 percentage points)\n\nPer-group sample size \u2248 18,542\nTotal sample size = 18,542 \u00d7 2 \u2248 37,084\n\n---\n\n### Feasibility Assessment\n\n**Duration:** Very favorable. The test requires only ~1.1 weeks of traffic to reach the target sample size, well within typical business planning windows.\n\n**Sample size:** Moderate. The required per-group sample (~18.5k) is achievable with 35,000 weekly eligible users.\n\n**Traffic efficiency:** At 50/50 split, the test will consume ~51% of weekly eligible traffic (37,084 / 35,000 \u00d7 100 / 2 splits \u2248 ~53% of weekly users per variant across the test period).\n\n**Recommendation:** This test is **feasible**. The short duration (1\u20132 weeks depending on daily traffic variance) allows for:\n- Quick iteration cycles\n- Minimal business impact from the 50/50 split\n- Clear signal if the effect size exists\n- Early decision point to scale or iterate\n\n---\n\n### Caveats and Trust Notes\n\n1. **Traffic consistency:** This estimate assumes 35,000 eligible users per week is consistent and stable. Weekly fluctuations or day-of-week effects may extend the actual duration by 20\u201330%.\n\n2. **Minimum detectable effect:** A +0.8pp uplift (7.8% \u2192 8.6%) represents a 10.3% relative improvement. This is a meaningful effect size. If the true effect is smaller, power will be reduced.\n\n3. **Click-to-order eligibility:** The \"eligible traffic\" count should exclude:\n   - Users not shown the restaurant card\n   - Users in geographies without restaurant coverage\n   - Users blocked by other feature flags\n\n   If actual eligible traffic is lower, duration will increase proportionally.\n\n4. **External factors:** The estimate may not account for:\n   - App version rollout pacing\n   - Seasonal demand shifts during the test window\n   - Competing product launches or features\n   - Traffic source or user cohort changes\n\n5. **Assumed equal variance:** The calculation assumes baseline and variant conversion rates have similar variance. For very low-rate metrics (<1%), consider consulting with a statistician.\n\n---\n\n### Downstream Handoff\n\nThis estimate is ready for:\n- **Experiment design documentation** (design-experiment-plan skill)\n- **Launch timeline planning:** Test can begin within 1\u20132 weeks and conclude in ~1 week\n- **Feasibility reviews:** Traffic is sufficient; duration is short; no major blocking constraints detected\n- **Stakeholder communication:** \"We need ~37k users to detect an 0.8pp lift with 95% confidence and 80% power. At our current traffic, this takes about 1 week.\"\n\n---\n\n### Next Steps\n\n1. Validate that 35,000 users per week actually reach the restaurant card test point\n2. Define control vs. variant experience in detail\n3. Plan telemetry and instrumentation (ensure click-to-order event is cleanly tracked)\n4. Check for interaction with concurrent experiments\n5. Schedule test window (aim for stable traffic period with no major app updates)\n"}], "complete-inputs-without_skill": [{"name": "output.md", "type": "text", "content": "# A/B Test Sample Size Estimate: Food Delivery App\n\n## Test Configuration\n- **Test Type:** Two-proportion A/B test (restaurant card design)\n- **Primary Metric:** Click-to-order conversion rate\n- **Confidence Level:** 95% (\u03b1 = 0.05, two-tailed)\n- **Statistical Power:** 80% (\u03b2 = 0.20)\n- **Split:** 50/50 (Control vs Treatment)\n\n## Baseline and Effect\n- **Baseline Conversion Rate (p\u2080):** 7.8%\n- **Minimum Detectable Effect (MDE):** +0.8 percentage points\n- **Expected Treatment Conversion Rate (p\u2081):** 8.6% (7.8% + 0.8%)\n- **Relative Lift:** 10.26% [(8.6 - 7.8) / 7.8]\n\n## Statistical Parameters\n- **Z-score for 95% confidence (\u03b1/2 = 0.025):** 1.96\n- **Z-score for 80% power (\u03b2 = 0.20):** 0.84\n- **Z-critical (one-sided):** 2.8 (1.96 + 0.84)\n\n## Sample Size Calculation\n\n### Formula\nn = (Z_{\u03b1/2} + Z_\u03b2)\u00b2 \u00d7 [p\u2080(1-p\u2080) + p\u2081(1-p\u2081)] / (p\u2081 - p\u2080)\u00b2\n\n### Variance Calculation\n- p\u2080(1-p\u2080) = 0.078 \u00d7 0.922 = 0.071916\n- p\u2081(1-p\u2081) = 0.086 \u00d7 0.914 = 0.078604\n- Pooled variance = 0.150520\n\n### Effect Size\n- (p\u2081 - p\u2080)\u00b2 = (0.008)\u00b2 = 0.000064\n- Z-critical squared = 7.84\n\n### Result per Group\nn = (7.84 \u00d7 0.150520) / 0.000064 = **117,752 users per group**\n\n## Sample Size Requirements\n\n| Metric | Value |\n|--------|-------|\n| **Per Group (50/50 split)** | 117,752 users |\n| **Total Sample Size** | 235,504 users |\n| **Control Group** | 117,752 users |\n| **Treatment Group** | 117,752 users |\n\n## Feasibility Analysis\n- **Weekly Eligible Traffic:** 35,000 users/week\n- **Test Duration Required:** 235,504 \u00f7 35,000 = **6.73 weeks** (~47 days)\n- **Recommended Duration:** 7 weeks (to account for day-of-week variations)\n- **Status:** \u2713 Feasible within typical testing windows\n\n## Power Analysis\n- **Significance Level (\u03b1):** 0.05\n- **Power (1 - \u03b2):** 0.80 (80% chance of detecting the effect if real)\n- **Type I Error (false positive):** 5%\n- **Type II Error (false negative):** 20%\n\n## Critical Values\n- **Minimum observed difference to reject null hypothesis:** Approximately \u00b10.0053 (0.53 pp at baseline rate)\n- **Confidence Interval at significance:** \u00b10.0053 around observed difference\n\n## Recommendations\n\n1. **Sample Size:** Allocate **117,752 users to each variant** for a total of **235,504 users**\n2. **Duration:** Plan for a **7-week test** given 35,000 weekly eligible users\n3. **Monitoring:** Use sequential testing or set fixed end-date to avoid multiple comparison issues\n4. **Traffic Allocation:** Maintain 50/50 split unless business constraints require adjustment\n5. **Minimum Duration:** Run for at least 2 weeks (minimum 70,000 users) to capture weekly variations\n6. **Sanity Checks:** Verify random assignment, tracking implementation, and metric definition before launch\n\n## Notes\n- This calculation assumes normal approximation to binomial distribution (valid for these proportions)\n- Real-world factors like seasonality, user segments, and device types may require higher sample sizes\n- If MDE of 0.8pp is difficult to achieve, consider re-evaluating the effect size or accepting higher Type II error\n- 80% power is standard but conservative; 90% power would require ~157,000 per group (6.73 weeks \u2192 8.95 weeks)\n"}], "missing-inputs-with_skill": [{"name": "output.md", "type": "text", "content": "# Sample Size Estimation: SaaS Trial Expiry Email Test\n\n## Status\n**Incomplete setup for sample size estimation**\n\nThe inputs provided are helpful but not sufficient for a defensible sample size and duration calculation. Three mandatory inputs are missing.\n\n---\n\n## Inputs Provided\n\n**Primary metric type:** Trial-to-paid conversion rate\n\n**Baseline metric value:** 12.3%\n\n**Eligible traffic:** 4,500 trial expiry emails per week\n\n**Product context:** SaaS trial expiry email sequence, testing new email design\n\n---\n\n## Missing Mandatory Inputs\n\nTo estimate sample size and test duration, the following must be defined:\n\n1. **Minimum Detectable Effect (MDE)**\n   - What relative or absolute uplift would make the new design \"worth it\"?\n   - Examples:\n     - Absolute: +0.5 percentage points (from 12.3% \u2192 12.8%)\n     - Relative: +5% (from 12.3% \u2192 12.9%)\n     - Relative: +10% (from 12.3% \u2192 13.5%)\n\n2. **Confidence Level (Significance Level)**\n   - What statistical confidence do you want?\n   - Standard choice: 95% confidence (\u03b1 = 0.05)\n   - More conservative: 99% confidence (\u03b1 = 0.01)\n\n3. **Statistical Power**\n   - How often should the test detect the effect if it truly exists?\n   - Standard choice: 80% power (\u03b2 = 0.20)\n   - More conservative: 90% power (\u03b2 = 0.10)\n\n---\n\n## What Can Be Said Now\n\n- **Eligible traffic is known:** 4,500 trial expiry emails per week is a concrete, helpful constraint\n- **Baseline is known:** 12.3% is a clear starting point\n- **Duration estimation is blocked:** Without knowing the required sample size, duration cannot be calculated\n- **Sample size estimation is blocked:** MDE choice determines the effect size; confidence and power determine the z-scores used in the calculation\n\n---\n\n## Scenario Ranges (Illustration Only)\n\nTo give you a sense of what different choices mean, here are illustrative scenarios. **These are NOT recommendations\u2014your team must decide the MDE, confidence, and power based on business priorities.**\n\n### Scenario A: Modest effect, standard statistical settings\n- **Assumptions:** 5% relative uplift, 95% confidence, 80% power\n- **Effect:** 12.3% \u2192 12.9%\n- **Estimated sample size per group:** ~2,600 users\n- **Total sample size:** ~5,200 users\n- **Estimated duration:** ~1.2 weeks (5,200 \u00f7 4,500)\n- **Feasibility:** Very practical\n\n### Scenario B: Smaller effect, standard statistical settings\n- **Assumptions:** 2% relative uplift, 95% confidence, 80% power\n- **Effect:** 12.3% \u2192 12.6%\n- **Estimated sample size per group:** ~6,500 users\n- **Total sample size:** ~13,000 users\n- **Estimated duration:** ~2.9 weeks (13,000 \u00f7 4,500)\n- **Feasibility:** Practical\n\n### Scenario C: Larger effect, standard statistical settings\n- **Assumptions:** 10% relative uplift, 95% confidence, 80% power\n- **Effect:** 12.3% \u2192 13.5%\n- **Estimated sample size per group:** ~1,050 users\n- **Total sample size:** ~2,100 users\n- **Estimated duration:** ~0.47 weeks (~3 days)\n- **Feasibility:** Very easy\n\n---\n\n## Recommended Next Steps\n\n1. **Define the MDE** with your product and analytics teams:\n   - What uplift would justify the engineering investment in the new email design?\n   - What is the smallest effect you'd regret missing?\n\n2. **Confirm statistical settings** (or use defaults):\n   - 95% confidence and 80% power are industry standard for product experiments\n   - If higher risk tolerance, consider 90% confidence and 80% power (smaller sample)\n   - If lower risk tolerance, consider 95% confidence and 90% power (larger sample)\n\n3. **Once MDE, confidence, and power are set**, this skill can provide:\n   - Precise sample size per group and total\n   - Estimated test duration based on your 4,500 weekly emails\n   - Feasibility assessment\n\n---\n\n## Notes on Eligible Traffic\n\nYour 4,500 trial expiry emails per week are the correct base for duration estimation. This is the traffic that can actually enter the test, so the sample size will be divided by this to estimate how many weeks the test must run.\n\n**Caution:** If not all 4,500 recipients complete the conversion funnel within the test window (e.g., some may decide days after receiving the email), the actual duration may be longer than the calculation suggests. Plan for a 1-2 week buffer if delayed conversions are common.\n\n---\n\n## Summary\n\n**Cannot estimate test duration without:**\n- A chosen minimum detectable effect\n- A chosen confidence level\n- A chosen power level\n\n**Once these are defined**, the 4,500 weekly emails provide a solid foundation for a realistic duration estimate.\n"}], "missing-inputs-without_skill": [{"name": "output.md", "type": "text", "content": "# A/B Test Duration Estimate: SaaS Trial Expiry Email\n\n## Executive Summary\n\n**Cannot provide a precise duration without defining the Minimum Detectable Effect (MDE).** However, based on your volume and typical business scenarios, your test will likely run **1-3 weeks** depending on the magnitude of improvement you're testing for.\n\n## Given Information\n\n- **Baseline conversion rate:** 12.3%\n- **Weekly email volume:** 4,500 trial expiry emails\n- **Test type:** Two-sample proportion test (control vs. treatment)\n\n## Missing Critical Input\n\nTo calculate exact test duration, you need to define:\n\n**Minimum Detectable Effect (MDE):** What percentage conversion lift would justify implementing the new email design?\n\nCommon questions to help define this:\n- What's the dollar impact of a 5% lift in trial-to-paid conversion?\n- How much effort/cost is required to maintain the new design?\n- Is this a critical business metric or a minor optimization?\n\n## Scenario Analysis (95% Confidence, 80% Power)\n\n### Scenario 1: 15% Relative Lift\n- **New conversion rate:** 14.1% (from 12.3%)\n- **Sample size per group:** 5,285\n- **Total sample size needed:** 10,571\n- **Duration:** **2-3 weeks**\n\n### Scenario 2: 20% Relative Lift\n- **New conversion rate:** 14.8% (from 12.3%)\n- **Sample size per group:** 3,031\n- **Total sample size needed:** 6,063\n- **Duration:** **1-2 weeks**\n\n### Scenario 3: 25% Relative Lift\n- **New conversion rate:** 15.4% (from 12.3%)\n- **Sample size per group:** 1,977\n- **Total sample size needed:** 3,954\n- **Duration:** **~1 week**\n\n## Statistical Framework\n\n### Standard Parameters Used\n- **Confidence level:** 95% (\u03b1 = 0.05, two-tailed)\n- **Statistical power:** 80% (\u03b2 = 0.20)\n- **Z-score for confidence:** 1.96\n- **Z-score for power:** 0.84\n\n### Sample Size Formula\n```\nn = 2 \u00d7 (z_\u03b1 + z_\u03b2)\u00b2 \u00d7 p\u0304 \u00d7 (1 - p\u0304) / (p\u2081 - p\u2082)\u00b2\n```\n\nWhere:\n- p\u0304 = pooled proportion (average of control and treatment conversion rates)\n- p\u2081, p\u2082 = conversion rates for control and treatment groups\n- n = sample size per group\n\n## Key Considerations\n\n### 1. Why Statistical Power Matters\n- **80% power** (industry standard) means there's an 80% chance of detecting a true effect of the size you're testing for\n- If you want higher confidence, use **90% power**, which requires ~20% more samples and thus ~1 week longer\n- Trade-off: higher power = longer test, but better protection against missing real effects\n\n### 2. Revenue Impact Math\nWith 4,500 emails/week:\n- **Even a 5% lift** = ~23 additional conversions per week\n- At typical SaaS LTV values ($500-2,000+), this could be $11K-$46K+ per week\n- At 3-week test duration: $33K-$138K+ revenue impact\n\n### 3. Test Validity Assumptions\n- \u2713 Consistent weekly email volume (~4,500/week)\n- \u2713 Random assignment to control/treatment groups\n- \u2713 No external factors skewing results during test period\n- \u2713 Single metric being tested (if testing multiple variants, adjust alpha)\n\n### 4. Sequential Testing Alternative\nIf you can't wait 2-3 weeks:\n- Sequential testing allows you to check results daily and stop early if effect is strong\n- Requires more sophisticated analysis (e.g., Bayesian methods)\n- Popular for high-velocity experiments but requires careful setup\n\n## Recommendations\n\n1. **Define Your MDE:**\n   - Calculate the revenue impact per percentage point of conversion lift\n   - Work with product/business teams to determine the minimum worthwhile improvement\n   - Even modest lifts can be valuable at your scale\n\n2. **Choose Your Power Level:**\n   - **80% power:** Faster (1-3 weeks), acceptable for most features\n   - **90% power:** More rigorous, takes ~20% longer, for critical decisions\n\n3. **Plan for Seasonality:**\n   - Check if trial expiry rates vary by day of week or season\n   - If so, consider running through full weeks/cycles to avoid bias\n\n4. **Set Success Criteria Before Launch:**\n   - Define what result = \"definitely roll out\" vs. \"needs more investigation\"\n   - Avoid p-hacking by pre-registering your statistical test\n\n## Quick Reference\n\n| Relative Lift | Duration | Impact (at 5% LTV)* |\n|---|---|---|\n| 15% (12.3% \u2192 14.1%) | 2-3 weeks | $33K-$138K |\n| 20% (12.3% \u2192 14.8%) | 1-2 weeks | $22K-$92K |\n| 25% (12.3% \u2192 15.4%) | ~1 week | $11K-$46K |\n\n*Based on 4,500 emails/week at varying SaaS LTV values ($500-$2,000+)\n\n## Conclusion\n\n**Most likely timeline: Run for 2 weeks** if you're testing for a reasonable (15-20%) relative lift. This balances statistical rigor with practical business needs and should capture a meaningful sample (6,000-10,500 total observations).\n\nIf the new design is lower-effort to maintain, testing for even 15% lift is reasonable. If it requires significant resources, consider raising your MDE threshold to 25%+ to justify the investment.\n"}], "unsafe-traffic-with_skill": [{"name": "output.md", "type": "text", "content": "# Sample Size Estimation: B2B Onboarding Wizard Test\n\n## Summary\n\n**Sample size per group:** ~3,078 users\n**Total sample size:** ~6,156 users\n**Estimated duration:** Cannot be reliably estimated (see warning below)\n\n---\n\n## Inputs Used\n\n| Parameter | Value |\n|-----------|-------|\n| **Metric type** | Conversion rate (onboarding completion) |\n| **Baseline rate** | 41% |\n| **Target rate** | 46% |\n| **Absolute effect size** | +5 percentage points |\n| **Confidence level** | 95% (\u03b1 = 0.05, two-tailed) |\n| **Statistical power** | 80% (\u03b2 = 0.20) |\n| **Split ratio** | 50/50 (assumed) |\n| **Total platform users** | 25,000 |\n| **Eligible segment** | 15% (new sign-ups per month) |\n| **Estimated eligible traffic** | ~3,750 per month (~868 per week) |\n\n---\n\n## Calculation Details\n\n**Formula:** Two-proportion test sample size\nn = 2 \u00d7 (z_\u03b1/2 + z_\u03b2)\u00b2 \u00d7 [p\u2081(1-p\u2081) + p\u2082(1-p\u2082)] / (p\u2082 - p\u2081)\u00b2\n\n**Parameters:**\n- z_\u03b1/2 = 1.96 (95% confidence, two-tailed)\n- z_\u03b2 = 0.84 (80% power)\n- p\u2081 = 0.41 (baseline)\n- p\u2082 = 0.46 (implied target)\n- \u0394p = 0.05 (effect size)\n\n**Numerator:** 2 \u00d7 7.84 \u00d7 0.4903 = 7.683\n**Denominator:** 0.0025\n**Per-group sample size:** ~3,078 users\n**Total sample size:** ~6,156 users\n\n---\n\n## Assumptions\n\n1. **Two-variant fixed-horizon A/B test** with equal allocation to control and treatment.\n2. **Metric is binary** (completion vs. non-completion).\n3. **Independent observations** within each group.\n4. **No sequential or adaptive stopping** during the test.\n5. **Traffic stability** across the test period (no major seasonal shifts, campaign changes, or traffic quality shifts).\n6. **Minimum detectable effect of +5 percentage points is meaningful** to your business.\n7. **50/50 traffic split** between control and treatment.\n\n---\n\n## Feasibility Assessment\n\n### \u26a0\ufe0f Critical Traffic Warning\n\n**Problem:** The input mixes total product traffic with eligible traffic.\n\nYou provided:\n- Total platform users: 25,000\n- Eligible segment: 15% (new sign-ups per month)\n\n**This is unsafe because:**\n- The test should only include users who go through onboarding (new sign-ups).\n- Not all 25,000 users are eligible; only the ~3,750 monthly new sign-ups (15%) qualify.\n- Using total traffic for duration estimation would dramatically underestimate the actual test length.\n\n### Duration Estimate Status: **BLOCKED**\n\nThe skill cannot reliably estimate calendar duration without confirming:\n1. **Weekly or monthly flow of new sign-ups** into onboarding (clarify whether 15% = 3,750 per month, and how this distributes weekly).\n2. **Whether 15% is stable** across the test period or varies seasonally.\n3. **Whether all new sign-ups are actually eligible** for the test (e.g., are some excluded by region, plan type, or other criteria?).\n\n### Current Feasibility Range (Directional)\n\nIf we assume **~868 new sign-ups per week** (3,750 / 4.3 weeks):\n\n**Estimated duration: ~7 weeks** (6,156 required / 868 per week)\n\n**This is a rough estimate only.** Actual duration depends on:\n- Exact weekly eligible traffic\n- Whether traffic is stable\n- Any exclusion criteria not yet mentioned\n\n### Feasibility Concerns\n\n1. **Test duration may be acceptable but non-trivial** for a B2B product. Seven weeks is reasonable for an important onboarding change.\n2. **Sample size is moderate** relative to your eligible traffic pool, which is positive.\n3. **The 5 percentage point effect is meaningful** for an onboarding metric and worth testing.\n\n---\n\n## Recommendations\n\n### Before launching the test:\n\n1. **Confirm weekly eligible traffic:**\n   - How many new sign-ups enter onboarding each week?\n   - Is this stable, or does it vary by season/marketing cadence?\n\n2. **Clarify any exclusions:**\n   - Are there user segments ineligible for the test (e.g., free trial users, specific regions, users from integrations)?\n   - If so, reduce the eligible traffic estimate accordingly.\n\n3. **Decide on test duration tolerance:**\n   - If 7 weeks is too long, consider whether a 3\u20134 percentage point effect might also be valuable (smaller MDE = faster test).\n   - If 7 weeks is acceptable, proceed with the 5 percentage point effect.\n\n4. **Plan for traffic variability:**\n   - Monitor weekly eligible traffic during the test.\n   - If weekly signup volume is lower than expected, extend the test runway.\n\n---\n\n## Missing Inputs (Not Fatal, But Useful)\n\n- **Exact weekly eligible traffic** (provided as a range: \"15% per month\")\n- **Seasonality or acquisition patterns** in new sign-ups\n- **Segment exclusions** (e.g., are enterprise users excluded? free-tier only?)\n- **Expected completion rate variance** (the baseline 41% is clear; no variance assumption needed for this calculation)\n\n---\n\n## Output Interpretation\n\n| Metric | Value | Meaning |\n|--------|-------|---------|\n| Per-group sample | ~3,078 | Each variant needs roughly 3,000 new users going through onboarding. |\n| Total sample | ~6,156 | Combined across control and treatment. |\n| Duration | ~7 weeks | Rough estimate if eligible traffic is ~868/week and stable. |\n\n---\n\n## Trust Caveats\n\n- **Duration estimate is directional, not guaranteed.** Real-world traffic varies week-to-week.\n- **The calculation assumes the baseline 41% is stable.** If new user cohorts differ in onboarding behavior, adjust expectations.\n- **The MDE of +5 percentage points was your input; verify this is achievable with your treatment variant.**\n- **Do not use total platform users (25,000) for traffic modeling.** Focus on new sign-ups entering onboarding each week.\n\n---\n\n## Next Steps\n\n1. **Validate eligible traffic:** Confirm new sign-up volume per week.\n2. **Review feasibility:** Confirm 7-week test window is acceptable.\n3. **Finalize hypothesis:** Ensure +5 percentage point lift is the target effect.\n4. **Prepare randomization:** Plan how to randomly assign new onboarding users to control vs. treatment.\n5. **Hand off to design-experiment-plan skill** (if available) for implementation details.\n\n"}], "unsafe-traffic-without_skill": [{"name": "output.md", "type": "text", "content": "# Sample Size Estimation: Onboarding Wizard A/B Test\n\n## Executive Summary\n\nFor your B2B project management tool onboarding wizard test, you need **3,076 total participants** (1,538 per group) to detect a 5 percentage point improvement in completion rate with 95% confidence and 80% statistical power.\n\n**Good news**: This sample size is achievable within approximately **3-4 weeks** using your current new user traffic (~3,750 new sign-ups per month).\n\n---\n\n## Detailed Calculation\n\n### Test Parameters\n\n| Parameter | Value |\n|-----------|-------|\n| **Primary Metric** | Onboarding Completion Rate |\n| **Baseline Rate (Control)** | 41% |\n| **Minimum Detectable Effect** | +5 percentage points |\n| **Expected Rate (Treatment)** | 46% |\n| **Confidence Level** | 95% (\u03b1 = 0.05, two-tailed) |\n| **Statistical Power** | 80% (1 - \u03b2 = 0.80, \u03b2 = 0.20) |\n| **Test Design** | Two-proportion test, independent samples |\n\n### Statistical Formula\n\nFor comparing two independent proportions:\n\n```\nn = (z_\u03b1/2 + z_\u03b2)\u00b2 \u00d7 [p\u2081(1-p\u2081) + p\u2082(1-p\u2082)] / (p\u2082 - p\u2081)\u00b2\n```\n\nWhere:\n- **z_\u03b1/2** = 1.96 (critical value for 95% confidence level, two-tailed)\n- **z_\u03b2** = 0.84 (critical value for 80% power)\n- **p\u2081** = 0.41 (baseline completion rate)\n- **p\u2082** = 0.46 (expected completion rate)\n- **p\u2082 - p\u2081** = 0.05 (minimum detectable effect)\n\n### Calculation Steps\n\n1. **Variance component**: p\u2081(1-p\u2081) + p\u2082(1-p\u2082)\n   - = 0.41(0.59) + 0.46(0.54)\n   - = 0.2419 + 0.2484\n   - = 0.4903\n\n2. **Z-score component**: (z_\u03b1/2 + z_\u03b2)\u00b2\n   - = (1.96 + 0.84)\u00b2\n   - = (2.80)\u00b2\n   - = 7.84\n\n3. **Effect size**: (p\u2082 - p\u2081)\u00b2\n   - = (0.05)\u00b2\n   - = 0.0025\n\n4. **Sample size per group**:\n   - n = (7.84 \u00d7 0.4903) / 0.0025\n   - n = 3.8408 / 0.0025\n   - n = **1,537.6** \u2192 **1,538 per group**\n\n5. **Total sample size** (both control + treatment):\n   - n_total = 1,538 \u00d7 2 = **3,076**\n\n---\n\n## Results\n\n### Sample Size Requirements\n\n| Metric | Value |\n|--------|-------|\n| **Control Group Size** | 1,538 participants |\n| **Treatment Group Size** | 1,538 participants |\n| **Total Sample Size** | **3,076 participants** |\n\n### Power Analysis Interpretation\n\n- **Statistical Power**: 80% \u2014 If the true effect is 5 percentage points, there's an 80% probability your test will detect it as statistically significant at the 95% confidence level.\n- **Type II Error (\u03b2)**: 20% \u2014 There's a 20% chance of a false negative (failing to detect a real 5 percentage point improvement).\n- **Type I Error (\u03b1)**: 5% \u2014 There's a 5% chance of a false positive (detecting an effect when none exists).\n\n---\n\n## Feasibility Analysis\n\n### Population Context\n\n| Factor | Value |\n|--------|-------|\n| **Total Registered Users** | 25,000 |\n| **Monthly New Sign-ups** | 3,750 (15% of total) |\n| **Required Sample** | 3,076 users |\n| **Sample as % of Monthly Traffic** | **82.0%** |\n| **Time to Reach Sample** | **~3-4 weeks** |\n\n### Recommendation\n\n\u2705 **The sample size is highly achievable.** Since 82% of your monthly new user traffic is needed, you can expect to reach statistical significance within 3-4 weeks of the test launching, assuming:\n- Steady new user sign-up rate (~3,750/month)\n- Random assignment to control/treatment groups\n- No significant seasonal variations in traffic\n\n### Implementation Considerations\n\n1. **User Eligibility**: Only new sign-ups go through the onboarding wizard. Ensure you exclude existing users who may be re-onboarding or using the wizard for re-engagement.\n\n2. **Randomization**: Use a consistent randomization mechanism (e.g., random assignment at sign-up time, user ID modulo, or a feature flag service) to ensure users are evenly distributed between groups.\n\n3. **Duration**: Plan for the test to run approximately 3-4 weeks to accumulate 3,076 participants. However:\n   - If traffic is higher than 15% monthly, you'll reach the sample size faster\n   - If traffic is lower, you may need to extend the test duration\n   - Consider day-of-week or seasonal effects on new sign-ups\n\n4. **Minimum Practical Effect Size**: Your 5 percentage point improvement (41% \u2192 46%) is both statistically meaningful AND practically valuable for an onboarding metric. Even detecting a smaller effect would require significantly more samples.\n\n---\n\n## Sensitivity Analysis\n\n### What if you need a different effect size?\n\n| MDE | Sample per Group | Total Sample | Time (weeks) |\n|-----|------------------|--------------|--------------|\n| \u00b13 pp | 2,794 | 5,588 | 7.5 |\n| \u00b14 pp | 1,976 | 3,952 | 5.3 |\n| \u00b15 pp | 1,538 | 3,076 | 4.1 |\n| \u00b16 pp | 1,347 | 2,694 | 3.6 |\n\n### What if you want 90% power instead of 80%?\n\nWith 90% power (z_\u03b2 = 1.28):\n- Sample per group: 1,749\n- Total sample: 3,498\n- Time needed: ~4.7 weeks\n\n---\n\n## Statistical Notes\n\n1. **Two-tailed test**: The calculation assumes you're testing for either improvement or degradation (typical for product changes).\n\n2. **Independence assumption**: The test assumes treatment group participants don't influence control group behavior (reasonable for onboarding).\n\n3. **Proportional metric**: Since completion rate is a binary metric (completed or not), the two-proportion test is appropriate.\n\n4. **Intent-to-treat (ITT) principle**: All randomized users should be included in analysis, whether they completed onboarding or not.\n\n---\n\n## Next Steps\n\n1. **Configure experiment**: Set up your feature flag or experiment framework to randomize users into control (current wizard) and treatment (new wizard) groups.\n\n2. **Track metrics**: Instrument both groups to capture:\n   - Completion events\n   - Dropout points in the wizard\n   - Time to completion\n   - Any secondary metrics (account activation, first task completion, etc.)\n\n3. **Monitor results**: After 2 weeks, check interim results. Plan for 3-4 weeks before making a final decision.\n\n4. **Statistical test**: Use a two-proportion z-test or chi-square test to evaluate significance at the end of the test period.\n\n5. **Post-hoc analysis**: If the test shows significant results, analyze which wizard steps showed the largest improvements.\n\n---\n\n*Calculation date: 2026-03-11*\n*Method: Standard two-proportion power analysis*\n"}]}, "benchmark": {"metadata": {"skill_name": "estimate-sample-size (iteration-3: formula fix applied)", "skill_path": "...", "executor_model": "claude-sonnet-4-6", "analyzer_model": "claude-sonnet-4-6", "timestamp": "2026-03-11T15:00:00Z", "evals_run": [1, 2, 3], "runs_per_configuration": 1}, "runs": [{"eval_id": 1, "eval_name": "complete-inputs", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 45.2, "tokens": 32258, "errors": 0}, "expectations": [{"text": "Output provides sample size per group in the range 15,000\u201322,000 users", "passed": true, "evidence": "18,439 users per group (line 50: 'n_per_group = 1.180077 / 0.000064 = **18,439 users**' and line 66: 'Sample size per group | 18,439 users')"}, {"text": "Output provides total sample size (roughly double the per-group figure)", "passed": true, "evidence": "36,877 total users (line 53: 'Total = 18,439 \u00d7 2 = **36,877 users**' and line 67: 'Total sample size | 36,877 users')"}, {"text": "Output estimates duration using eligible traffic of 35,000/week \u2014 result in range 0.9\u20131.4 weeks", "passed": true, "evidence": "1.05 weeks (line 5: '1.05 weeks (7.4 days)' and line 56: 'Duration = 36,877 / 35,000 per week = **1.05 weeks**')"}, {"text": "Output lists all key inputs: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%", "passed": true, "evidence": "All inputs present (lines 12-19): baseline 7.8%, MDE +0.8pp, 95% confidence, 80% power, 35,000 weekly traffic, 50/50 split"}, {"text": "Output states assumptions used (e.g. two-variant test, stable traffic)", "passed": true, "evidence": "Comprehensive assumptions section (lines 73\u201381) including 'Two-variant A/B test' (line 75), 'Stable traffic quality' (line 76), and five additional assumptions"}, {"text": "Output includes a feasibility note or comment on reliability", "passed": true, "evidence": "Feasibility Assessment section (lines 84\u201392) with '\u2713 **Test is highly feasible**' including timeline, traffic sufficiency, statistical power, and effect size reasonability"}], "notes": []}, {"eval_id": 1, "eval_name": "complete-inputs", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 23.4, "tokens": 23820, "errors": 0}, "expectations": [{"text": "Output provides sample size per group in the range 15,000\u201322,000 users", "passed": true, "evidence": "Sample size per group: 18,434 (from line 61 and line 69)"}, {"text": "Output provides total sample size (roughly double the per-group figure)", "passed": true, "evidence": "Total Sample Size: 36,868 (line 70), which is exactly 2\u00d7 per-group figure of 18,434"}, {"text": "Output estimates duration using eligible traffic of 35,000/week \u2014 result in range 0.9\u20131.4 weeks", "passed": true, "evidence": "Test Duration: ~1.05 weeks (7-8 days) (line 72), which falls within 0.9\u20131.4 weeks range"}, {"text": "Output lists all key inputs: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%", "passed": true, "evidence": "All present: Baseline 7.8% (line 14), MDE +0.8pp (line 15), 95% confidence (line 17), 80% power (line 18)"}, {"text": "Output states assumptions used (e.g. two-variant test, stable traffic)", "passed": true, "evidence": "Methodology Notes section (lines 98-107) explicitly lists: 'Formula Used: Two-proportion hypothesis test', 'Baseline conversion rate is stable during test period', plus additional assumptions about independence and random assignment"}, {"text": "Output includes a feasibility note or comment on reliability", "passed": true, "evidence": "Recommendations section (lines 89-94) includes feasibility guidance: 'Plan for 8-10 days to account for traffic variation', power analysis note about Type I/II errors (lines 83-85), and practical significance comment"}], "notes": []}, {"eval_id": 2, "eval_name": "missing-inputs", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 6, "failed": 0, "total": 6, "time_seconds": 37.0, "tokens": 29218, "errors": 0}, "expectations": [{"text": "Output does NOT present a single committed sample size as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)", "passed": true, "evidence": "Output explicitly states 'These are NOT recommendations' and presents three labeled scenarios (A, B, C) as 'Illustration Only', each with explicit assumptions. No single sample size is presented as definitive. Instead, ranges depend on MDE choice: Scenario A (~5,200), B (~13,000), C (~2,100)."}, {"text": "Output does NOT present a single committed duration estimate as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)", "passed": true, "evidence": "Three scenarios show durations that vary dramatically: ~1.2 weeks, ~2.9 weeks, ~0.47 weeks. Output states 'Duration estimation is blocked: Without knowing the required sample size, duration cannot be calculated' and explicitly frames durations as conditional on scenario assumptions."}, {"text": "Output explicitly identifies MDE (minimum detectable effect) as a missing input that must be confirmed", "passed": true, "evidence": "Section 'Missing Mandatory Inputs' item 1 explicitly identifies MDE with explanation: 'Minimum Detectable Effect (MDE) - What relative or absolute uplift would make the new design \"worth it\"?' Repeated in 'Recommended Next Steps' and summary sections."}, {"text": "Output explicitly identifies confidence level or significance level as a missing or assumed input", "passed": true, "evidence": "Section 'Missing Mandatory Inputs' item 2 explicitly identifies 'Confidence Level (Significance Level)' with examples: '95% confidence (\u03b1 = 0.05)' and '99% confidence (\u03b1 = 0.01)'. Also in 'Recommended Next Steps': 'Confirm statistical settings (or use defaults)'"}, {"text": "Output explicitly identifies statistical power as a missing or assumed input", "passed": true, "evidence": "Section 'Missing Mandatory Inputs' item 3 explicitly identifies 'Statistical Power' with explanation and examples: '80% power (\u03b2 = 0.20)' and '90% power (\u03b2 = 0.10)'. Repeated in 'Recommended Next Steps'."}, {"text": "If any numbers are given, they are explicitly framed as scenarios or examples tied to assumed inputs \u2014 NOT presented as the answer", "passed": true, "evidence": "All numerical estimates appear in 'Scenario Ranges (Illustration Only)' section which opens: 'To give you a sense of what different choices mean, here are illustrative scenarios. **These are NOT recommendations**.' Each scenario explicitly states assumptions (e.g., '5% relative uplift, 95% confidence, 80% power'). Numbers are introduced with scenario labels and conditional framing, not as facts."}], "notes": []}, {"eval_id": 2, "eval_name": "missing-inputs", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 0.67, "passed": 4, "failed": 2, "total": 6, "time_seconds": 34.5, "tokens": 25272, "errors": 0}, "expectations": [{"text": "Output does NOT present a single committed sample size as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)", "passed": true, "evidence": "Output explicitly avoids a single committed sample size. Instead, it presents three labeled scenarios (Scenario 1, 2, 3) with different MDEs, each with its own sample size calculation (5,285, 3,031, 1,977 per group respectively). The executive summary states 'Cannot provide a precise duration' and scenarios are introduced as dependent on MDE definition."}, {"text": "Output does NOT present a single committed duration estimate as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)", "passed": false, "evidence": "CRITICAL FAILURE: The executive summary states 'your test will likely run **1-3 weeks** depending on the magnitude of improvement you're testing for.' This frames '1-3 weeks' as a definitive answer to 'how long?', not as a conditional range tied to a specific scenario. While scenarios later provide specific durations (2-3 weeks, 1-2 weeks, ~1 week), the headline answer '1-3 weeks' is presented as THE answer. Additionally, line 118 states 'Most likely timeline: Run for 2 weeks' which is another definitive recommendation, not framed as conditional on MDE confirmation."}, {"text": "Output explicitly identifies MDE (minimum detectable effect) as a missing input that must be confirmed", "passed": true, "evidence": "Line 13-14 contains explicit section 'Missing Critical Input' and line 17 states: '**Minimum Detectable Effect (MDE):** What percentage conversion lift would justify implementing the new email design?' The entire scenario analysis hinges on this missing input."}, {"text": "Output explicitly identifies confidence level or significance level as a missing or assumed input", "passed": true, "evidence": "Line 47 explicitly states '**Confidence level:** 95% (\u03b1 = 0.05, two-tailed)' under 'Standard Parameters Used' section. This is clearly marked as an assumption/standard parameter, not confirmed from the user's input."}, {"text": "Output explicitly identifies statistical power as a missing or assumed input", "passed": true, "evidence": "Line 48 explicitly states '**Statistical power:** 80% (\u03b2 = 0.20)' under 'Standard Parameters Used' section. This is clearly marked as an assumption. Additionally, line 65-67 discusses the trade-off: 'If you want higher confidence, use **90% power**, which requires ~20% more samples' making clear that power level was assumed, not confirmed."}, {"text": "If any numbers are given, they are explicitly framed as scenarios or examples tied to assumed inputs \u2014 NOT presented as the answer", "passed": false, "evidence": "While scenario numbers (sample sizes in Scenarios 1-3) are well-labeled and conditional, the DURATION numbers in the executive summary are NOT adequately framed as conditional. The opening statement 'your test will likely run **1-3 weeks**' and conclusion 'Most likely timeline: Run for 2 weeks' present durations as definitive recommendations rather than explicitly tying them to specific assumed MDE values. The reader could reasonably interpret '1-3 weeks' as the answer rather than understanding it requires MDE confirmation first."}], "notes": []}, {"eval_id": 3, "eval_name": "unsafe-traffic", "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 5, "failed": 0, "total": 5, "time_seconds": 38.4, "tokens": 32830, "errors": 0}, "expectations": [{"text": "Output warns that total registered users (25,000) cannot be used as eligible traffic", "passed": true, "evidence": "Eligible traffic refers specifically to new sign-ups entering the onboarding wizard\u2014not all 25,000 registered users"}, {"text": "Output correctly identifies that only new sign-ups are eligible (~15% of 25,000 = ~3,750/month)", "passed": true, "evidence": "Eligible traffic: 3,750 new sign-ups per month (15% of 25,000 registered users)"}, {"text": "Output provides sample size per group in the range 1,400\u20131,700 (correct answer ~1,537-1,538; numbers above ~2,500 indicate a formula error \u2192 FAIL)", "passed": true, "evidence": "n_per_group = 3.8408 / 0.0025 = 1,536.32 \u2248 1,537 users per group"}, {"text": "Output does NOT calculate duration using 25,000 as eligible traffic", "passed": true, "evidence": "Duration = 3,074 / 3,750 = 0.82 months \u2248 3.6 weeks (uses 3,750, not 25,000)"}, {"text": "Output calculates duration using ~3,750/month eligible traffic, giving approximately 3\u20134 weeks", "passed": true, "evidence": "0.82 months \u2248 3.6 weeks"}], "notes": []}, {"eval_id": 3, "eval_name": "unsafe-traffic", "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 5, "failed": 0, "total": 5, "time_seconds": 17.5, "tokens": 23389, "errors": 0}, "expectations": [{"text": "Output warns that total registered users (25,000) cannot be used as eligible traffic", "passed": true, "evidence": "Line 13: 'Population: 25,000 registered users; 15% new sign-ups monthly = 3,750 eligible users' \u2014 clearly distinguishes between total registered users and eligible traffic"}, {"text": "Output correctly identifies that only new sign-ups are eligible (~15% of 25,000 = ~3,750/month)", "passed": true, "evidence": "Line 13: '15% new sign-ups monthly = 3,750 eligible users' and Line 72-73: 'Monthly new sign-ups (eligible for onboarding): 3,750 users'"}, {"text": "Output provides sample size per group in the range 1,400\u20131,700", "passed": true, "evidence": "Line 53: 'Per-group sample size = 1,537 users (rounded up)' and Line 65 table: 'Sample size per group | 1,537 users'. Per-group number: 1,537"}, {"text": "Output does NOT calculate duration using 25,000 as eligible traffic", "passed": true, "evidence": "Lines 72-75 feasibility assessment uses 3,750 monthly new sign-ups as the eligible pool, not 25,000 total registered users"}, {"text": "Output calculates duration using ~3,750/month eligible traffic, giving approximately 3\u20134 weeks", "passed": true, "evidence": "Lines 76-79: 'Collect sample within ~1 month of new registrations' which is approximately 4 weeks, within the 3-4 week range"}], "notes": []}], "run_summary": {"with_skill": {"pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0}, "time_seconds": {"mean": 40.2, "stddev": 4.3863, "min": 37.0, "max": 45.2}, "tokens": {"mean": 31435.3333, "stddev": 1941.4483, "min": 29218, "max": 32830}}, "without_skill": {"pass_rate": {"mean": 0.89, "stddev": 0.1905, "min": 0.67, "max": 1.0}, "time_seconds": {"mean": 25.1333, "stddev": 8.6315, "min": 17.5, "max": 34.5}, "tokens": {"mean": 24160.3333, "stddev": 986.5558, "min": 23389, "max": 25272}}, "delta": {"pass_rate": "+0.11", "time_seconds": "+15.1", "tokens": "+7275"}}, "notes": ["complete-inputs (iter3): 6/6 vs 6/6 \u2014 tie. Both configs compute ~18,439/group correctly. Formula fix confirmed on with_skill side.", "missing-inputs (iter2): 6/6 vs 4/6 \u2014 skill correctly labels all scenario numbers as 'Illustration Only'; baseline gave a headline '1-3 weeks' without explicit conditional framing.", "unsafe-traffic (iter3): 5/5 vs 5/5 \u2014 tie. FORMULA FIX WORKED: with_skill now gives 1,537/group (was 3,073 before). Without_skill also correct. Both warn about eligible vs total traffic.", "Overall: with_skill 100%, without_skill 89%. The remaining gap is entirely from missing-inputs: baseline presents numbers confidently without provisional framing.", "Skill value confirmed: behavioral correctness (provisional framing, traffic warnings) + calculation accuracy after formula fix."]}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

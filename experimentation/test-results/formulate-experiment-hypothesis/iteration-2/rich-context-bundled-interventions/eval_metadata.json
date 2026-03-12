@@ -1,0 +1,16 @@
+{
+  "eval_id": 1,
+  "eval_name": "rich-context-bundled-interventions",
+  "prompt": "Мы запускаем маркетплейс б/у электроники. Сейчас конверсия из карточки товара в покупку — 3.2% на мобильном вебе. Мы хотим одновременно добавить видео-обзор от продавца на карточку товара и сократить чекаут с 4 шагов до 2. Целевой сегмент — покупатели смартфонов на Android. Мы рассчитываем поднять конверсию до 5%.",
+  "assertions": [
+    "Output contains two separate hypotheses, not a single bundled one",
+    "Each hypothesis follows 'If we change X for Y, we expect Z' format",
+    "Target segment is identified for each hypothesis",
+    "Primary metric is identified for each hypothesis",
+    "Expected direction is stated for each hypothesis",
+    "Causal mechanism is explained for each hypothesis",
+    "Missing information section is present",
+    "The user's 5% target is not accepted uncritically as a guaranteed outcome",
+    "Confidence level is explicitly stated"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is NOT 'valid for experiment design' — should be 'valid for exploration' due to implausible effect size", "passed": true, "evidence": "Verdict: 'Valid for exploration, but NOT ready for experiment design'"},
+    {"text": "Output explicitly flags the 25% uplift as implausibly high or unsupported by evidence", "passed": true, "evidence": "Flags 'Effect size is implausibly high without supporting data' and 'Mature e-commerce platforms typically see 5-15% recovery'"},
+    {"text": "Output confirms the hypothesis has a specific change (push notification for cart abandonment)", "passed": true, "evidence": "Context Classification confirms 'Clear intervention (push notification at 1 hour)'"},
+    {"text": "Output confirms the target segment is identifiable (mobile users with abandoned carts)", "passed": true, "evidence": "Context Classification confirms 'Clear target segment (mobile users)'"},
+    {"text": "A readiness statement is present and explicitly says NOT ready for experiment design (or only exploration-ready)", "passed": true, "evidence": "Readiness Statement: 'This hypothesis is NOT ready for experiment design'"},
+    {"text": "Output does not include experiment design elements such as sample size, test duration, or traffic splits", "passed": true, "evidence": "Missing information section asks for data; no experiment design elements provided"},
+    {"text": "Output classifies the hypothesis using one of the four defined verdict tiers", "passed": true, "evidence": "'Valid for exploration' — one of the four defined tiers"}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

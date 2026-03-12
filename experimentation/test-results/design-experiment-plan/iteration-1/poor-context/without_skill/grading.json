@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT produce a complete or execution-ready experiment brief — switches to skeleton or checklist mode",
+      "passed": true,
+      "evidence": "Response explicitly avoids creating a full brief. Instead it uses a checklist format ('[ ] Define the specific design change(s)') and states 'Once we have these answers, we can design a proper experiment' — deferring the full brief until missing information is provided."
+    },
+    {
+      "text": "Output explicitly flags 'stopping early when results look good' as a statistical validity risk (optional stopping, peeking, or p-hacking)",
+      "passed": true,
+      "evidence": "Opening paragraph explicitly states: 'stopping early when results look good is a statistical trap' and names the problem: 'This is called \"optional stopping\" or \"p-hacking,\" and it inflates your false positive rate dramatically.' Also recommends 'Set a minimum test duration (e.g., 2 weeks, 10,000 users) to avoid peeking' and 'Commit to the analysis plan upfront—don't adjust it once you see results.'"
+    },
+    {
+      "text": "Output identifies at least 4 required inputs that are missing: what change is being tested, which users are affected, what the primary metric is, and what constitutes 'good results' or the success threshold",
+      "passed": true,
+      "evidence": "Lists four specific missing items under 'Critical Missing Information': (1) 'What exactly is being tested?' (2) 'Which users are affected?' (3) 'What's the primary metric?' (4) 'What counts as \"good results\"?'"
+    },
+    {
+      "text": "Output does NOT fabricate a target segment, primary metric, or success threshold and present it as if it were provided by the user",
+      "passed": true,
+      "evidence": "Response uses only examples in parentheses (e.g., 'segment, geography, traffic allocation?' and 'e.g., 5% uplift, 10% improvement') and explicitly frames them as placeholders or questions, not as assumptions about the actual test design."
+    },
+    {
+      "text": "Output provides a path forward — either a list of questions to answer before planning can proceed, or a skeleton showing what needs to be filled in",
+      "passed": true,
+      "evidence": "Provides both a question-based path ('Here's what we need to nail down before any experiment starts:') and a concrete checklist under 'Path Forward' with five actionable items and a final commitment statement ('Once we have these answers, we can design a proper experiment with guardrails against early stopping.')."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": false,
+      "evidence": "Lines 13-17 use scientific null/alternative hypothesis format (H₀ and H₁) and a research question format, but do not use the requested 'If X for Y, expect Z' format. Missing the imperative structure requested by the assertion."
+    },
+    {
+      "text": "The 30% uplift is flagged as unsubstantiated or lacking evidence",
+      "passed": true,
+      "evidence": "Lines 9-10 state: 'A 30% conversion lift... would be considered exceptional... This assumption lacks substantiation and should be validated through proper experimentation'"
+    },
+    {
+      "text": "Confidence level is explicitly stated as provisional",
+      "passed": false,
+      "evidence": "The word 'provisional' does not appear anywhere in the output. No explicit confidence level classification is stated."
+    },
+    {
+      "text": "Missing information is extensively listed (5+ items)",
+      "passed": false,
+      "evidence": "Lines 81-85 list next steps but not missing information explicitly. Lines 43-48 reference missing baseline and MDE data, but there is no structured enumerated list of 5+ distinct missing items. Information gaps are scattered and implicit rather than explicitly listed."
+    },
+    {
+      "text": "Discovery questions or recommended next steps are suggested",
+      "passed": true,
+      "evidence": "Lines 79-101 provide 'Recommended Next Steps' with 5 distinct action items: establish baseline, define realistic target, design the change, pre-test planning, analysis framework"
+    },
+    {
+      "text": "The hypothesis does NOT present 30% as an accepted fact",
+      "passed": true,
+      "evidence": "Lines 51-55 present realistic expectations of 2-15% for button changes, and line 109 states 'achieving a 30% lift from this single change alone is unlikely without addressing fundamental usability issues'"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 3,
+    "total": 6,
+    "pass_rate": 0.5
+  }
+}

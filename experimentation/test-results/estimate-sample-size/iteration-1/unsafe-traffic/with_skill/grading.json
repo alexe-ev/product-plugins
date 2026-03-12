@@ -1,0 +1,51 @@
+{
+  "expectations": [
+    {
+      "text": "Output warns that total registered users (25,000) cannot be used as eligible traffic for this experiment",
+      "passed": true,
+      "evidence": "The 25,000 total users **cannot be used** for duration calculation because: Existing, tenured users will not be re-exposed to the onboarding wizard. Only new sign-ups see the onboarding flow."
+    },
+    {
+      "text": "Output correctly identifies that only new sign-ups are eligible (approximately 15% of 25,000 = ~3,750/month)",
+      "passed": true,
+      "evidence": "Only new sign-ups can be tested, which represents approximately 15% of the platform = **3,750 eligible users per month**."
+    },
+    {
+      "text": "Output provides a sample size per group in the range 1,200–2,000 users",
+      "passed": false,
+      "evidence": "Sample size per group (control): ~3,073 users. Sample size per group (treatment): ~3,073 users. (Outside acceptable range of 1,200–2,000)"
+    },
+    {
+      "text": "Output does NOT calculate duration using 25,000 as eligible traffic (would give an incorrectly short duration of ~0.12 weeks or ~1 day)",
+      "passed": true,
+      "evidence": "Estimated Duration = Total Required Sample / Eligible Traffic per Period = 6,146 users / 3,750 users per month = 1.64 months ≈ 6.6 weeks. Output correctly uses 3,750/month, not 25,000."
+    },
+    {
+      "text": "Output either blocks the duration estimate pending confirmation of eligible traffic, or calculates it using the ~3,750/month figure",
+      "passed": true,
+      "evidence": "Duration Calculation: Estimated Duration = Total Required Sample / Eligible Traffic per Period = 6,146 users / 3,750 users per month = 1.64 months ≈ 6.6 weeks"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.80
+  },
+  "execution_metrics": {
+    "output_chars": 5482
+  },
+  "timing": {
+    "executor_duration_seconds": 40.6
+  },
+  "claims": [
+    "Sample size calculation differs significantly from expected range. Output computed ~3,073 users per group using standard two-proportion formula, but expectations specified 1,200–2,000 range. This may indicate either: (a) the expected range was calibrated for different power/confidence assumptions, or (b) the output's calculation is correct but baseline expectations were misaligned."
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      "Assertion 3 failed because the sample size per group (~3,073) exceeds the expected range (1,200–2,000). Verify: Are the power/confidence levels (95% CI, 80% power) the same as those used to derive the expected range? If yes, the discrepancy suggests a calculation issue. If no, re-calibrate expectations.",
+      "All other assertions passed with strong evidence. The output correctly distinguished eligible traffic (3,750/month) from total platform users (25,000), avoided the duration miscalculation, and provided clear duration estimates."
+    ],
+    "overall": "The output demonstrates correct statistical reasoning and proper handling of the critical distinction between total platform users and eligible traffic. However, the sample size per group (~3,073 users) falls outside the specified acceptable range of 1,200–2,000 users. This is the primary concern."
+  }
+}

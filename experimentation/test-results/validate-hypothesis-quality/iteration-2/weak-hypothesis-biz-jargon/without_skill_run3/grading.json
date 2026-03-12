@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is 'weak' or 'invalid' — stated explicitly", "passed": true, "evidence": "Output clearly identifies hypothesis as weak/not ready (D+, 2/5-Weak, WEAK/MODERATE)"},
+    {"text": "Output flags that 'improving UX' is too vague — no specific change is defined", "passed": true, "evidence": "All runs flag 'улучшение UX' as vague independent variable"},
+    {"text": "Output flags that 'activation' is not defined as a measurable metric", "passed": true, "evidence": "All runs flag 'активация' as undefined/ambiguous dependent variable"},
+    {"text": "A readiness statement is present and explicitly says NOT ready for experiment design", "passed": true, "evidence": "All runs contain explicit NOT READY statement"},
+    {"text": "Output does not include experiment design elements such as sample size, test duration, or statistical power calculations", "passed": false, "evidence": "All without_skill runs include sample size calculations, power analysis, and test duration recommendations"},
+    {"text": "Output classifies the hypothesis using one of the four defined verdict tiers", "passed": false, "evidence": "Uses score-based systems (D+, 2/5, WEAK/MODERATE) — not the four defined verdict tiers"},
+    {"text": "Target segment vagueness is noted (which new users? platform? channel?)", "passed": false, "evidence": "None of the runs specifically flag 'new users' as a vague segment — focus is on metric/change vagueness"}
+  ],
+  "summary": {"passed": 4, "failed": 3, "total": 7, "pass_rate": 0.571}
+}

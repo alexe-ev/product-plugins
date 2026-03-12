@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly identifies MDE (minimum detectable effect) as a missing required input",
+      "passed": true,
+      "evidence": "Response opens with a dedicated section stating 'Missing Required Input: MDE' and explicitly defines it as 'the smallest improvement you want to reliably detect.' This is prominently positioned before any calculations."
+    },
+    {
+      "text": "Output does NOT commit to a single sample size as the definitive answer",
+      "passed": true,
+      "evidence": "Response provides three distinct scenarios with different sample size results. No single answer is presented as the correct or recommended sample size. The response explicitly asks the user to decide which MDE applies to their situation."
+    },
+    {
+      "text": "Output provides labeled scenario estimates for at least 2 different MDE assumptions (e.g., +0.5pp, +1pp, +2pp), each clearly tied to an assumed MDE value",
+      "passed": true,
+      "evidence": "Three scenarios are provided: Scenario 1 (+0.5pp, ~36k per variant), Scenario 2 (+1.0pp, ~9k per variant), and Scenario 3 (+2.0pp, ~2.3k per variant). Each scenario header explicitly states the assumed MDE value and percentage point improvement."
+    },
+    {
+      "text": "Output explains why MDE matters for the calculation (larger effect → smaller sample needed)",
+      "passed": true,
+      "evidence": "Response includes: 'Sample size scales inversely with effect size. A smaller improvement requires a much larger sample to detect reliably, while a larger improvement needs fewer users.' This directly explains the inverse relationship between MDE and sample size."
+    },
+    {
+      "text": "Output does NOT generate a single committed duration estimate as if the sample size were determined",
+      "passed": true,
+      "evidence": "Duration estimates are provided only within each scenario (4.8 weeks for +0.5pp, 1.2 weeks for +1.0pp, 0.3 weeks for +2.0pp). No single duration is committed to as the 'correct' timeline. The response defers to the user to choose their MDE before finalizing a timeline."
+    }
+  ]
+}

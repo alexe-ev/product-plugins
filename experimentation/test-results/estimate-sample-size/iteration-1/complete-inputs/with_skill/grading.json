@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "text": "Output provides sample size per group in the range 15,000–22,000 users",
+      "passed": true,
+      "evidence": "Line 9: 'Approximately **18,400 users**'; Line 51: 'Sample per group = 1.1785 / 0.000064 ≈ 18,414'. 18,400 falls within the required range."
+    },
+    {
+      "text": "Output provides total sample size (roughly double the per-group figure)",
+      "passed": true,
+      "evidence": "Line 12: 'Approximately **36,800 users**'; Line 52: 'Total sample = 2 × 18,414 ≈ 36,828'. Total is exactly double the per-group figure."
+    },
+    {
+      "text": "Output estimates duration using eligible traffic of 35,000/week — result should be in the range 0.9–1.4 weeks",
+      "passed": true,
+      "evidence": "Line 15: 'Approximately **1.05 weeks** (5.3–7.4 days depending on traffic distribution)'; Line 56: 'Duration = 36,828 / 35,000 ≈ **1.05 weeks**'. 1.05 weeks is within the required range."
+    },
+    {
+      "text": "Output lists all key inputs used: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%",
+      "passed": true,
+      "evidence": "Lines 19–27 'Inputs Used' section lists: 'Baseline conversion: 7.8%' (line 21), 'Minimum detectable effect: +0.8 percentage points (absolute)' (line 23), 'Confidence level: 95% (α = 0.05, two-tailed)' (line 24), 'Statistical power: 80% (β = 0.20)' (line 25)."
+    },
+    {
+      "text": "Output states the assumptions used (e.g. two-variant test, stable traffic)",
+      "passed": true,
+      "evidence": "Lines 58–70 'Assumptions' section includes: Assumption 1 (line 60-61): 'Two-variant fixed-horizon test: The experiment compares control (current design) vs. treatment (new design) over a fixed period.' Assumption 2 (line 62): 'Stable eligible traffic: The 35,000 users/week figure represents eligible traffic that actually reaches the restaurant card step and is stable across the test period.'"
+    },
+    {
+      "text": "Output includes a feasibility note or comment on the estimate's reliability",
+      "passed": true,
+      "evidence": "Lines 72–85 'Feasibility Assessment' section with Status: Feasible, Positive factors, and Considerations. Lines 87–95 'Risk and Caveats' section addresses reliability concerns including 'Traffic assumptions', 'Conversion window', 'Repeat users', and 'Statistical power'."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 4847
+  },
+  "timing": {
+    "executor_duration_seconds": 46.1
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "All assertions passed. The output is comprehensive and well-structured.",
+      "The output exceeds baseline requirements by including detailed calculation steps, risk caveats, and actionable recommendations.",
+      "The feasibility assessment is thorough and includes both positive factors and important considerations for practitioners."
+    ],
+    "overall": "Excellent. All six assertions are met with strong evidence. The output demonstrates rigorous statistical reasoning and practical guidance for experiment planning."
+  }
+}

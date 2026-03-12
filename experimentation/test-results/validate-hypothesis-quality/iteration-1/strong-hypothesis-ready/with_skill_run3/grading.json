@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is 'valid for experiment design'", "passed": true, "evidence": "Вердикт: 'Valid for experiment design'"},
+    {"text": "Output confirms the hypothesis has a specific change (text reviews → video reviews)", "passed": true, "evidence": "Критерий 1: 'Замена текстовых отзывов на видео-отзывы явно описана'"},
+    {"text": "Output confirms the target segment is clear (mobile users, Electronics category)", "passed": true, "evidence": "Критерий 3: 'Мобильные пользователи категории Электроника явно определены'"},
+    {"text": "Output confirms the primary metric is measurable (add-to-cart conversion)", "passed": true, "evidence": "Критерий 2: 'Конверсия в добавление в корзину - четкая, измеримая метрика'"},
+    {"text": "Output confirms causal mechanism is plausible", "passed": true, "evidence": "Критерий 4: 'Видео повышает доверие и снижает неопределённость - биэвидентное и правдоподобное обоснование'"},
+    {"text": "Minor gaps are noted (e.g. guardrail metrics, rollback plan) but do NOT block approval", "passed": true, "evidence": "Missing info lists guardrails, deployment risks, test duration; but 'Нет критических разрывов'"},
+    {"text": "Output does NOT destructively rewrite or weaken a strong hypothesis", "passed": true, "evidence": "Recommendations add guardrails and technical validation without rewriting the hypothesis"}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

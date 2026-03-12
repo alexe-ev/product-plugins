@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly flags that the test group received significantly more notifications than the control group (82,000 vs 45,000 — an 82% volume increase), which confounds the open rate comparison",
+      "passed": true,
+      "evidence": "Section 'Critical Confound: Notification Volume Imbalance' explicitly states: 'The test group received 82,000 notifications versus 45,000 in the control—an 82% increase in volume. This creates a fundamental confound that undermines the open rate comparison.'"
+    },
+    {
+      "text": "Output questions whether the open rate improvement reflects genuine quality improvement or is partly explained by the higher notification volume sent to test users",
+      "passed": true,
+      "evidence": "Output directly addresses this: 'The higher open rate in the test group cannot be cleanly attributed to the smart send algorithm's quality. Part or all of the uplift may reflect: Selection effects, Recency/frequency effects, Novelty bias.' Also states: 'We cannot determine how much of the +5.8pp uplift reflects genuine algorithm quality versus the volume differential.'"
+    },
+    {
+      "text": "Output flags the opt-out rate increase (+2.7pp, more than doubling from 2.1% to 4.8%) as a critical guardrail failure that should block shipping regardless of the primary metric result",
+      "passed": true,
+      "evidence": "Section 'Guardrail: Notification Opt-Out Rate — CRITICAL FAILURE' explicitly states: 'Users in the test group are opting out at more than double the rate.' The section emphasizes: 'The opt-out increase is not a minor trade-off—it directly contradicts the premise that the algorithm improves user satisfaction.'"
+    },
+    {
+      "text": "Output does NOT recommend shipping and does NOT treat the primary metric uplift as a reliable signal given the confound and guardrail failure",
+      "passed": true,
+      "evidence": "Output explicitly states in Result Classification: 'Negative — Do Not Ship' and provides rationale: '1. The primary metric improvement cannot be trusted due to confounding volume differences. 2. The guardrail metric shows clear user rejection...3. Even if the open rate uplift were genuine, shipping a change that doubles user opt-outs is not a net positive outcome.'"
+    },
+    {
+      "text": "Output classifies the result as Negative, 'Do not ship', or equivalent — making clear the primary metric result cannot be trusted at face value",
+      "passed": true,
+      "evidence": "Output provides explicit classification: 'Result Classification: Negative — Do Not Ship'. Rationale explicitly states: 'The test provides evidence of a failed variant, not a successful one.' Also states in caveats: 'The open rate delta may be partially or entirely explained by higher notification volume in the test group, not algorithm quality.'"
+    }
+  ]
+}

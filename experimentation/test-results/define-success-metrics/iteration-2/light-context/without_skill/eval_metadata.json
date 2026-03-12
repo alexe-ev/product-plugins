@@ -1,0 +1,6 @@
+{
+  "eval_id": 2,
+  "eval_name": "light-context",
+  "prompt": "We're testing a new in-app upgrade prompt for our B2B project management tool. The idea is to show the prompt right after a user hits the collaborator limit on a free plan. We think this will increase paid conversions.",
+  "assertions": []
+}

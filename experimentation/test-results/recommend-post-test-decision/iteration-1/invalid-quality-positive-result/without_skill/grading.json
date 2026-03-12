@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT recommend Full rollout or Partial rollout based on p=0.001 alone — it must give weight to the quality audit flag",
+      "passed": true,
+      "evidence": "Status line explicitly states 'DO NOT ROLLOUT' and the entire first section explains why the p-value cannot be trusted despite appearing significant. No rollout recommendation is made."
+    },
+    {
+      "text": "Output explicitly identifies that the flexible stopping (extension from 14 to 18 days because results weren't significant) undermines the reliability of the p-value",
+      "passed": true,
+      "evidence": "The output states: 'The team extended the experiment from 14 to 18 days because results weren't significant at the planned stopping point. This outcome-dependent decision inflates the false positive risk and makes the p-value unreliable.' Further detail section explains: 'At day 14, the result was not significant. The team then extended to 18 days to collect more data. This is the definition of outcome-dependent stopping.'"
+    },
+    {
+      "text": "Output does not treat the guardrail stability as sufficient to overcome the quality concern",
+      "passed": true,
+      "evidence": "Output explicitly states: 'stability of secondary metrics doesn't remedy the primary quality issue' and 'Guardrail stability is a necessary but not sufficient condition. It does not validate the primary result when the experimental design itself is compromised.'"
+    },
+    {
+      "text": "Output recommends Rerun (or equivalent — rerun with proper stopping rule) as the primary action, not rollout",
+      "passed": true,
+      "evidence": "Primary recommendation is 'Rerun with proper experimental design' and Next Steps section begins with 'Rerun the experiment with a pre-committed stopping rule.' Recommendation section also lists 'Action: Rerun' explicitly."
+    },
+    {
+      "text": "Output acknowledges the strong numeric result but frames it as useful for sizing the rerun rather than as decision-making evidence",
+      "passed": true,
+      "evidence": "Output states: 'the numeric pattern is interesting and worth exploring' and 'The observed +4.5pp effect is useful for planning the rerun sample, but don't treat it as decision evidence.' This properly acknowledges the effect size while demoting its evidential value."
+    }
+  ]
+}

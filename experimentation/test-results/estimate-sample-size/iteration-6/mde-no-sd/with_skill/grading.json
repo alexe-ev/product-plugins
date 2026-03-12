@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly identifies standard deviation (SD) as a missing required input for this continuous metric",
+      "passed": true,
+      "evidence": "Response includes dedicated sections: (1) formula showing σ marked as 'MISSING', (2) 'Calculation Status' flagged with ⚠️, (3) 'Missing Inputs' section explicitly listing 'Standard deviation of baseline time-to-first-action (required)'"
+    },
+    {
+      "text": "Output does NOT commit to a single sample size without clearly flagging the SD assumption",
+      "passed": true,
+      "evidence": "Response explicitly states '⚠️ Blocked on missing required input' upfront. No single definitive sample size is given. Only scenario estimates are provided in a table preceded by 'Scenario estimates (illustrative only)' and followed by 'Important: These are directional only and depend entirely on the SD assumption.'"
+    },
+    {
+      "text": "Output explains how to obtain SD (historical data, pilot test, prior experiments) or what information would enable a reliable estimate",
+      "passed": true,
+      "evidence": "Dedicated section 'How to Obtain the Standard Deviation' provides four concrete methods: (1) historical data from last 1-3 months, (2) pilot test with 500-1,000 users, (3) related prior experiments, (4) industry benchmarks with caveats"
+    },
+    {
+      "text": "If providing scenario estimates, each scenario is clearly labeled with the assumed SD value",
+      "passed": true,
+      "evidence": "Scenario table has 'Assumed SD' as the first column, making each row's SD assumption explicit. Table header clearly shows SD values: 1.5 min, 2.5 min, 4.0 min"
+    },
+    {
+      "text": "Output does NOT fabricate a specific SD and present the result as a reliable answer",
+      "passed": true,
+      "evidence": "No fabricated SD is used. Response explicitly states 'Without the standard deviation of your baseline metric, the calculation cannot proceed reliably' and avoids inventing any plausible SD value to proceed with a definitive calculation"
+    }
+  ]
+}

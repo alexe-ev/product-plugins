@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Lines 18-19: 'IF we change the primary call-to-action button color to a more visually prominent/contrasting option, THEN we will observe an increase in click-through rate and conversion rate, BECAUSE improved visual contrast and color psychology principles will make the button more noticeable and psychologically compelling to users.'"
+    },
+    {
+      "text": "The 30% uplift is flagged as unsubstantiated or lacking evidence",
+      "passed": true,
+      "evidence": "Lines 20-24: 'Alternative Framing (Realistic Expectation)' section states: 'A button color change may improve conversion by 5-15% in typical e-commerce or SaaS contexts, not the proposed 30%.' Lines 161-177: 'Why 30% May Be Unrealistic' section explains why the 30% target is problematic. Line 175: '30% improvement target is ambitious and should be treated as a stretch goal rather than an expected outcome.'"
+    },
+    {
+      "text": "Confidence level is explicitly stated as provisional",
+      "passed": false,
+      "evidence": "No explicit 'Confidence' statement labeling the hypothesis as provisional. Document ends with 'Status: Ready for Experiment Execution' (line 196) which suggests confidence in moving forward, but does not explicitly state the confidence level of the hypothesis framing itself."
+    },
+    {
+      "text": "Missing information is extensively listed (5+ items)",
+      "passed": false,
+      "evidence": "No explicit 'Missing Information' section. The document has 'Test Variables' (lines 45-55), 'Assumptions & Risks' (lines 78-92), and 'Phase 1: Pre-Test Analysis' (lines 112-115) which discuss unknowns, but these are not structured as an explicit list of missing information items required to proceed."
+    },
+    {
+      "text": "Discovery questions or recommended next steps are suggested",
+      "passed": true,
+      "evidence": "Section '9. Implementation Plan' (lines 109-131) provides 4 phases with action items. Section 'Phase 1: Pre-Test Analysis' (lines 112-115) lists discovery items: current button color documentation, baseline conversion analysis, contrast ratio assessment, user feedback review."
+    },
+    {
+      "text": "The hypothesis does NOT present 30% as an accepted fact",
+      "passed": true,
+      "evidence": "Lines 20-24 explicitly state 30% is unrealistic. Lines 161-177 section titled 'Why 30% May Be Unrealistic' provides detailed reasoning. Line 175: 'the 30% improvement target is ambitious and should be treated as a stretch goal rather than an expected outcome.' Line 177: 'A 5-15% conversion lift is a more realistic expectation based on industry benchmarks.'"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.67
+  }
+}

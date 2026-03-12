@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT approve the segment rollout to new users based on the post-hoc segment analysis",
+      "passed": true,
+      "evidence": "I recommend **against** the segment rollout to new users based on this analysis. While the new-user result appears compelling on its surface (+3.6pp, p=0.011), approving this decision would introduce significant statistical and methodological risks."
+    },
+    {
+      "text": "Output identifies that the segment breakdown was run after observing the overall non-significant result, which constitutes post-hoc slicing and inflates false positive risk",
+      "passed": true,
+      "evidence": "The segment breakdown was conducted *after observing* the overall non-significant result (p=0.09). This is classic post-hoc slicing — examining subgroups only after the primary result disappointed. This practice inflates false positive risk substantially."
+    },
+    {
+      "text": "Output does NOT accept the team's framing that p=0.011 in the new-user segment is 'solid' without flagging that this result emerged from post-hoc analysis and was not pre-registered",
+      "passed": true,
+      "evidence": "The p=0.011 result for new users cannot be treated as robust evidence because: 1. It was not pre-registered as a primary success metric 2. It emerged from exploratory analysis performed after observing overall failure 3. No multiple-comparison correction was applied (comparing new vs. existing users)"
+    },
+    {
+      "text": "Output does NOT treat the existing-user null result (p=0.87) as a confirmation of safety or as supporting the segment rollout decision",
+      "passed": true,
+      "evidence": "The null finding in existing users (p=0.87, +0.1pp) is *not* confirmation of safety for a new-user rollout. It actually suggests the treatment effect (if real) is not generalizable. A true safety confirmation would show a consistent small positive or neutral effect across segments. Instead, we have a dramatic difference: +3.6pp in one segment, essentially zero in another. This heterogeneity raises questions about whether the new-user finding is real or driven by noise."
+    },
+    {
+      "text": "Output recommends treating the new-user finding as a hypothesis for a fresh, pre-registered experiment with new users as the defined target population",
+      "passed": true,
+      "evidence": "Treat the new-user finding as a hypothesis, not validated evidence. Design a pre-registered experiment with new users as the *defined primary population* before launch. Pre-specify all success metrics and stopping rules in advance."
+    }
+  ]
+}

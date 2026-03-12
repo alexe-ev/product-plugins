@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "mixed-changes-strong-hypothesis",
+  "prompt": "Оцени гипотезу: Если мы добавим персонализированные рекомендации на главную страницу и упростим навигацию по каталогу для активных покупателей, мы ожидаем рост среднего чека на 15%, потому что пользователи будут быстрее находить релевантные товары.",
+  "assertions": [
+    "Output identifies that two changes are mixed into one hypothesis (personalized recommendations + simplified navigation)",
+    "Verdict is NOT 'valid for experiment design' — should be 'weak' or 'valid for exploration'",
+    "Output suggests splitting into two separate hypotheses",
+    "The 15% effect size is questioned or flagged as needing evidence basis",
+    "A readiness statement is present and explicitly says NOT ready for experiment design",
+    "Output does not include experiment design elements such as sample size, test duration, or traffic splits",
+    "Output classifies the hypothesis using one of the four defined verdict tiers (valid for exploration, valid for experiment design, weak, invalid)"
+  ]
+}

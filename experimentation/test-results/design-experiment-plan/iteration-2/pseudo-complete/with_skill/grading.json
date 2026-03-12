@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT declare the plan execution-ready or launch-ready — flags it as incomplete or as a partial skeleton",
+      "passed": true,
+      "evidence": "Plan Status: ⚠️ PARTIAL SKELETON — NOT EXECUTION-READY. Later: 'This plan captures the core experiment structure...but it **is not execution-ready** because three critical gaps block launch'"
+    },
+    {
+      "text": "Output explicitly calls out that 'Engagement' is not an operationalised metric and requires a precise definition (e.g., specific events, a formula, or a named composite metric)",
+      "passed": true,
+      "evidence": "Primary Metric: ⚠️ NOT OPERATIONALIZED. 'Problem: This is too vague to measure, compare, or act upon. Engagement could mean: Daily active users (DAU), Session count, Session length...Action required: Define the exact event(s) or formula before launch. Examples: Posts viewed per session...A named composite metric (e.g., engagement score = 0.5×posts_viewed + 0.3×interactions + 0.2×session_length)'"
+    },
+    {
+      "text": "Output explicitly calls out that 'Significant improvement' is not a usable success threshold — the plan needs a numeric minimum detectable effect or specific % threshold",
+      "passed": true,
+      "evidence": "Success Threshold: ⚠️ NOT DEFINED. 'Problem: \"Significant\" is subjective and cannot be used to make a go/no-go decision. You need a numeric minimum detectable effect (MDE) or a percentage threshold. Action required: Define one of these before launch: Minimum meaningful effect (e.g., \"5% relative uplift in engagement rate\")...Absolute threshold (e.g., \"session length must increase by at least 45 seconds\")'"
+    },
+    {
+      "text": "Output explicitly calls out that the stopping logic ('team will review and decide') is not a defined stopping rule and must be replaced with a pre-committed criterion",
+      "passed": true,
+      "evidence": "Stopping Logic: ⚠️ FLEXIBLE, NOT PRE-COMMITTED. 'Current definition: The team will review results at the end of the 2 weeks and decide. Problem: This is a \"soft\" decision rule, not a hard stopping criterion...Action required: Replace with a pre-committed, objective stopping logic. Examples: Option 1 (Fixed duration): Run the test for exactly 2 weeks or until 20k users are assigned...'"
+    },
+    {
+      "text": "Output does NOT silently accept the vague inputs and proceed as if they are precisely defined — must treat each vague field as a gap requiring resolution",
+      "passed": true,
+      "evidence": "The output explicitly flags vague fields throughout with ⚠️ markers and 'Action required' sections. Launch Blockers section lists: '1. Primary Metric Definition...2. Success Threshold...3. Stopping Logic...4. Secondary Metric Clarity...5. Sample Size Validation'"
+    }
+  ]
+}

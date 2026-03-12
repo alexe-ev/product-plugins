@@ -1,0 +1,51 @@
+{
+  "expectations": [
+    {
+      "text": "Output warns that total registered users (25,000) cannot be used as eligible traffic",
+      "passed": true,
+      "evidence": "Eligible traffic refers specifically to new sign-ups entering the onboarding wizard—not all 25,000 registered users"
+    },
+    {
+      "text": "Output correctly identifies that only new sign-ups are eligible (~15% of 25,000 = ~3,750/month)",
+      "passed": true,
+      "evidence": "Eligible traffic: 3,750 new sign-ups per month (15% of 25,000 registered users)"
+    },
+    {
+      "text": "Output provides sample size per group in the range 1,400–1,700 (correct answer ~1,537-1,538; numbers above ~2,500 indicate a formula error → FAIL)",
+      "passed": true,
+      "evidence": "n_per_group = 3.8408 / 0.0025 = 1,536.32 ≈ 1,537 users per group"
+    },
+    {
+      "text": "Output does NOT calculate duration using 25,000 as eligible traffic",
+      "passed": true,
+      "evidence": "Duration = 3,074 / 3,750 = 0.82 months ≈ 3.6 weeks (uses 3,750, not 25,000)"
+    },
+    {
+      "text": "Output calculates duration using ~3,750/month eligible traffic, giving approximately 3–4 weeks",
+      "passed": true,
+      "evidence": "0.82 months ≈ 3.6 weeks"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 4287
+  },
+  "timing": {
+    "executor_duration_seconds": 38.4
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "Excellent execution across all assertions",
+      "Per-group sample size of 1,537 is precise and within expected range",
+      "Clear distinction made between total registered users and eligible traffic",
+      "Duration calculation properly derived from eligible monthly traffic (3,750)"
+    ],
+    "overall": "PASS - All 5 assertions satisfied. Output correctly implements the sample size formula, properly identifies eligible traffic constraints, and provides accurate duration estimates. Formula validation: 1,537 is well within the acceptable range (1,400–1,700), indicating correct implementation."
+  }
+}

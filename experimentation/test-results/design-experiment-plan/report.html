@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eval Report: design-experiment-plan</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a;
+    --border: #2d3148; --accent: #6c8aff; --accent2: #a78bfa;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #94a3b8; --dim: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 14px; line-height: 1.6; padding: 40px 24px; }
+  .container { max-width: 980px; margin: 0 auto; }
+
+  .skill-tag { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  h1 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  h2 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  section { margin-bottom: 40px; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 40px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 7px; }
+  .kpi-value { font-size: 26px; font-weight: 700; line-height: 1; }
+  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+  .cmp-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+  .cmp-table th { background: var(--surface2); padding: 9px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--border); }
+  .cmp-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .eval-name { font-weight: 600; color: var(--text); }
+  .eval-sub { font-size: 11px; color: var(--dim); margin-top: 2px; }
+
+  .score-pass { color: var(--green); font-weight: 700; }
+  .score-fail { color: var(--red); font-weight: 700; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+  .dot-pass { background: var(--green); }
+  .dot-fail { background: var(--red); }
+  .dot-partial { background: var(--yellow); }
+
+  .delta-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .delta-pos { background: rgba(52,211,153,.12); color: var(--green); }
+  .delta-zero { background: rgba(148,163,184,.1); color: var(--muted); }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+  .tag-green { background: rgba(52,211,153,.12); color: var(--green); }
+  .tag-red { background: rgba(248,113,113,.12); color: var(--red); }
+  .tag-yellow { background: rgba(251,191,36,.12); color: var(--yellow); }
+  .tag-blue { background: rgba(108,138,255,.12); color: var(--accent); }
+
+  .fail-box { background: rgba(248,113,113,.05); border: 1px solid rgba(248,113,113,.2); border-radius: 8px; padding: 14px 16px; margin-top: 10px; }
+  .fail-item { display: flex; gap: 8px; margin-bottom: 8px; font-size: 12px; }
+  .fail-item:last-child { margin-bottom: 0; }
+  .fail-label { color: var(--red); font-weight: 700; flex-shrink: 0; }
+  .fail-text { color: var(--muted); }
+
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .insight { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .insight.highlight { border-color: rgba(108,138,255,.35); background: rgba(108,138,255,.05); }
+  .insight.warn { border-color: rgba(251,191,36,.25); background: rgba(251,191,36,.04); }
+  .insight-icon { font-size: 16px; margin-bottom: 7px; }
+  .insight-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+  .insight-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .recs { display: flex; flex-direction: column; gap: 10px; }
+  .rec { display: flex; gap: 14px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; }
+  .rec-num { font-size: 16px; font-weight: 800; color: var(--accent); opacity: .4; flex-shrink: 0; padding-top: 1px; }
+  .rec-prio { display: inline-block; padding: 2px 7px; border-radius: 8px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+  .prio-high { background: rgba(248,113,113,.12); color: var(--red); }
+  .prio-med { background: rgba(251,191,36,.12); color: var(--yellow); }
+  .prio-low { background: rgba(52,211,153,.12); color: var(--green); }
+  .rec-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .rec-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .verdict { background: linear-gradient(135deg, rgba(52,211,153,.07), rgba(108,138,255,.07)); border: 1px solid rgba(108,138,255,.28); border-radius: 12px; padding: 24px 28px; }
+  .verdict-nums { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .v-big { font-size: 42px; font-weight: 800; line-height: 1; color: var(--green); }
+  .v-vs { font-size: 18px; color: var(--dim); }
+  .v-base { font-size: 42px; font-weight: 800; line-height: 1; color: var(--yellow); }
+  .verdict-text { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .verdict-text strong { color: #fff; }
+
+  code { background: rgba(108,138,255,.1); color: var(--accent); padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: monospace; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="skill-tag">Skill Evaluation Report</div>
+  <h1>design-experiment-plan</h1>
+  <div class="subtitle">2 итерации · 6 eval-кейсов · концептуальный orchestration skill · ключевая ценность — restraint на adversarial-кейсах</div>
+
+  <!-- KPI -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">with_skill (итог)</div>
+      <div class="kpi-value" style="color:var(--green)">100%</div>
+      <div class="kpi-sub">30/30 assertions pass</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">without_skill (итог)</div>
+      <div class="kpi-value" style="color:var(--yellow)">73%</div>
+      <div class="kpi-sub">22/30 assertions pass</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Разрыв на adversarial</div>
+      <div class="kpi-value" style="color:var(--green)">+80pp</div>
+      <div class="kpi-sub">pseudo-complete и validity-traps</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Разрыв на стандартных</div>
+      <div class="kpi-value">0pp</div>
+      <div class="kpi-sub">Iter-1: оба 15/15</div>
+    </div>
+  </div>
+
+  <!-- Iteration 1 -->
+  <section>
+    <h2>Итерация 1 — стандартные контекст-уровни</h2>
+    <table class="cmp-table">
+      <thead><tr><th>Eval</th><th>Кейс</th><th>with_skill</th><th>without_skill</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="eval-name">rich-context</div><div class="eval-sub">push notifications, все поля заполнены</div></td>
+          <td><span class="tag tag-green">Полный</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">light-context</div><div class="eval-sub">B2B SaaS navigation, явные пробелы</div></td>
+          <td><span class="tag tag-yellow">Частичный</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">poor-context</div><div class="eval-sub">"test new design, stop early if good"</div></td>
+          <td><span class="tag tag-red">Пустой</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding:11px 14px; background:var(--surface); border:1px solid var(--border); border-radius:8px; font-size:12px; color:var(--muted);">
+      <strong style="color:#fff">Вывод:</strong> Базовая модель хорошо справляется с очевидными контекст-уровнями. Оба конфига признают неполноту там, где она явна, и структурируют планы там, где данные есть. Разрыв нулевой. Нужны adversarial-кейсы.
+    </div>
+  </section>
+
+  <!-- Iteration 2 -->
+  <section>
+    <h2>Итерация 2 — adversarial кейсы</h2>
+    <table class="cmp-table">
+      <thead><tr><th>Eval</th><th>Ловушка</th><th>with_skill</th><th>without_skill</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="eval-name">pseudo-complete</div><div class="eval-sub">home feed experiment, поля "заполнены" но расплывчато</div></td>
+          <td><span class="tag tag-red">Вагуные поля</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-fail"><span class="dot dot-fail"></span>1/5</span></td>
+          <td><span class="delta-badge delta-pos">+80pp</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">validity-traps</div><div class="eval-sub">e-com рекомендации, peeking + session randomization</div></td>
+          <td><span class="tag tag-red">Validity риски</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-fail"><span class="dot dot-fail"></span>1/5</span></td>
+          <td><span class="delta-badge delta-pos">+80pp</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">missing-stopping</div><div class="eval-sub">SaaS trial conversion, только stopping logic missing</div></td>
+          <td><span class="tag tag-yellow">Один пробел</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="fail-box">
+      <strong style="color:var(--red); font-size:12px; display:block; margin-bottom:10px;">Конкретные провалы baseline:</strong>
+      <div class="fail-item">
+        <span class="fail-label">pseudo-complete</span>
+        <span class="fail-text">Принял «Engagement» как метрику без вопросов, «Significant improvement» как threshold, «team will review and decide» как stopping rule. Создал полноценный plan как будто всё задано.</span>
+      </div>
+      <div class="fail-item">
+        <span class="fail-label">validity-traps</span>
+        <span class="fail-text">«Stop as soon as significant» — принял без замечаний, записал как «Daily monitoring, stop when significance reached». Session-level randomization — принял как данность, написал «Randomize by session ID as specified».</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insights -->
+  <section>
+    <h2>Ключевые выводы</h2>
+    <div class="insight-grid">
+      <div class="insight highlight">
+        <div class="insight-icon">🎯</div>
+        <div class="insight-title">Ценность скила — в restraint, не в структуре</div>
+        <div class="insight-body">Оба конфига одинаково хорошо структурируют эксперимент-план. Скил даёт преимущество в одном: он отказывается принимать псевдо-полные данные за реальные. Baseline "помогает" пользователю двигаться вперёд — скил останавливает и требует ответов.</div>
+      </div>
+      <div class="insight highlight">
+        <div class="insight-icon">⚡</div>
+        <div class="insight-title">Baseline не замечает validity-ловушки</div>
+        <div class="insight-body">Optional stopping и session-level randomization — две классические ошибки, которые baseline молча принял. Скил их явно идентифицировал и предложил корректирующие действия. Это критично: пропущенные validity-риски делают результаты теста ненадёжными.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">📋</div>
+        <div class="insight-title">Один явный пробел ловится и без скила</div>
+        <div class="insight-body">Когда missing-stopping-only: все поля заполнены, не хватает только stopping logic — baseline тоже его находит. Очевидные пробелы не требуют skill-инструкций. Скил нужен именно там, где вход выглядит валидным, но содержит проблему.</div>
+      </div>
+      <div class="insight warn">
+        <div class="insight-icon">⚠️</div>
+        <div class="insight-title">Риск «compliance театра» у baseline</div>
+        <div class="insight-body">В pseudo-complete кейсе baseline сгенерировал структурно правильный, профессионально выглядящий план — с несуществующими метриками и решениями. Это опаснее чем пустой скелет: план выглядит готовым к запуску, хотя фундаментально не определён.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations -->
+  <section>
+    <h2>Рекомендации</h2>
+    <div class="recs">
+      <div class="rec">
+        <div class="rec-num">1</div>
+        <div>
+          <span class="rec-prio prio-high">Высокий</span>
+          <div class="rec-title">Добавить REFERENCE.md с операционализацией «плохих паттернов»</div>
+          <div class="rec-body">SKILL.md содержит правило «не генерировать fake-ready план», но не перечисляет конкретных сигналов, которые должны триггерить проверку. REFERENCE.md мог бы содержать список: расплывчатые метрики (engagement, performance), non-threshold threshold ("significant"), flexible stopping patterns, session-vs-user mismatch.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">2</div>
+        <div>
+          <span class="rec-prio prio-high">Высокий</span>
+          <div class="rec-title">Протестировать ещё validity-риски: SRM, novelty effect, carryover</div>
+          <div class="rec-body">Eval 5 тестировал peeking и session randomization. Не протестированы: sample ratio mismatch (SRM), novelty/primacy effects для UI-тестов, carryover bias при последовательных тестах, network effects при тестах на connected users. Это полный список validity-рисков из реальной практики.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">3</div>
+        <div>
+          <span class="rec-prio prio-med">Средний</span>
+          <div class="rec-title">Добавить тест на «compliant hallucination»</div>
+          <div class="rec-body">Baseline создал структурно корректный план с невалидными данными. Стоит добавить assertion: «если метрика не операционализирована — вывод НЕ должен содержать числовые таргеты или sample size, связанные с этой метрикой». Это поймает случаи, когда модель умеет флагировать вербально, но продолжает считать.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- Verdict -->
+  <section>
+    <div class="verdict">
+      <div class="verdict-nums">
+        <span class="v-big">100%</span>
+        <span class="v-vs">vs</span>
+        <span class="v-base">73%</span>
+      </div>
+      <div class="verdict-text">
+        Скил <strong>design-experiment-plan</strong> показывает нулевой разрыв на стандартных кейсах и <strong>+80pp на adversarial</strong>.
+        Ценность не в структуре вывода — структуру базовая модель умеет воспроизводить.
+        Ценность в том, что скил <strong>не принимает расплывчатые поля за полные</strong> и <strong>явно идентифицирует validity-риски</strong> (peeking, session randomization),
+        которые baseline молча принимает как данность.
+        Следующий шаг: добавить REFERENCE.md со списком bad-pattern сигналов и расширить eval-покрытие на SRM, novelty effect, carryover.
+      </div>
+    </div>
+  </section>
+
+  <div style="text-align:center; color:var(--dim); font-size:11px; padding-top:20px; border-top:1px solid var(--border);">
+    design-experiment-plan · 2 итерации · 6 eval-кейсов · 2026-03-11
+  </div>
+
+</div>
+</body>
+</html>

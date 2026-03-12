@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly flags the post-hoc metric switch — the planned metric (checkout completion) failed to reach significance and the team switched to reporting revenue per session instead",
+      "passed": true,
+      "evidence": "Output contains dedicated section 'The Critical Issue: Post-Hoc Metric Switch' that explicitly states: (1) planned metric was not significant (p=0.18), (2) team then reported unplanned metric revenue per session (p=0.031), (3) team proposes using post-hoc significant result as primary basis for shipping. This is clearly and prominently flagged."
+    },
+    {
+      "text": "Output explains that discovering and reporting a significant result after the planned metric failed inflates false positive risk (multiple comparisons, HARKing, or p-hacking)",
+      "passed": true,
+      "evidence": "Output explicitly describes this as 'textbook case of HARKing (Hypothesizing After Results are Known) combined with multiple comparisons without correction'. Explains that team 'ran two metrics (or more) and chose to emphasize the one that achieved significance' and that 'false-positive risk is substantially inflated'. Provides quantitative context: expected ~5% false positive rate under single metric vs 20-40% when searching across metrics."
+    },
+    {
+      "text": "Output does NOT validate the revenue per session finding as a reliable primary basis for the shipping decision",
+      "passed": true,
+      "evidence": "Output explicitly recommends 'DO NOT ship based on the revenue per session finding.' States the finding was 'generated after observing that the primary metric failed, which triggers selection bias and multiple-comparison concerns.' Emphasizes that 'the observed p = 0.031 for revenue per session may simply reflect noise from repeated testing, not a true effect.' Does not provide any validation or endorsement of the post-hoc finding as reliable."
+    },
+    {
+      "text": "Output recommends treating the revenue finding as hypothesis-generating — a candidate for a follow-up test where revenue is pre-registered as the primary metric",
+      "passed": true,
+      "evidence": "Output explicitly states under Recommendation section: 'Treat the revenue per session result as hypothesis-generating. It is a candidate finding, not a validated primary outcome.' And: 'Rerun the experiment with revenue per session as a pre-registered primary metric (or co-primary with checkout completion). Design and power the test to detect a realistic effect size on revenue.'"
+    },
+    {
+      "text": "Output classifies the metric switch as at least a Manageable or Fatal quality risk, not dismisses it as acceptable because 'revenue is more meaningful'",
+      "passed": true,
+      "evidence": "Output includes Risk Classification table that explicitly marks 'Post-hoc metric switch' as FATAL severity. Also marks 'Multiple comparisons without correction' as FATAL. Notably, the 'Business rationalization' risk (revenue being more meaningful) is classified as only Manageable, with explanation: 'Revenue is indeed commercially important, but this does not justify using a post-hoc, uncontrolled finding as the primary basis for a shipping decision.' The business importance is explicitly rejected as grounds to override the procedural violation."
+    }
+  ]
+}

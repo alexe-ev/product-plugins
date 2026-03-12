@@ -42,4 +42,4 @@ leadership-communication/
 
 ## Status
 
-Planned — SKILL.md files are complete. Examples in progress.
+Ready

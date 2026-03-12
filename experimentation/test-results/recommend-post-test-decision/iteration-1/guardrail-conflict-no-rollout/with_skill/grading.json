@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT recommend Full rollout — it must acknowledge that the significant AOV guardrail decline (−8.2%, p=0.016) prevents a clean full-rollout recommendation",
+      "passed": true,
+      "evidence": "Recommended Action: 'Partial rollout with investigation required — do not proceed with immediate full rollout.' The output explicitly rejects full rollout and explains the AOV decline prevents a confident full-rollout recommendation."
+    },
+    {
+      "text": "Output flags the AOV guardrail degradation as a material risk and explains that the net revenue impact of more completions at lower order value is unknown or potentially negative",
+      "passed": true,
+      "evidence": "The output states: 'Net revenue impact is unclear: The completion rate increase (+7.2%) may be offset or exceeded by the AOV decline (−8.2%).' It also includes in Risks: 'Full rollout without investigation could erode gross revenue if AOV decline generalizes to production and isn't offset by volume.' And: 'Net revenue modeling: What is the revenue impact of 7.2% more orders at 8.2% lower AOV? This is the critical unknown.'"
+    },
+    {
+      "text": "Output considers the business trade-off: conversion rate gain vs. AOV loss — and does not treat the primary metric improvement as sufficient on its own",
+      "passed": true,
+      "evidence": "The output includes a dedicated 'Trade-Offs' section with a table comparing conversion gain, AOV loss, net revenue impact, and notes that quality 'cannot resolve a fundamental business trade-off between conversion and margin.' The output explicitly states AOV decline 'is concerning' and creates 'material tension' despite positive primary metric."
+    },
+    {
+      "text": "Output recommends a cautious action pattern: either partial rollout, investigate and retest, or iterate — not immediate full rollout",
+      "passed": true,
+      "evidence": "Recommended action is 'Partial rollout with investigation required.' The 'What Should Happen Next' section offers three explicit options: (A) Investigate before rollout, (B) Partial/low-risk rollout with monitoring, and (C) Iterate and retest. None are immediate full rollout."
+    },
+    {
+      "text": "Output explains what must be understood or confirmed (e.g., root cause of AOV drop, net revenue impact at full scale) before a full-rollout decision can be made",
+      "passed": true,
+      "evidence": "The 'Missing Business Inputs That Limit Recommendation Strength' section explicitly lists: (1) Net revenue modeling, (2) Root cause of AOV decline, (3) Acceptable trade-off threshold, and (4) Production environment effects. The output also details investigation approaches in Option A including 'Segment the test results by customer cohort' and 'Analyze order composition' to understand the AOV driver."
+    }
+  ]
+}

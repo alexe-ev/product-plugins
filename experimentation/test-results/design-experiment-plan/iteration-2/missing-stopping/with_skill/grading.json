@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT declare the plan fully execution-ready — flags stopping logic as a missing or unresolved field that blocks launch",
+      "passed": true,
+      "evidence": "Stopping Logic section marked [MISSING FIELD — BLOCKS LAUNCH] and explicitly states 'The experiment lacks a predefined stopping rule. Before launch, the team must decide:'. Launch Readiness section lists 'Stopping logic — Must define before launch' as a field that blocks launch."
+    },
+    {
+      "text": "Output explicitly identifies the absence of a pre-defined stopping rule as the key gap (run to fixed sample? Fixed calendar date? Emergency stops only?)",
+      "passed": true,
+      "evidence": "Stopping Logic section provides four explicit options: '1. Run to fixed sample size? 2. Run to fixed calendar date? 3. Early stopping rule? 4. Combination?' and asks the team to decide which rule applies."
+    },
+    {
+      "text": "Output does NOT silently invent a stopping rule and present it as decided — if it suggests one, it must be clearly labelled as a suggestion or assumption requiring team sign-off",
+      "passed": true,
+      "evidence": "Stopping Logic section ends with 'Recommendation: Suggest the team confirm which rule applies and document it before launch.' The options are presented as decisions the team must make, not as predetermined choices."
+    },
+    {
+      "text": "Output correctly identifies that all other fields are present and well-defined (hypothesis, segment, metric, threshold, guardrails, sample size, decision rules)",
+      "passed": true,
+      "evidence": "Launch Readiness section explicitly lists all present fields with checkmarks: '✓ Hypothesis ✓ Control and test variants ✓ Target segment ✓ Primary metric ✓ Secondary metrics ✓ Guardrails ✓ Minimum meaningful effect ✓ Success threshold ✓ Sample size ✓ Decision rules'"
+    },
+    {
+      "text": "Output flags duration as either missing or derived from sample size + traffic (and if derived, shows the calculation or asks for traffic data)",
+      "passed": true,
+      "evidence": "Sample Size & Duration section shows [MISSING FIELD] for Expected duration and provides the calculation formula: 'Duration = (2,500 × 2 groups) / (daily new trial starters)'. It explicitly asks 'Please provide daily trial starter volume to estimate calendar duration.'"
+    }
+  ]
+}

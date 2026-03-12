@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output classifies the result as Inconclusive — correctly noting that p=0.09 misses the significance threshold AND the observed effect (+1.1pp) is below the pre-defined MDE (+1.5pp)",
+      "passed": true,
+      "evidence": "Output explicitly states 'Result Classification: INCONCLUSIVE' and provides clear reasoning: 'Statistical significance is not achieved (p = 0.09)' and 'Observed effect is below the pre-defined MDE.' The analysis directly compares the observed effect (+1.1pp) to the pre-defined MDE (+1.5pp) and notes the shortfall."
+    },
+    {
+      "text": "Output explicitly calls out that the 95% CI (−0.2pp to +2.4pp) crosses zero, meaning the data is consistent with both a positive and a negative true effect",
+      "passed": true,
+      "evidence": "The output explicitly states: 'The interval crosses zero, indicating that the data is consistent with both a negative true effect (up to −0.2pp) and a positive one (up to +2.4pp). This wide uncertainty around the true effect is a key concern.' This directly addresses the critical implication that the CI includes the null."
+    },
+    {
+      "text": "Output flags the guardrail trends (checkout time +9.4%, payment errors +0.3pp) as concerning signals that should not be dismissed simply because no hard thresholds were pre-defined",
+      "passed": true,
+      "evidence": "The output provides a dedicated 'Guardrail Analysis' section that flags both guardrail trends with concern. For checkout time: 'The test variant increased checkout completion time by approximately 10%, which is a notable increase... this trend suggests the simplified layout may actually be adding friction.' For payment errors: 'this directional signal indicates potential usability or technical issues with the variant.' The output explicitly avoids dismissing these signals and incorporates them into the inconclusive classification."
+    },
+    {
+      "text": "Output does NOT recommend shipping and does NOT characterise the result as 'directionally promising enough to ship'",
+      "passed": true,
+      "evidence": "The recommendation section begins with a clear directive: 'Do not ship based on this test.' The output explicitly rejects the 'directionally promising' framing in the final paragraph: 'The direction of the primary metric is positive, but it is neither statistically nor practically strong enough, and the guardrail trends warrant caution. This is not a case of \"directionally promising\"—it is genuinely inconclusive and requires either better data or a better variant.' This directly contradicts the premise that the result should be shipped."
+    },
+    {
+      "text": "Output notes that the slight underpowering (95% of planned sample) is a contributing factor and recommends either a properly powered follow-up or iterating on the variant before re-testing",
+      "passed": true,
+      "evidence": "The output addresses sample size in the 'Statistical Evidence' section: 'This slight underpowering reduces statistical power—a larger sample could have provided stronger evidence either direction.' The recommendation section provides two path-forward options that align with the assertion: (1) 'Run a properly powered follow-up' and (2) 'Iterate on the variant before re-testing.' Both recommendations are grounded in the underpowering observation."
+    }
+  ]
+}

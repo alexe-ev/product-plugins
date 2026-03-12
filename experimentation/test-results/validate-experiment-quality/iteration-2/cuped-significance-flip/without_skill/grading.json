@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output flags that the unadjusted (pre-CUPED) result was not statistically significant (p=0.091) and that the observed effect (+0.7pp) was below the pre-planned MDE of +1.0pp",
+      "passed": true,
+      "evidence": "Output states: 'The **raw, pre-adjustment result is not statistically significant**: p-value: 0.091 (above standard α=0.05 threshold)' and 'The observed effect falls **below the minimum detectable effect** and fails to achieve statistical significance in the planned primary analysis.'"
+    },
+    {
+      "text": "Output notes that a large significance change from p=0.091 to p=0.028 via variance reduction is itself worth scrutinising — it implies the covariate explained a substantial share of outcome variance and warrants verifying the covariate is not contaminated",
+      "passed": true,
+      "evidence": "Output states: 'The shift from p=0.091 (unadjusted) to p=0.028 (variance-reduced) represents a **dramatic change in statistical significance**' and 'This magnitude of change suggests that the pre-experiment engagement covariate explained a substantial share of the outcome variance' and 'A large variance reduction effect can indicate either legitimate noise reduction or potential data quality issues that require investigation.'"
+    },
+    {
+      "text": "Output flags that the covariate specification ('pre-experiment engagement') is underspecified — no metric name, no time window, no confirmation the window does not overlap with the test period — which creates a data leakage risk",
+      "passed": true,
+      "evidence": "Output identifies all three gaps: '**No metric definition**: What exactly is \"engagement\"?' and '**No time window specified**: What constitutes \"pre-experiment\"?' and '**No confirmation of non-overlap**: Most critically, is it confirmed that the pre-experiment measurement window does **not overlap with the test period**?' and explains data leakage risk: 'If the \"pre-experiment\" window includes any days during the 21-day test period, the covariate becomes **post-treatment measurement** that itself responds to the treatment, inducing bias rather than reducing it.'"
+    },
+    {
+      "text": "Output does NOT simply accept the post-CUPED p=0.028 as straightforwardly valid because variance reduction is a legitimate technique",
+      "passed": true,
+      "evidence": "Output explicitly rejects acceptance: 'This experiment exhibits **significant trustworthiness concerns** that should prevent immediate shipping' and 'The experiment is **not currently trustworthy as presented**' and 'Do not ship based on the adjusted p=0.028 result without' [detailed verification requirements]. The response does not rely on the legitimacy of variance reduction as justification for accepting the result."
+    },
+    {
+      "text": "Output recommends verifying the covariate specification (non-overlapping pre-experiment window, specific metric) before accepting the adjusted result as the primary decision basis, and/or reporting both raw and adjusted results as co-equal evidence",
+      "passed": true,
+      "evidence": "Output recommends: '**Verify covariate specification in writing**: Document the exact metric definition, the precise pre-experiment time window (with confirmed non-overlap)' and '**Report results transparently**: Present both the raw (p=0.091) and adjusted (p=0.028) results as co-equal evidence.' This directly addresses both verification of specification and dual reporting."
+    }
+  ]
+}

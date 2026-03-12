@@ -1,146 +1,118 @@
-# AI Product Ops Skill Repository
+# AI Product Ops
 
-This repository is the foundational knowledge base and playbook for AI agents supporting product work.
+Your AI agent doesn't know how to think like a product manager. This library fixes that.
 
-## Purpose
+121 skills across 15 domains, each one a structured playbook: what to ask, how to reason, what to output. Install the domains you need, skip the rest.
 
-We are building a practical, reusable skill library that helps AI agents contribute across the full product lifecycle—from strategy to execution to scaling operations.
+```bash
+claude plugin install ai-product-ops/experimentation
+# now Claude knows how to design experiments, size samples, and read results
+```
 
-## Who This Is For
+---
 
-- **Product managers and product teams** who want AI agents to assist with experimentation, analytics, strategy, and operations
-- **AI engineers** building agent workflows that require structured product expertise
-- **Organizations** looking for reusable, quality-controlled skill libraries for their AI tooling
+## What this looks like in practice
 
-## Current Status
+Running an A/B test and need to know if you have enough traffic:
+```
+/experimentation:estimate-sample-size
+```
 
-| Domain | Status | Skills |
-|--------|--------|--------|
-| Experimentation & Optimization | **Ready** | 8 skills covering the full experiment lifecycle |
-| Product Strategy | **Ready** | 9 skills covering vision, direction, market fit, positioning, portfolio, and competitive strategy |
-| Product Discovery & User Research | **Ready** | 8 skills covering the full discovery pipeline |
-| Product Planning & Execution | Planned | — |
-| UX Research & Design Collaboration | Planned | — |
-| Go-to-Market (GTM) | Planned | — |
-| Data Analytics & Insights | Planned | — |
-| Marketing & Growth | Planned | — |
-| Product Operations | Planned | — |
-| AI Product Management | Planned | — |
-| Technical Product & Platform | Planned | — |
-| Customer Success & Feedback | Planned | — |
-| Business & Commercial Skills | Planned | — |
-| Leadership, Communication & Stakeholders | Planned | — |
-| Risk, Compliance & Responsible Development | Planned | — |
+Metric dropped 12% last week and nobody knows why:
+```
+/data-analytics:diagnose-metric-movement
+```
 
-## Usage with Claude Code
+Investor deck needs a real business case, not vibes:
+```
+/business-commercial:build-business-case
+```
 
-Skills are located in `.claude/skills/` and follow the Claude Code skill structure. Each skill has:
+Stakeholders are misaligned on the roadmap, again:
+```
+/product-planning:build-roadmap-prioritization
+```
 
-- `SKILL.md` — main instructions with YAML frontmatter (`name`, `description`)
-- `REFERENCE.md` — methodology and formulas (for calculation-aware skills)
-- `examples/` — input/output patterns for different context levels
-- `scripts/` — helper scripts (if needed)
+Each command walks Claude through the right questions, the right methodology, and the right output format for that specific task.
 
-Canonical skill sources are domain skill directories (e.g. `experimentation/skills/`, `product-discovery/skills/`); `.claude/skills/` contains symlinks for Claude Code discovery.
+---
 
-## Skill Directions (Expertise Areas)
+## 15 domains, 121 skills
 
-Below is the initial map of skill directions this repository will cover.
+| Plugin | What it covers |
+|--------|----------------|
+| `experimentation` | Hypothesis design, sample sizing, experiment plans, result analysis, post-test decisions |
+| `data-analytics` | Metrics frameworks, funnel analysis, dashboards, signal detection, metric diagnosis |
+| `product-strategy` | Vision, long-term direction, market fit, positioning, competitive strategy, portfolio |
+| `product-discovery` | Problem framing, user interviews, JTBD, insight synthesis, opportunity identification |
+| `product-planning` | OKRs, roadmapping, prioritization, PRDs, user stories, delivery planning |
+| `gtm` | Launch planning, positioning, messaging, pricing, sales battlecards, enablement |
+| `marketing-growth` | Growth models, acquisition funnels, lifecycle, onboarding, conversion, channel experiments |
+| `ai-product` | AI feature ideation, model tradeoffs, HITL workflows, quality monitoring, value framing |
+| `business-commercial` | Business cases, unit economics, LTV/CAC, forecasting, ROI, revenue strategy |
+| `customer-success` | Churn analysis, health scoring, VOC programs, feedback triage, retention playbooks |
+| `product-ops` | Operating cadence, planning processes, tooling, cross-team alignment, wikis |
+| `leadership-communication` | Executive narratives, stakeholder mapping, decision frameworks, team rituals |
+| `technical-product` | Platform thinking, architecture-aware prioritization, engineering collaboration, NFRs |
+| `risk-compliance` | Risk registers, privacy assessment, ethical frameworks, responsible AI governance |
+| `ux-research` | Research planning, usability testing, journey mapping, experience quality, design handoff |
 
-### 1. Product Strategy
-- Vision, mission, and long-term product direction
-- Product-market fit and strategic positioning
-- Portfolio and roadmap strategy
-- Competitive strategy and differentiation
+Install any combination:
 
-### 2. Product Discovery & User Research
-- Problem discovery and opportunity identification
-- User interviews, JTBD, and qualitative research synthesis
-- Persona and segment development
-- Insight generation and opportunity framing
+```bash
+claude plugin install ai-product-ops/experimentation
+claude plugin install ai-product-ops/data-analytics
+claude plugin install ai-product-ops/product-strategy
+```
 
-### 3. Product Planning & Execution
-- Goal setting (OKRs, KPIs)
-- Roadmapping and prioritization frameworks
-- Requirements definition (PRDs, user stories)
-- Delivery planning and cross-functional collaboration
+---
 
-### 4. UX Research & Design Collaboration
-- UX research planning and methods
-- Usability testing and feedback loops
-- Experience quality and journey improvement
-- Product/design handoff and iteration workflows
+## Does it actually work?
 
-### 5. Go-to-Market (GTM)
-- Launch strategy and release readiness
-- Positioning and messaging
-- Pricing and packaging support
-- Sales, CS, and enablement collaboration
+Skills in the `experimentation` domain were benchmarked against a vanilla Claude (same model, no skill) across multiple scenarios: complete inputs, missing inputs, and edge cases like unsafe traffic assumptions.
 
-### 6. Data Analytics & Insights
-- Product metrics design and instrumentation
-- Funnel, retention, and cohort analysis
-- Dashboarding and decision support
-- Signal detection and performance diagnostics
+| Skill | With skill | Without skill | Delta |
+|-------|-----------|---------------|-------|
+| `formulate-experiment-hypothesis` | 100% | 37% | +63pp |
+| `validate-hypothesis-quality` | 100% | 60% | +40pp |
+| `define-success-metrics` | 100% | 71% | +29pp |
+| `estimate-sample-size` | 100% | 87% | +13pp |
 
-### 7. Experimentation & Optimization
-- Hypothesis generation and prioritization
-- A/B testing design and statistical guardrails
-- Experiment execution and readouts
-- Rollout, rollback, and scaling decisions
+Skills score 100% with zero variance across all runs. The baseline varies widely, and the gap widens on harder scenarios.
 
-### 8. Marketing & Growth
-- Growth model design (acquisition, activation, retention, referral, revenue)
-- Lifecycle and engagement strategies
-- Channel strategy and campaign experimentation
-- Conversion and growth loop optimization
+What the skill actually prevents:
 
-### 9. Product Operations (Product Ops)
-- Operating cadence and process design
-- Tooling, documentation, and knowledge management
-- Cross-team alignment and communication systems
-- Workflow automation and governance
+- **Fabricated numbers.** Without the skill, the model invents concrete targets ("this will improve conversion by 30%") in 2 out of 3 runs on ambiguous inputs. The skill stops and asks instead.
+- **Scope creep.** Without the skill, a hypothesis prompt sometimes ballooned into a full experiment design (100s response time vs 10-22s). The skill stays on task.
+- **Wrong behavior on missing inputs.** Without the skill, the model confidently commits to a primary metric even when inputs are ambiguous. The skill flags it as provisional and lists what's missing.
 
-### 10. AI Product Management
-- AI feature ideation and value framing
-- Model capability assessment and trade-off decisions
-- Human-in-the-loop workflow design
-- AI quality evaluation, monitoring, and iteration
+The biggest gains are on fuzzy inputs — exactly the situations that come up in real product work.
 
-### 11. Technical Product & Platform Collaboration
-- API/platform product thinking
-- Architecture-aware prioritization
-- Engineering collaboration patterns
-- Reliability, scalability, and performance considerations
+---
 
-### 12. Customer Success & Feedback Systems
-- Voice of customer programs
-- Feedback intake and triage loops
-- Churn analysis and retention interventions
-- Adoption health monitoring
+## Skill structure
 
-### 13. Business & Commercial Skills
-- Business case development
-- Unit economics and profitability analysis
-- Forecasting and scenario planning
-- Revenue strategy alignment
+Every skill is a standalone playbook:
 
-### 14. Leadership, Communication & Stakeholder Management
-- Executive communication and narrative building
-- Decision-making frameworks and trade-off communication
-- Stakeholder mapping and influence strategies
-- Team rituals and operating discipline
+```
+experimentation/skills/estimate-sample-size/
+├── SKILL.md        ← what to ask, how to reason, what to output
+├── REFERENCE.md    ← formulas and methodology (calculation skills)
+└── examples/       ← how the skill behaves with complete vs. incomplete inputs
+```
 
-### 15. Risk, Compliance & Responsible Product Development
-- Privacy, security, and regulatory awareness
-- Ethical product decision frameworks
-- Risk assessment and mitigation planning
-- Responsible AI and governance practices
+Skills don't hallucinate methodology. If required inputs are missing, they stop and ask. If the math is uncertain, they say so.
 
-## What's Next
+---
 
-Each direction will get:
-1. A dedicated set of skills in `.claude/skills/`
-2. Standard workflows and checklists
-3. Reusable templates and prompts
-4. Quality criteria for AI agent outputs
+## Install a single skill without the plugin
+
+```bash
+cp -r experimentation/skills/estimate-sample-size ~/.claude/skills/
+```
+
+---
+
+## Who built this
+
+[Evgeny Alexeev](https://github.com/alexe-ev), Lead PM. Built this to stop re-explaining product methodology to AI agents on every project.

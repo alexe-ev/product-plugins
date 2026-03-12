@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "rich-context",
+  "prompt": "Help me define success metrics for this experiment.\n\nHypothesis: If we reduce onboarding from 5 steps to 3 for new iOS users, we expect more users to start their first lesson.\n\nBusiness goal: Increase new-user activation without hurting Day 1 retention.",
+  "assertions": [
+    "Output includes a clearly identified primary metric",
+    "Output includes guardrail metrics (at least one related to retention)",
+    "Output includes success threshold or explains it must be defined",
+    "Output marks minimum meaningful effect as provisional or TBD",
+    "Output does NOT default to revenue or generic conversion as primary metric",
+    "Output provides interpretation notes linking metric choice to hypothesis"
+  ]
+}

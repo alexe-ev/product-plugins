@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "email-conversion",
+  "prompt": "email open rate: baseline 22%, MDE +2pp, 95%/80%, 8k/week",
+  "assertions": []
+}

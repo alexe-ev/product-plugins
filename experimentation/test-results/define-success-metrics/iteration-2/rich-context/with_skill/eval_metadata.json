@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "rich-context",
+  "prompt": "Help me set up success metrics for this experiment.\n\nHypothesis: If we show users a weekly spending summary inside the app, more users will stay active past day 30 — because they'll have a reason to return and check their progress.\n\nBusiness goal: Improve 30-day retention without increasing notification opt-outs or creating anxiety around spending habits.",
+  "assertions": []
+}

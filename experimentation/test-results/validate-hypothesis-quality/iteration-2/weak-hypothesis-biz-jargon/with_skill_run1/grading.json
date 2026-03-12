@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is 'weak' or 'invalid' — stated explicitly", "passed": true, "evidence": "Verdict: 'Weak' stated explicitly at top"},
+    {"text": "Output flags that 'improving UX' is too vague — no specific change is defined", "passed": true, "evidence": "Flags 'Vague change description — улучшение UX lacks specificity'"},
+    {"text": "Output flags that 'activation' is not defined as a measurable metric", "passed": true, "evidence": "Flags 'Undefined metric — активация is business jargon without precise operational definition'"},
+    {"text": "A readiness statement is present and explicitly says NOT ready for experiment design", "passed": true, "evidence": "Readiness Statement: 'NOT ready for experiment design'"},
+    {"text": "Output does not include experiment design elements such as sample size, test duration, or statistical power calculations", "passed": true, "evidence": "No sample sizes, durations, or statistical power calculations in output"},
+    {"text": "Output classifies the hypothesis using one of the four defined verdict tiers", "passed": true, "evidence": "'Weak' — one of the four defined verdict tiers"},
+    {"text": "Target segment vagueness is noted (which new users? platform? channel?)", "passed": true, "evidence": "Flags unbounded segment: 'новых пользователей lacks temporal and platform boundaries'"}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

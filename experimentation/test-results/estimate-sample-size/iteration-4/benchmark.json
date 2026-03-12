@@ -1,0 +1,318 @@
+{
+  "metadata": {
+    "skill_name": "estimate-sample-size (calc-only evals, formula fix applied)",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-03-11T16:00:00Z",
+    "evals_run": [
+      1,
+      2,
+      3
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "email-conversion",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 32.6,
+        "tokens": 30800,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 6,000\u20138,000",
+          "passed": true,
+          "evidence": "Output states 'Sample size per group: 6,926 users' (line 50). Value 6,926 falls within the range 6,000\u20138,000."
+        },
+        {
+          "text": "Output provides total sample size in the range 12,000\u201316,000",
+          "passed": true,
+          "evidence": "Output states 'Total sample size: 13,852 users' (line 52). Value 13,852 falls within the range 12,000\u201316,000."
+        },
+        {
+          "text": "Output estimates duration in the range 1.4\u20132.1 weeks using 8,000/week traffic",
+          "passed": true,
+          "evidence": "Output states 'Estimated duration: Approximately 1.7 weeks of eligible traffic' (line 54). Calculation shown: 13,852 / 8,000 = 1.73 weeks \u2248 1.7 weeks. Value 1.7 falls within the range 1.4\u20132.1 weeks."
+        },
+        {
+          "text": "Output lists all key inputs: baseline 22%, MDE +2pp, confidence 95%, power 80%",
+          "passed": true,
+          "evidence": "All inputs are present in 'Input Summary' section (lines 4-10) and 'Inputs Used' section (lines 56-63): Baseline 22% (line 5), MDE +2 percentage points (line 6, calculated as 0.22 \u2192 0.24), Confidence level 95% (line 7), Power 80% (line 8). Also in 'Inputs Used': 'Baseline 22%', 'Target 24%' (which is baseline + MDE), 'Confidence 95%', 'Power 80%'."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "email-conversion",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 19.5,
+        "tokens": 23001,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 6,000\u20138,000",
+          "passed": true,
+          "evidence": "Output states 6,939 participants per group (line 46). Value 6,939 falls within range [6,000, 8,000]."
+        },
+        {
+          "text": "Output provides total sample size in the range 12,000\u201316,000",
+          "passed": true,
+          "evidence": "Output states 13,878 participants total (line 47). Value 13,878 falls within range [12,000, 16,000]."
+        },
+        {
+          "text": "Output estimates duration in the range 1.4\u20132.1 weeks using 8,000/week traffic",
+          "passed": true,
+          "evidence": "Output states 1.73 weeks required (line 54, calculated as 13,878 / 8,000 = 1.73 weeks). Value 1.73 falls within range [1.4, 2.1]."
+        },
+        {
+          "text": "Output lists all key inputs: baseline 22%, MDE +2pp, confidence 95%, power 80%",
+          "passed": true,
+          "evidence": "All four inputs present: Baseline 22% (line 5), MDE +2pp (line 6), Confidence 95% (line 7), Power 80% (line 8)."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "session-duration",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 29.7,
+        "tokens": 29507,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 3,000\u20134,200",
+          "passed": true,
+          "evidence": "Output states: 'n_per_group = 3,528 users' (line 45). Value 3,528 falls within range [3,000\u20134,200]."
+        },
+        {
+          "text": "Output provides total sample size in the range 6,000\u20138,400",
+          "passed": true,
+          "evidence": "Output states: 'Total = 3,528 \u00d7 2 = 7,056 users' (line 48). Value 7,056 falls within range [6,000\u20138,400]."
+        },
+        {
+          "text": "Output estimates duration in the range 0.35\u20130.65 weeks using 15,000/week traffic",
+          "passed": true,
+          "evidence": "Output states: 'Duration = 7,056 / 15,000 = 0.47 weeks' (line 52). Value 0.47 falls within range [0.35\u20130.65]."
+        },
+        {
+          "text": "Output uses the continuous metric formula (references standard deviation in the calculation)",
+          "passed": true,
+          "evidence": "Output explicitly references the formula on line 28: 'n_per_group = (z_\u03b1/2 + z_\u03b2)\u00b2 \u00d7 2\u03c3\u00b2 / \u03b4\u00b2'. Variance term calculation on line 37 shows: '2\u03c3\u00b2 = 2 \u00d7 (12)\u00b2 = 2 \u00d7 144 = 288'. SD of 12 minutes is used as \u03c3 in the formula."
+        },
+        {
+          "text": "Output notes that the estimate depends on the SD assumption and may shift if actual SD differs",
+          "passed": true,
+          "evidence": "Line 109 explicitly states: 'The estimate relies on the historical standard deviation of 12 minutes being representative of future conditions. If the treatment significantly changes variance, power may shift.'"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "session-duration",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 30.2,
+        "tokens": 26040,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 3,000\u20134,200",
+          "passed": true,
+          "evidence": "Output line 57 states 'Sample size per group: 3,528 users', which falls within the specified range [3,000\u20134,200]."
+        },
+        {
+          "text": "Output provides total sample size in the range 6,000\u20138,400",
+          "passed": true,
+          "evidence": "Output line 58 states 'Total sample size required: 7,056 users', which falls within the specified range [6,000\u20138,400]."
+        },
+        {
+          "text": "Output estimates duration in the range 0.35\u20130.65 weeks using 15,000/week traffic",
+          "passed": true,
+          "evidence": "Output line 65 states 'Days needed = 0.47 weeks \u2248 3.3 days', which falls within the specified range [0.35\u20130.65] weeks."
+        },
+        {
+          "text": "Output uses the continuous metric formula (references standard deviation in the calculation)",
+          "passed": true,
+          "evidence": "Output line 42 explicitly shows the formula 'n = 2 \u00d7 (z_\u03b1 + z_\u03b2)\u00b2 \u00d7 SD\u00b2 / MDE\u00b2' with SD\u00b2 in the numerator. Line 48 demonstrates the calculation with SD value (12 minutes) substituted."
+        },
+        {
+          "text": "Output notes that the estimate depends on the SD assumption and may shift if actual SD differs",
+          "passed": false,
+          "evidence": "Output includes an Assumptions section (lines 108-114) but does not explicitly state that the sample size estimate depends on the SD assumption or that results may shift if the actual SD differs from the assumed 12 minutes. This insight is missing."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "form-90pct",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 28.8,
+        "tokens": 29391,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 2,600\u20133,500",
+          "passed": true,
+          "evidence": "Output states '~3,018 users' per group (line 60), which falls within the specified range."
+        },
+        {
+          "text": "Output provides total sample size in the range 5,200\u20137,000",
+          "passed": true,
+          "evidence": "Output states '~6,036 users' total (line 61), which falls within the specified range."
+        },
+        {
+          "text": "Output estimates duration in the range 0.85\u20131.35 weeks using 5,500/week traffic",
+          "passed": true,
+          "evidence": "Output shows calculation: 6,036 / 5,500 = 1.10 weeks (lines 53-55), stated as '~1.1 weeks' (line 62), which falls within range."
+        },
+        {
+          "text": "Output explicitly uses z_beta = 1.28 (or states 90% power requires a higher z-value than 80% power)",
+          "passed": true,
+          "evidence": "Output explicitly states on line 23: 'Power: 90% \u2192 z_\u03b2 = 1.28'. The formula and calculation use this value correctly (line 24: 1.96 + 1.28 = 3.24)."
+        },
+        {
+          "text": "Output result is meaningfully larger than if 80% power had been used (which would give ~2,250/group)",
+          "passed": true,
+          "evidence": "Output provides 3,018/group for 90% power. Comparison: 3,018 vs 2,250 represents a 34% increase, which is meaningful. The output demonstrates power's direct impact on sample size requirements."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "form-90pct",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 20.7,
+        "tokens": 23142,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 2,600\u20133,500",
+          "passed": true,
+          "evidence": "Output states 3,018 per group (line 54), which falls within the range 2,600\u20133,500"
+        },
+        {
+          "text": "Output provides total sample size in the range 5,200\u20137,000",
+          "passed": true,
+          "evidence": "Output states 6,036 total (line 61), which falls within the range 5,200\u20137,000"
+        },
+        {
+          "text": "Output estimates duration in the range 0.85\u20131.35 weeks using 5,500/week traffic",
+          "passed": false,
+          "evidence": "Output states duration is 0.549 weeks for one group (line 69) or 5-6 days for full sample (lines 70, 87). 0.549 weeks is well below the 0.85\u20131.35 week range. The output recommends 1-2 weeks for robustness, but the calculated minimum duration is 0.549 weeks, not in the specified range"
+        },
+        {
+          "text": "Output explicitly uses z_beta = 1.28 (or states 90% power requires a higher z-value than 80% power)",
+          "passed": true,
+          "evidence": "Output explicitly states z_beta (one-tailed, 90% power): 1.28 on line 15, and uses this value in calculations on lines 41 and 50"
+        },
+        {
+          "text": "Output result is meaningfully larger than if 80% power had been used (which would give ~2,250/group)",
+          "passed": true,
+          "evidence": "Output provides 3,018/group for 90% power (line 54). This is 34.1% larger than the baseline 2,250/group for 80% power, which qualifies as meaningfully larger"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 30.3667,
+        "stddev": 1.9858,
+        "min": 28.8,
+        "max": 32.6
+      },
+      "tokens": {
+        "mean": 29899.3333,
+        "stddev": 782.1537,
+        "min": 29391,
+        "max": 30800
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.8667,
+        "stddev": 0.1155,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 23.4667,
+        "stddev": 5.862,
+        "min": 19.5,
+        "max": 30.2
+      },
+      "tokens": {
+        "mean": 24061.0,
+        "stddev": 1715.3137,
+        "min": 23001,
+        "max": 26040
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.13",
+      "time_seconds": "+6.9",
+      "tokens": "+5838"
+    }
+  },
+  "notes": [
+    "email-conversion: 4/4 vs 4/4 \u2014 tie. Both compute 6,926-6,939/group correctly. Formula fix stable.",
+    "session-duration: 5/5 vs 4/5 \u2014 skill adds explicit SD sensitivity caveat; baseline gives correct numbers but omits the caveat.",
+    "form-90pct: 5/5 vs 4/5 \u2014 both use z_beta=1.28 correctly. Baseline fail: calculated duration for one group (0.549w) instead of total (1.097w). Borderline interpretation issue.",
+    "Key result: after formula fix, with_skill achieves 100% on pure calculation evals. The remaining gap vs baseline is in output quality (caveats, framing) not numerical accuracy.",
+    "Overhead: with_skill adds ~8s and ~6k tokens vs baseline \u2014 consistent with previous iterations."
+  ]
+}

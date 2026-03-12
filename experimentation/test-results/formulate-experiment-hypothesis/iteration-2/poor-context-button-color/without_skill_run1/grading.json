@@ -1,0 +1,11 @@
+{
+  "expectations": [
+    {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": false, "evidence": "Hypothesis is stated as Null/Alternative pair: 'Changing the CTA button color will have no statistically significant effect' (H0) and 'will increase the conversion rate by a measurable amount' (H1). Not in the 'If we change X for Y, we expect Z' format."},
+    {"text": "Output does not contain experiment design elements such as sample size, statistical significance thresholds, test duration, or rollout plans", "passed": false, "evidence": "Lines 54-57: 'Sample Size & Duration' section with 'minimum 2 business cycles or until statistical significance achieved'. Experiment design elements present."},
+    {"text": "Confidence level is explicitly stated as provisional", "passed": false, "evidence": "No confidence level label appears anywhere in the output."},
+    {"text": "Missing information is extensively listed (5+ items)", "passed": true, "evidence": "Lines 63-69: 5 'Key Questions to Answer First' covering root cause, button visibility, specific color, 30% basis, and current conversion rate."},
+    {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "Lines 35-41: 5 'Recommended Prerequisites' and Lines 63-69: 5 key questions."},
+    {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": false, "evidence": "Lines 23-25: 'Claim: 30% improvement in conversion rate' and 'Target Conversion Rate: Current baseline × 1.30' — presents 30% as the expected target outcome in the hypothesis structure, despite later criticism."}
+  ],
+  "summary": {"passed": 2, "failed": 4, "total": 6, "pass_rate": 0.33}
+}

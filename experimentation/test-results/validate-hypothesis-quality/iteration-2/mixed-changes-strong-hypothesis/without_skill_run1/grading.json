@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Output identifies that two changes are mixed into one hypothesis (personalized recommendations + simplified navigation)", "passed": true, "evidence": "Table row: 'КРИТИЧНЫЙ: Смешанное вмешательство (Multiple Changes)' — both changes named"},
+    {"text": "Verdict is NOT 'valid for experiment design' — should be 'weak' or 'valid for exploration'", "passed": true, "evidence": "Final verdict: '6.7/10 — Гипотеза Требует Улучшения', Status: '🔴 Требует доработки' — clearly not valid for experiment design"},
+    {"text": "Output suggests splitting into two separate hypotheses", "passed": true, "evidence": "Recommendation: 'Разделить на две гипотезы: H1 (рекомендации) и H2 (навигация)'"},
+    {"text": "The 15% effect size is questioned or flagged as needing evidence basis", "passed": true, "evidence": "Question asked: 'Почему именно 15%? Откуда это число?'"},
+    {"text": "A readiness statement is present and explicitly says NOT ready for experiment design", "passed": true, "evidence": "Recommendations section: '🔴 Требует доработки' and 'Рекомендация: Вернуться к формулировке'"},
+    {"text": "Output does not include experiment design elements such as sample size, test duration, or traffic splits", "passed": false, "evidence": "Includes 'Провести анализ мощности (power analysis)', 'Определить период эксперимента: Минимум 2-4 недели', 'Определить размер выборки'"},
+    {"text": "Output classifies the hypothesis using one of the four defined verdict tiers (valid for exploration, valid for experiment design, weak, invalid)", "passed": false, "evidence": "Uses score-based system (6.7/10) — not one of the four defined tiers"}
+  ],
+  "summary": {"passed": 5, "failed": 2, "total": 7, "pass_rate": 0.714}
+}

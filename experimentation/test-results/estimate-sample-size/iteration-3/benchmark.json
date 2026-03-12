@@ -1,0 +1,349 @@
+{
+  "metadata": {
+    "skill_name": "estimate-sample-size (iteration-3: formula fix applied)",
+    "skill_path": "...",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-03-11T15:00:00Z",
+    "evals_run": [
+      1,
+      2,
+      3
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "complete-inputs",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 45.2,
+        "tokens": 32258,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 15,000\u201322,000 users",
+          "passed": true,
+          "evidence": "18,439 users per group (line 50: 'n_per_group = 1.180077 / 0.000064 = **18,439 users**' and line 66: 'Sample size per group | 18,439 users')"
+        },
+        {
+          "text": "Output provides total sample size (roughly double the per-group figure)",
+          "passed": true,
+          "evidence": "36,877 total users (line 53: 'Total = 18,439 \u00d7 2 = **36,877 users**' and line 67: 'Total sample size | 36,877 users')"
+        },
+        {
+          "text": "Output estimates duration using eligible traffic of 35,000/week \u2014 result in range 0.9\u20131.4 weeks",
+          "passed": true,
+          "evidence": "1.05 weeks (line 5: '1.05 weeks (7.4 days)' and line 56: 'Duration = 36,877 / 35,000 per week = **1.05 weeks**')"
+        },
+        {
+          "text": "Output lists all key inputs: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%",
+          "passed": true,
+          "evidence": "All inputs present (lines 12-19): baseline 7.8%, MDE +0.8pp, 95% confidence, 80% power, 35,000 weekly traffic, 50/50 split"
+        },
+        {
+          "text": "Output states assumptions used (e.g. two-variant test, stable traffic)",
+          "passed": true,
+          "evidence": "Comprehensive assumptions section (lines 73\u201381) including 'Two-variant A/B test' (line 75), 'Stable traffic quality' (line 76), and five additional assumptions"
+        },
+        {
+          "text": "Output includes a feasibility note or comment on reliability",
+          "passed": true,
+          "evidence": "Feasibility Assessment section (lines 84\u201392) with '\u2713 **Test is highly feasible**' including timeline, traffic sufficiency, statistical power, and effect size reasonability"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "complete-inputs",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 23.4,
+        "tokens": 23820,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output provides sample size per group in the range 15,000\u201322,000 users",
+          "passed": true,
+          "evidence": "Sample size per group: 18,434 (from line 61 and line 69)"
+        },
+        {
+          "text": "Output provides total sample size (roughly double the per-group figure)",
+          "passed": true,
+          "evidence": "Total Sample Size: 36,868 (line 70), which is exactly 2\u00d7 per-group figure of 18,434"
+        },
+        {
+          "text": "Output estimates duration using eligible traffic of 35,000/week \u2014 result in range 0.9\u20131.4 weeks",
+          "passed": true,
+          "evidence": "Test Duration: ~1.05 weeks (7-8 days) (line 72), which falls within 0.9\u20131.4 weeks range"
+        },
+        {
+          "text": "Output lists all key inputs: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%",
+          "passed": true,
+          "evidence": "All present: Baseline 7.8% (line 14), MDE +0.8pp (line 15), 95% confidence (line 17), 80% power (line 18)"
+        },
+        {
+          "text": "Output states assumptions used (e.g. two-variant test, stable traffic)",
+          "passed": true,
+          "evidence": "Methodology Notes section (lines 98-107) explicitly lists: 'Formula Used: Two-proportion hypothesis test', 'Baseline conversion rate is stable during test period', plus additional assumptions about independence and random assignment"
+        },
+        {
+          "text": "Output includes a feasibility note or comment on reliability",
+          "passed": true,
+          "evidence": "Recommendations section (lines 89-94) includes feasibility guidance: 'Plan for 8-10 days to account for traffic variation', power analysis note about Type I/II errors (lines 83-85), and practical significance comment"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "missing-inputs",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 37.0,
+        "tokens": 29218,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output does NOT present a single committed sample size as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)",
+          "passed": true,
+          "evidence": "Output explicitly states 'These are NOT recommendations' and presents three labeled scenarios (A, B, C) as 'Illustration Only', each with explicit assumptions. No single sample size is presented as definitive. Instead, ranges depend on MDE choice: Scenario A (~5,200), B (~13,000), C (~2,100)."
+        },
+        {
+          "text": "Output does NOT present a single committed duration estimate as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)",
+          "passed": true,
+          "evidence": "Three scenarios show durations that vary dramatically: ~1.2 weeks, ~2.9 weeks, ~0.47 weeks. Output states 'Duration estimation is blocked: Without knowing the required sample size, duration cannot be calculated' and explicitly frames durations as conditional on scenario assumptions."
+        },
+        {
+          "text": "Output explicitly identifies MDE (minimum detectable effect) as a missing input that must be confirmed",
+          "passed": true,
+          "evidence": "Section 'Missing Mandatory Inputs' item 1 explicitly identifies MDE with explanation: 'Minimum Detectable Effect (MDE) - What relative or absolute uplift would make the new design \"worth it\"?' Repeated in 'Recommended Next Steps' and summary sections."
+        },
+        {
+          "text": "Output explicitly identifies confidence level or significance level as a missing or assumed input",
+          "passed": true,
+          "evidence": "Section 'Missing Mandatory Inputs' item 2 explicitly identifies 'Confidence Level (Significance Level)' with examples: '95% confidence (\u03b1 = 0.05)' and '99% confidence (\u03b1 = 0.01)'. Also in 'Recommended Next Steps': 'Confirm statistical settings (or use defaults)'"
+        },
+        {
+          "text": "Output explicitly identifies statistical power as a missing or assumed input",
+          "passed": true,
+          "evidence": "Section 'Missing Mandatory Inputs' item 3 explicitly identifies 'Statistical Power' with explanation and examples: '80% power (\u03b2 = 0.20)' and '90% power (\u03b2 = 0.10)'. Repeated in 'Recommended Next Steps'."
+        },
+        {
+          "text": "If any numbers are given, they are explicitly framed as scenarios or examples tied to assumed inputs \u2014 NOT presented as the answer",
+          "passed": true,
+          "evidence": "All numerical estimates appear in 'Scenario Ranges (Illustration Only)' section which opens: 'To give you a sense of what different choices mean, here are illustrative scenarios. **These are NOT recommendations**.' Each scenario explicitly states assumptions (e.g., '5% relative uplift, 95% confidence, 80% power'). Numbers are introduced with scenario labels and conditional framing, not as facts."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "missing-inputs",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.67,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 34.5,
+        "tokens": 25272,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output does NOT present a single committed sample size as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)",
+          "passed": true,
+          "evidence": "Output explicitly avoids a single committed sample size. Instead, it presents three labeled scenarios (Scenario 1, 2, 3) with different MDEs, each with its own sample size calculation (5,285, 3,031, 1,977 per group respectively). The executive summary states 'Cannot provide a precise duration' and scenarios are introduced as dependent on MDE definition."
+        },
+        {
+          "text": "Output does NOT present a single committed duration estimate as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)",
+          "passed": false,
+          "evidence": "CRITICAL FAILURE: The executive summary states 'your test will likely run **1-3 weeks** depending on the magnitude of improvement you're testing for.' This frames '1-3 weeks' as a definitive answer to 'how long?', not as a conditional range tied to a specific scenario. While scenarios later provide specific durations (2-3 weeks, 1-2 weeks, ~1 week), the headline answer '1-3 weeks' is presented as THE answer. Additionally, line 118 states 'Most likely timeline: Run for 2 weeks' which is another definitive recommendation, not framed as conditional on MDE confirmation."
+        },
+        {
+          "text": "Output explicitly identifies MDE (minimum detectable effect) as a missing input that must be confirmed",
+          "passed": true,
+          "evidence": "Line 13-14 contains explicit section 'Missing Critical Input' and line 17 states: '**Minimum Detectable Effect (MDE):** What percentage conversion lift would justify implementing the new email design?' The entire scenario analysis hinges on this missing input."
+        },
+        {
+          "text": "Output explicitly identifies confidence level or significance level as a missing or assumed input",
+          "passed": true,
+          "evidence": "Line 47 explicitly states '**Confidence level:** 95% (\u03b1 = 0.05, two-tailed)' under 'Standard Parameters Used' section. This is clearly marked as an assumption/standard parameter, not confirmed from the user's input."
+        },
+        {
+          "text": "Output explicitly identifies statistical power as a missing or assumed input",
+          "passed": true,
+          "evidence": "Line 48 explicitly states '**Statistical power:** 80% (\u03b2 = 0.20)' under 'Standard Parameters Used' section. This is clearly marked as an assumption. Additionally, line 65-67 discusses the trade-off: 'If you want higher confidence, use **90% power**, which requires ~20% more samples' making clear that power level was assumed, not confirmed."
+        },
+        {
+          "text": "If any numbers are given, they are explicitly framed as scenarios or examples tied to assumed inputs \u2014 NOT presented as the answer",
+          "passed": false,
+          "evidence": "While scenario numbers (sample sizes in Scenarios 1-3) are well-labeled and conditional, the DURATION numbers in the executive summary are NOT adequately framed as conditional. The opening statement 'your test will likely run **1-3 weeks**' and conclusion 'Most likely timeline: Run for 2 weeks' present durations as definitive recommendations rather than explicitly tying them to specific assumed MDE values. The reader could reasonably interpret '1-3 weeks' as the answer rather than understanding it requires MDE confirmation first."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "unsafe-traffic",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 38.4,
+        "tokens": 32830,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output warns that total registered users (25,000) cannot be used as eligible traffic",
+          "passed": true,
+          "evidence": "Eligible traffic refers specifically to new sign-ups entering the onboarding wizard\u2014not all 25,000 registered users"
+        },
+        {
+          "text": "Output correctly identifies that only new sign-ups are eligible (~15% of 25,000 = ~3,750/month)",
+          "passed": true,
+          "evidence": "Eligible traffic: 3,750 new sign-ups per month (15% of 25,000 registered users)"
+        },
+        {
+          "text": "Output provides sample size per group in the range 1,400\u20131,700 (correct answer ~1,537-1,538; numbers above ~2,500 indicate a formula error \u2192 FAIL)",
+          "passed": true,
+          "evidence": "n_per_group = 3.8408 / 0.0025 = 1,536.32 \u2248 1,537 users per group"
+        },
+        {
+          "text": "Output does NOT calculate duration using 25,000 as eligible traffic",
+          "passed": true,
+          "evidence": "Duration = 3,074 / 3,750 = 0.82 months \u2248 3.6 weeks (uses 3,750, not 25,000)"
+        },
+        {
+          "text": "Output calculates duration using ~3,750/month eligible traffic, giving approximately 3\u20134 weeks",
+          "passed": true,
+          "evidence": "0.82 months \u2248 3.6 weeks"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "unsafe-traffic",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 17.5,
+        "tokens": 23389,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Output warns that total registered users (25,000) cannot be used as eligible traffic",
+          "passed": true,
+          "evidence": "Line 13: 'Population: 25,000 registered users; 15% new sign-ups monthly = 3,750 eligible users' \u2014 clearly distinguishes between total registered users and eligible traffic"
+        },
+        {
+          "text": "Output correctly identifies that only new sign-ups are eligible (~15% of 25,000 = ~3,750/month)",
+          "passed": true,
+          "evidence": "Line 13: '15% new sign-ups monthly = 3,750 eligible users' and Line 72-73: 'Monthly new sign-ups (eligible for onboarding): 3,750 users'"
+        },
+        {
+          "text": "Output provides sample size per group in the range 1,400\u20131,700",
+          "passed": true,
+          "evidence": "Line 53: 'Per-group sample size = 1,537 users (rounded up)' and Line 65 table: 'Sample size per group | 1,537 users'. Per-group number: 1,537"
+        },
+        {
+          "text": "Output does NOT calculate duration using 25,000 as eligible traffic",
+          "passed": true,
+          "evidence": "Lines 72-75 feasibility assessment uses 3,750 monthly new sign-ups as the eligible pool, not 25,000 total registered users"
+        },
+        {
+          "text": "Output calculates duration using ~3,750/month eligible traffic, giving approximately 3\u20134 weeks",
+          "passed": true,
+          "evidence": "Lines 76-79: 'Collect sample within ~1 month of new registrations' which is approximately 4 weeks, within the 3-4 week range"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 40.2,
+        "stddev": 4.3863,
+        "min": 37.0,
+        "max": 45.2
+      },
+      "tokens": {
+        "mean": 31435.3333,
+        "stddev": 1941.4483,
+        "min": 29218,
+        "max": 32830
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.89,
+        "stddev": 0.1905,
+        "min": 0.67,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 25.1333,
+        "stddev": 8.6315,
+        "min": 17.5,
+        "max": 34.5
+      },
+      "tokens": {
+        "mean": 24160.3333,
+        "stddev": 986.5558,
+        "min": 23389,
+        "max": 25272
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.11",
+      "time_seconds": "+15.1",
+      "tokens": "+7275"
+    }
+  },
+  "notes": [
+    "complete-inputs (iter3): 6/6 vs 6/6 \u2014 tie. Both configs compute ~18,439/group correctly. Formula fix confirmed on with_skill side.",
+    "missing-inputs (iter2): 6/6 vs 4/6 \u2014 skill correctly labels all scenario numbers as 'Illustration Only'; baseline gave a headline '1-3 weeks' without explicit conditional framing.",
+    "unsafe-traffic (iter3): 5/5 vs 5/5 \u2014 tie. FORMULA FIX WORKED: with_skill now gives 1,537/group (was 3,073 before). Without_skill also correct. Both warn about eligible vs total traffic.",
+    "Overall: with_skill 100%, without_skill 89%. The remaining gap is entirely from missing-inputs: baseline presents numbers confidently without provisional framing.",
+    "Skill value confirmed: behavioral correctness (provisional framing, traffic warnings) + calculation accuracy after formula fix."
+  ]
+}

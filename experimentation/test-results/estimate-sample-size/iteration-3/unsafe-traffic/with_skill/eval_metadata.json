@@ -1,0 +1,43 @@
+{
+  "eval_id": 3,
+  "eval_name": "unsafe-traffic",
+  "prompt": "B2B onboarding: baseline 41%, MDE +5pp, 95%/80%, 25k total users but 15% eligible",
+  "assertions": [
+    {
+      "name": "sample_size_per_group_calculated",
+      "description": "Sample size per group should be approximately 1,537 users",
+      "expected_value": 1537,
+      "tolerance": 5
+    },
+    {
+      "name": "total_sample_size_calculated",
+      "description": "Total sample size should be approximately 3,074 users (1,537 × 2)",
+      "expected_value": 3074,
+      "tolerance": 10
+    },
+    {
+      "name": "estimated_duration_weeks",
+      "description": "Estimated duration should be approximately 3.6 weeks based on 3,750 eligible users per month",
+      "expected_value": 3.6,
+      "tolerance": 0.5
+    },
+    {
+      "name": "formula_used",
+      "description": "Conversion metric formula must be used: (z_α/2 + z_β)² × (p1×(1−p1) + p2×(1−p2)) / (p2 − p1)²",
+      "expected_value": "n_per_group = 7.84 × 0.4903 / 0.0025",
+      "tolerance": null
+    },
+    {
+      "name": "correct_eligible_traffic_interpretation",
+      "description": "Must use only eligible traffic (3,750 new sign-ups per month), not total user base",
+      "expected_value": "eligible_traffic_per_month = 3750",
+      "tolerance": null
+    },
+    {
+      "name": "double_multiplication_avoided",
+      "description": "Must NOT multiply final result by 2 as the formula already accounts for both groups",
+      "expected_value": "only multiply once at the end for total (n_per_group × 2)",
+      "tolerance": null
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "expectations": [
+    {
+      "text": "Output provides sample size per group in the range 2,600–3,500",
+      "passed": true,
+      "evidence": "Output states '~3,018 users' per group (line 60), which falls within the specified range."
+    },
+    {
+      "text": "Output provides total sample size in the range 5,200–7,000",
+      "passed": true,
+      "evidence": "Output states '~6,036 users' total (line 61), which falls within the specified range."
+    },
+    {
+      "text": "Output estimates duration in the range 0.85–1.35 weeks using 5,500/week traffic",
+      "passed": true,
+      "evidence": "Output shows calculation: 6,036 / 5,500 = 1.10 weeks (lines 53-55), stated as '~1.1 weeks' (line 62), which falls within range."
+    },
+    {
+      "text": "Output explicitly uses z_beta = 1.28 (or states 90% power requires a higher z-value than 80% power)",
+      "passed": true,
+      "evidence": "Output explicitly states on line 23: 'Power: 90% → z_β = 1.28'. The formula and calculation use this value correctly (line 24: 1.96 + 1.28 = 3.24)."
+    },
+    {
+      "text": "Output result is meaningfully larger than if 80% power had been used (which would give ~2,250/group)",
+      "passed": true,
+      "evidence": "Output provides 3,018/group for 90% power. Comparison: 3,018 vs 2,250 represents a 34% increase, which is meaningful. The output demonstrates power's direct impact on sample size requirements."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 2948
+  },
+  "timing": {
+    "executor_duration_seconds": 28.7
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "Output quality is excellent: all calculations shown step-by-step with clear intermediate values.",
+      "Z-values, variance terms, and effect sizes all verified correct.",
+      "Feasibility assessment adds practical context.",
+      "All inputs and assumptions properly documented."
+    ],
+    "overall": "All assertions passed. The output provides accurate, well-documented sample size calculations for 90% power with clear step-by-step derivation. Calculations are mathematically correct and fall within all specified ranges."
+  }
+}

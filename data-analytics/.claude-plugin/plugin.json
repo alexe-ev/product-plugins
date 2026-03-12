@@ -1,0 +1,18 @@
+{
+  "name": "data-analytics",
+  "version": "1.0.0",
+  "description": "8-skill library for data analytics: metrics design, funnel analysis, dashboards, and signal detection.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "analytics",
+    "metrics",
+    "data",
+    "funnel",
+    "cohort"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

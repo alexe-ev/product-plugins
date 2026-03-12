@@ -1,0 +1,17 @@
+{
+  "name": "leadership-communication",
+  "version": "1.0.0",
+  "description": "8-skill library for leadership and communication: executive narratives, stakeholder mapping, decision frameworks, and team rituals.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "leadership",
+    "communication",
+    "stakeholders",
+    "decisions"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

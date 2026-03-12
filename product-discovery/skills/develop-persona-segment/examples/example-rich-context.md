@@ -1,63 +1,63 @@
 ## Input
 
-Product: Finly — a B2C mobile app for personal finance.
+Product: SkillBridge — an online tutoring marketplace connecting students (ages 14–22) with freelance tutors for exam prep, homework help, and skill-building sessions.
 
-Research basis: 10 user interviews (6 churned, 4 retained) synthesised. Two distinct behavioural patterns emerged from the data:
+Research basis: 12 user interviews (8 students, 4 parents who booked on behalf of their children) synthesised. Two distinct behavioural patterns emerged from the data:
 
-Pattern A: Users who set a savings goal within 3 days, return 3+ times per week, and describe the app as giving them "a sense of control." Emotional language is positive — they talk about progress, calm, feeling on top of things. No consistent demographic profile — spans income levels and employment types.
+Pattern A: Students who booked 3+ sessions within the first two weeks, always with the same tutor. Describe the value as "having someone who already knows where I'm stuck." Emotional language centres on confidence and reduced anxiety before exams. These users return consistently during exam periods and occasionally between them.
 
-Pattern B: Users who connected their bank but did not set a goal. They open the app reactively (typically after noticing unusual spend or receiving a bank notification). Describe the app as "useful to have" but not something they return to regularly. Disengagement language: "I just forgot it was there."
+Pattern B: Students who booked 1–2 sessions and did not rebook. Describe the experience as "fine but not worth the money for what I got." Typically came for a single homework problem or concept they were stuck on. Once the immediate problem was solved, saw no reason to return. Price sensitivity was high in this group.
 
-No significant demographic difference between groups. The differentiator is behavioural (goal-set vs. no goal) and motivational (progress-seeking vs. reference-checking).
+Parents in both groups described the purchase as driven by anxiety about grades, not by the child's request. In 3 of 4 parent interviews, the child did not choose the tutor or the session format.
 
 ## Expected output
 
-Persona 1: The Anxious Planner
+Persona 1: The Exam Anxious
 
-Name and archetype: Maya — The Anxious Planner
+Name and archetype: Priya — The Exam Anxious
 
 Primary goals and JTBD:
-- Goal: Feel financially in control on a regular basis without it becoming an obsession
-- JTBD: "When I receive my paycheck and start thinking about the month ahead, I want to quickly feel that my money is under control, so I can stop worrying and get on with the rest of my life."
-- Savings goal is central to this — it provides the forward-looking frame that makes the app feel useful rather than punishing
+- Goal: Feel prepared and confident before high-stakes exams without relying solely on self-study
+- JTBD: "When exams are approaching and I don't feel ready, I want structured guidance from someone who understands my gaps, so I can walk into the exam feeling confident instead of panicked."
+- Tutor consistency is central: the value is not just instruction but the relationship and context the tutor has about the student's weak areas
 
 Key pain points:
-- Spend categorisation without context feels like a judgment ("you failed again") rather than useful information
-- Gap between paydays feels like an absence of signal — nothing to check or act on
-- Financial anxiety increases when the app shows red without showing a path forward
+- Finding a tutor who "gets" them takes multiple tries, and each mismatch wastes time and money
+- Session scheduling around exam periods is competitive; preferred tutors get booked out
+- The gap between exam periods feels like wasted subscription value, creating guilt about not using the platform
 
-Context of use: Payday check-in (primary trigger), weekly planning ritual (self-created), savings goal review when anxious about spending.
+Context of use: Intensive during exam prep (2–4 weeks before exams); sporadic between exam periods. Sessions booked in clusters, typically 2–3 per week during peak periods.
 
-Behavioural patterns: Sets savings goal within first 3 days; returns 3+ times per week; responds positively to forward-looking progress signals; created own return ritual.
+Behavioural patterns: Books 3+ sessions in first two weeks; strong tutor loyalty; returns for each exam cycle; uses messaging to stay in contact with tutor between sessions.
 
-Strategic priority for the product: High. This segment activates reliably, retains, and is the most likely to convert to a paid subscription. Designing for Maya protects the core retention loop.
+Strategic priority for the product: High. This segment drives recurring revenue, has high lifetime value, and generates word-of-mouth referrals. Designing for Priya protects the core retention and rebooking loop.
 
-Evidence quality: Data-informed — consistent pattern across 4 retained user interviews; goal-setting behaviour directionally corroborated by product usage data.
+Evidence quality: Data-informed — consistent pattern across 5 student interviews; tutor loyalty behaviour directionally corroborated by rebooking data.
 
-Research gaps: How does this persona behave on a variable or irregular income, where payday is less predictable? What happens when a savings goal is missed — does anxiety increase or does the user adapt?
+Research gaps: Does this persona exist outside of exam-driven education systems? How does behaviour change after the student passes a major exam — do they churn or shift to a different use pattern? What happens when a preferred tutor leaves the platform?
 
 ---
 
-Persona 2: The Passive Tracker
+Persona 2: The Quick Fixer
 
-Name and archetype: Tom — The Passive Tracker
+Name and archetype: Alex — The Quick Fixer
 
 Primary goals and JTBD:
-- Goal: Know where money went when something feels off; avoid financial surprises
-- JTBD: "When I feel like I've overspent or something unexpected happened, I want to quickly see what the damage is so I can decide whether I need to adjust."
-- Reference tool, not a planning tool — no forward-looking frame
+- Goal: Get unstuck on a specific problem quickly without long-term commitment
+- JTBD: "When I'm stuck on a homework problem or concept and can't figure it out on my own, I want to talk to someone who can explain it right now, so I can finish my work and move on."
+- Transactional, not relational: tutor identity is irrelevant; speed and availability are what matter
 
 Key pain points:
-- No compelling reason to open the app proactively — the app doesn't surface anything Tom didn't already know
-- Budget categories feel prescriptive and judgmental, not useful
-- The concept of a savings goal feels like pressure, not motivation
+- The booking and matching process feels too heavy for a 15-minute question
+- Price per session feels too high for a single problem when free alternatives (YouTube, forums) exist
+- No way to get a quick answer without committing to a full session slot
 
-Context of use: Reactive — opens app when a bank notification triggers concern or when end-of-month spend feels unclear. No consistent return ritual.
+Context of use: Sporadic and reactive. Opens the app when stuck, usually in the evening while doing homework. No return pattern between problems.
 
-Behavioural patterns: Low session frequency (1–2 per week or fewer); no savings goal set; does not engage with budget features proactively; highest churn risk.
+Behavioural patterns: 1–2 sessions total; no tutor preference; high price sensitivity; compares against free alternatives before booking.
 
-Strategic priority for the product: Medium. Lower conversion potential in current product form. May respond to a lighter-touch value proposition or a different product mode. Worth understanding whether this segment can be shifted toward proactive engagement or whether a separate experience is needed.
+Strategic priority for the product: Medium. High volume potential but low per-user revenue in current format. May respond to a lighter product tier (quick Q&A, shorter session format, lower price point). Worth investigating whether this segment can be converted into recurring users or whether a separate product mode is needed.
 
-Evidence quality: Data-informed — consistent pattern across 4–5 churned user interviews; reactive access behaviour directionally consistent with product session data.
+Evidence quality: Data-informed — consistent pattern across 3 student interviews; single-session behaviour confirmed in booking data.
 
-Research gaps: Can this segment be shifted to proactive engagement with a different onboarding or trigger design? Is this a permanent attitudinal difference or an early-stage behaviour that changes with product education? Would a simpler, notification-led experience serve this user better?
+Research gaps: Would a cheaper, shorter session format convert this segment to repeat usage? Is this a permanent user type or an early-stage behaviour before students discover the value of tutor consistency? How large is this segment relative to the Exam Anxious segment in the overall user base?

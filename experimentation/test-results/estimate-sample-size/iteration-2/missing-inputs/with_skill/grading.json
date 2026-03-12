@@ -1,0 +1,57 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT present a single committed sample size as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)",
+      "passed": true,
+      "evidence": "Output explicitly states 'These are NOT recommendations' and presents three labeled scenarios (A, B, C) as 'Illustration Only', each with explicit assumptions. No single sample size is presented as definitive. Instead, ranges depend on MDE choice: Scenario A (~5,200), B (~13,000), C (~2,100)."
+    },
+    {
+      "text": "Output does NOT present a single committed duration estimate as a definitive answer (may offer labeled scenarios if each is clearly marked as conditional)",
+      "passed": true,
+      "evidence": "Three scenarios show durations that vary dramatically: ~1.2 weeks, ~2.9 weeks, ~0.47 weeks. Output states 'Duration estimation is blocked: Without knowing the required sample size, duration cannot be calculated' and explicitly frames durations as conditional on scenario assumptions."
+    },
+    {
+      "text": "Output explicitly identifies MDE (minimum detectable effect) as a missing input that must be confirmed",
+      "passed": true,
+      "evidence": "Section 'Missing Mandatory Inputs' item 1 explicitly identifies MDE with explanation: 'Minimum Detectable Effect (MDE) - What relative or absolute uplift would make the new design \"worth it\"?' Repeated in 'Recommended Next Steps' and summary sections."
+    },
+    {
+      "text": "Output explicitly identifies confidence level or significance level as a missing or assumed input",
+      "passed": true,
+      "evidence": "Section 'Missing Mandatory Inputs' item 2 explicitly identifies 'Confidence Level (Significance Level)' with examples: '95% confidence (α = 0.05)' and '99% confidence (α = 0.01)'. Also in 'Recommended Next Steps': 'Confirm statistical settings (or use defaults)'"
+    },
+    {
+      "text": "Output explicitly identifies statistical power as a missing or assumed input",
+      "passed": true,
+      "evidence": "Section 'Missing Mandatory Inputs' item 3 explicitly identifies 'Statistical Power' with explanation and examples: '80% power (β = 0.20)' and '90% power (β = 0.10)'. Repeated in 'Recommended Next Steps'."
+    },
+    {
+      "text": "If any numbers are given, they are explicitly framed as scenarios or examples tied to assumed inputs — NOT presented as the answer",
+      "passed": true,
+      "evidence": "All numerical estimates appear in 'Scenario Ranges (Illustration Only)' section which opens: 'To give you a sense of what different choices mean, here are illustrative scenarios. **These are NOT recommendations**.' Each scenario explicitly states assumptions (e.g., '5% relative uplift, 95% confidence, 80% power'). Numbers are introduced with scenario labels and conditional framing, not as facts."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 3738
+  },
+  "timing": {
+    "executor_duration_seconds": 36.9
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "Output quality is high: all assertions pass",
+      "MDE, confidence, and power are clearly identified as mandatory inputs with no ambiguity",
+      "Scenarios are appropriately labeled and explicitly marked as non-prescriptive",
+      "Output correctly blocks sample size and duration estimates pending input confirmation",
+      "Structure is clear and actionable with specific next steps"
+    ],
+    "overall": "PASS - Output successfully avoids committing to definitive sample size or duration estimates, explicitly identifies all three mandatory missing inputs (MDE, confidence level, power), and frames all numerical examples as conditional scenarios tied to assumed inputs. No single numbers are presented as the answer. The output is well-structured, transparent about constraints, and provides a clear path forward for the user to provide missing inputs."
+  }
+}

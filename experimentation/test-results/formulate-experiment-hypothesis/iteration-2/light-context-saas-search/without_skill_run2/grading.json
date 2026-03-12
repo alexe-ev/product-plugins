@@ -1,0 +1,11 @@
+{
+  "expectations": [
+    {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Line 8: 'If we add a search bar with intelligent filters... to the main page, then users will find their desired projects faster...'"},
+    {"text": "Missing information is explicitly listed with specific items", "passed": false, "evidence": "No dedicated missing information section. The output identifies metrics and design elements but does not list what context is unknown or needs confirmation."},
+    {"text": "Confidence level is stated as provisional or context-informed", "passed": false, "evidence": "No confidence level label appears anywhere in the output."},
+    {"text": "Target segment uncertainty is acknowledged", "passed": false, "evidence": "No mention of target segment uncertainty. Users are treated generically without acknowledging that the specific affected segment is unknown."},
+    {"text": "No fabricated quantitative impact numbers", "passed": false, "evidence": "Lines 66-67: Fabricated success criteria — '30% adoption rate within 2 weeks', 'time to find project reduced by ≥20%'."},
+    {"text": "Downstream handoff or next steps mentioned", "passed": true, "evidence": "Lines 57-63: 'Experiment Setup Recommendations' with 5 specific items including MVP approach, analytics, user testing, A/B testing, and rollout strategy."}
+  ],
+  "summary": {"passed": 2, "failed": 4, "total": 6, "pass_rate": 0.33}
+}

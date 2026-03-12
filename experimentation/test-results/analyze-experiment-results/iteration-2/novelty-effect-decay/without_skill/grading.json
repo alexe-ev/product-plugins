@@ -1,0 +1,37 @@
+{
+  "expectations": [
+    {
+      "assertion_id": 1,
+      "text": "Output explicitly identifies the week-over-week decay pattern (Week 1: +17%, Week 2: +2.3%) as a potential novelty or primacy effect",
+      "passed": true,
+      "evidence": "The response explicitly states: 'This sharp decay from Week 1 to Week 2 suggests a novelty or primacy effect—users may initially respond positively to the change itself rather than deriving sustained, lasting value from the redesign.' Week 1 (+17% relative) and Week 2 (+2.3% relative) figures are cited directly."
+    },
+    {
+      "assertion_id": 2,
+      "text": "Output notes that the Week 2 result (+1pp, +2.3%) is likely not statistically significant on its own and may represent true steady-state effect",
+      "passed": true,
+      "evidence": "Response states: 'The Week 2 result in isolation (+1pp, +2.3%) is unlikely to be statistically significant on its own given the smaller observed effect size.' It also notes this 'may represent the true steady-state effect.'"
+    },
+    {
+      "assertion_id": 3,
+      "text": "Output does NOT give a clean 'ship it' recommendation despite p=0.004 significance and clean guardrails",
+      "passed": true,
+      "evidence": "Response explicitly states: 'I would not recommend shipping yet despite the overall p-value.' The recommendation explicitly avoids a clean approval despite acknowledging statistical significance and clean guardrails."
+    },
+    {
+      "assertion_id": 4,
+      "text": "Output recommends extending test by ≥1 week OR post-launch monitoring with rollback threshold",
+      "passed": true,
+      "evidence": "Response provides both options: (1) 'Extend the test by at least 1-2 additional weeks' and (2) 'implement post-launch monitoring with a clear rollback threshold—for example, if engagement drops below a certain level after launch, be prepared to revert.'"
+    },
+    {
+      "assertion_id": 5,
+      "text": "Output classifies result as 'Positive with caution' or 'Inconclusive pending decay analysis'—not straightforward positive",
+      "passed": true,
+      "evidence": "Response explicitly classifies as: 'Positive with Caution — The result shows promise but the decay pattern prevents a clean \"ship it\" decision without additional evidence of sustained benefit.'"
+    }
+  ],
+  "overall_score": 5,
+  "total_assertions": 5,
+  "grade": "PASS"
+}

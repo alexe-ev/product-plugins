@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly flags the post-hoc metric switch — the planned metric (checkout completion) failed to reach significance and the team switched to reporting revenue per session instead",
+      "passed": true,
+      "evidence": "The output clearly states 'RED FLAG: The team has engaged in metric switching' and explicitly documents: Planned metric (checkout completion, p=0.18, NOT significant) vs. Post-hoc pivot (revenue per session, p=0.031, significant). This is flagged in the opening section and reinforced in 'What Happened'."
+    },
+    {
+      "text": "Output explains that discovering and reporting a significant result after the planned metric failed inflates false positive risk (multiple comparisons, HARKing, or p-hacking)",
+      "passed": true,
+      "evidence": "The output provides a detailed explanation under 'Multiple Comparisons & HARKing', covering: (1) uncontrolled statistical testing without correction, (2) selection bias and p-hacking, and (3) the risk of post-hoc story-building. Specifically states: 'the probability that at least one passes p < 0.05 by chance alone is much higher than 5%' and describes this as 'a form of p-hacking.'"
+    },
+    {
+      "text": "Output does NOT validate the revenue per session finding as a reliable primary basis for the shipping decision",
+      "passed": true,
+      "evidence": "The output explicitly states under 'Reliability of the Revenue Finding': 'The revenue per session result cannot serve as a trustworthy primary basis for shipping' and lists multiple reasons (unregistered hypothesis, single observation, no correction, vulnerable to noise). This directly rejects using the post-hoc finding for the shipping decision."
+    },
+    {
+      "text": "Output recommends treating the revenue finding as hypothesis-generating — a candidate for a follow-up test where revenue is pre-registered as the primary metric",
+      "passed": true,
+      "evidence": "The 'Recommendation' section explicitly states: 'This finding should be: (1) Acknowledged as an interesting post-hoc signal worth investigating (2) Registered as the primary metric in a follow-up experiment with revenue per session pre-specified as the primary outcome... (3) Not used as the primary justification for shipping this design now.' This directly matches the assertion."
+    },
+    {
+      "text": "Output classifies the metric switch as at least a Manageable or Fatal quality risk, not dismisses it as acceptable because 'revenue is more meaningful'",
+      "passed": true,
+      "evidence": "The output classifies the risk as 'FATAL' and explicitly rejects the 'revenue matters more' argument: 'A $1.40 revenue lift *sounds* meaningful and aligns with business intuition (\"revenue matters more\"), but this narrative can emerge *from the data* rather than from genuine user behavior change.' The fatal risk classification stands independent of whether revenue has business value."
+    }
+  ]
+}

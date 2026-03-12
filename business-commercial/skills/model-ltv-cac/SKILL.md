@@ -22,21 +22,24 @@ Conceptual skill with calculation-aware components
 - The goal is pricing structure (use support-pricing-packaging)
 
 ## Required inputs
-- Average revenue per customer (monthly or annual)
-- Gross margin
-- Average customer lifetime or churn rate
-- CAC estimate
+- Cohort-level gross profit data over time (preferred), OR:
+  - Average revenue per customer (monthly or annual)
+  - Gross margin
+  - Churn rate (for the simplified formula — subscription models only)
+- CAC estimate (total S&M spend and new customers acquired)
 
 ## Optional inputs
 - CAC breakdown by channel
 - LTV by segment or cohort
 - Payback period data
 - Industry benchmarks
+- Early cohort data for LTV prediction
 
 ## Upstream context
 Works best when:
 - Revenue model is defined
-- Churn data exists
+- Cohort-level data or churn data exists
+- Gross margin is known (not assumed)
 
 ## Downstream handoff
 Output can feed:
@@ -45,26 +48,33 @@ Output can feed:
 - strategize-channel-campaigns (CAC by channel feeds channel strategy)
 
 ## Instructions
-1. Calculate LTV: (Average Revenue per Customer × Gross Margin) ÷ Churn Rate.
-2. Calculate CAC: Total Sales and Marketing Spend ÷ New Customers Acquired.
-3. Calculate LTV:CAC ratio and payback period.
-4. Assess the ratio against benchmarks (typically: >3x LTV:CAC is healthy; <12 month payback is strong).
+1. Determine available data: cohort-level gross profit data, or aggregate metrics (ARPU, churn, margin).
+2. Calculate LTV using the appropriate method:
+   - **Cohort method (preferred):** calculate cumulative gross profit per user over time from cohort data. Present LTV at specific time horizons (month 6, month 12, etc.).
+   - **Simplified formula (subscription models with stable churn only):** (ARPU × Gross Margin) ÷ Churn Rate. State all assumptions. Flag that this is an estimate.
+3. Calculate CAC: Total Sales and Marketing Spend ÷ New Customers Acquired.
+4. Calculate LTV:CAC ratio and payback period. Always specify the LTV time horizon used.
 5. Break down CAC by channel if data allows.
-6. Identify the biggest levers to improve the ratio.
-7. Model what the ratio looks like at different scale or with proposed changes.
+6. Assess the ratio against benchmarks (typically: >3x LTV:CAC is healthy; <12 month payback is strong).
+7. Identify the biggest levers to improve the ratio.
+8. If early cohort data is available, describe how to predict long-term LTV from short-term signals.
 
 ## Output
 Provide:
-- LTV calculation with inputs and formula
+- LTV calculation with method stated (cohort or simplified), inputs, and time horizon
 - CAC calculation with inputs
 - LTV:CAC ratio and payback period
 - Benchmark comparison
 - Ratio interpretation (healthy / marginal / unsustainable)
 - CAC by channel (if available)
 - Top improvement levers with estimated impact
-- Model at different scale or with proposed changes
+- Key assumptions and their sensitivity
+- Recommendation for which data to collect if inputs are incomplete
 
 ## Risks / caveats
-- LTV is often overestimated with optimistic churn assumptions — use actual cohort data
+- LTV based on revenue instead of gross profit overstates customer value — always use gross profit
+- The simplified formula (ARPU × Margin / Churn) assumes constant churn, which rarely holds — prefer cohort-based LTV when data is available
+- "Lifetime = 1 / Churn" is a rough estimate, not a measured quantity — do not treat it as precise
 - CAC must include all S&M costs, not just paid advertising
 - LTV:CAC above 10x sometimes signals underinvestment in growth, not just efficiency
+- LTV without a specified time horizon is meaningless — always state the period

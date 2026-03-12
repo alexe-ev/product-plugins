@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains two separate hypotheses, not a single bundled one",
+      "passed": true,
+      "evidence": "Hypothesis 1 (lines 22-62) and Hypothesis 2 (lines 65-108) are clearly separated with independent mechanisms. H1 focuses on video reviews as trust catalyst; H2 focuses on checkout simplification as friction removal. Summary table (lines 165-178) displays them as distinct hypotheses with separate mechanisms and estimated lifts."
+    },
+    {
+      "text": "Each hypothesis follows 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "H1 (lines 24-27): 'If we add seller video reviews to product cards for Android smartphone buyers, we expect product card to purchase conversion rate to increase, because video social proof reduces purchase uncertainty and builds trust before checkout.' H2 (lines 67-70): 'If we reduce checkout steps from 4 to 2 for Android smartphone buyers, we expect product card to purchase conversion rate to increase, because removing friction in the final funnel stage reduces abandonment at critical decision points.'"
+    },
+    {
+      "text": "Target segment is identified for each hypothesis",
+      "passed": true,
+      "evidence": "H1 target segment (line 29): 'Android users purchasing smartphones on mobile web'. H2 target segment (line 72): 'Android users purchasing smartphones on mobile web'. Also shown in summary table (lines 170-171)."
+    },
+    {
+      "text": "Primary metric is identified for each hypothesis",
+      "passed": true,
+      "evidence": "H1 primary metric (line 32): 'Product card to purchase conversion rate (%)'. H2 primary metric (line 75): 'Product card to purchase conversion rate (%)'. Also in summary table (lines 171-172)."
+    },
+    {
+      "text": "Expected direction is stated for each hypothesis",
+      "passed": true,
+      "evidence": "H1 expected direction (line 35): 'Increase'. H2 expected direction (line 78): 'Increase'. Both confirmed in summary table (lines 172-173)."
+    },
+    {
+      "text": "Causal mechanism is explained for each hypothesis",
+      "passed": true,
+      "evidence": "H1 mechanism (lines 38-42): 'Video reviews provide dynamic, credible social proof; Smartphone buyers often research through video; Video authenticity may reduce perceived risk; Reduces cognitive load compared to reading text reviews.' H2 mechanism (lines 81-86): 'Checkout abandonment is a known friction point; Mobile checkout is particularly sensitive to step count; Reducing steps from 4 to 2 is substantial (50% reduction); Users who reach checkout have already committed to purchase; Aggregating or removing low-value steps preserves data quality while reducing friction.'"
+    },
+    {
+      "text": "Missing information section is present",
+      "passed": true,
+      "evidence": "H1 missing information (lines 49-54): Current video completion rate, whether seller videos exist, mobile bandwidth constraints, autoplay vs interaction, guardrails for content quality. H2 missing information (lines 93-100): Which 2 of 4 steps retained, drop-off by step, Android-specific friction patterns, mobile form input challenges, first-time vs all buyers, guest vs account checkout, payment method options."
+    },
+    {
+      "text": "The user's 5% target is not accepted uncritically as a guaranteed outcome",
+      "passed": true,
+      "evidence": "Output provides estimated ranges: H1 '+0.5% to +1.5% absolute conversion' (line 45); H2 '+1.0% to +2.0% absolute conversion' (line 89). Combined table (line 174) states estimated lifts are '+0.5% to +1.5%' and '+1.0% to +2.0%', totaling to potential 1.5-3.5% uplift against 1.8% target needed. Explicitly notes 'uplift assumption partially justified' (lines 61, 107)."
+    },
+    {
+      "text": "Confidence level is explicitly stated",
+      "passed": true,
+      "evidence": "H1 confidence level (lines 56-61): 'Context-informed - Rich input provided (current metric, segment, platform, category); Clear causal mechanism (video trust → reduced uncertainty); Plausible for this product category (used electronics); Quantified uplift assumption partially justified'. H2 confidence level (lines 102-107): 'Context-informed - Rich input provided (current metric, segment, platform, clear intervention); Clear causal mechanism (friction reduction → lower abandonment); Well-established pattern in e-commerce (fewer steps = higher completion); Quantified uplift assumption partially justified.'"
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 0,
+    "total": 9,
+    "pass_rate": 1.00
+  }
+}

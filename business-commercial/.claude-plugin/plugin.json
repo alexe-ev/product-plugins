@@ -1,0 +1,18 @@
+{
+  "name": "business-commercial",
+  "version": "1.0.0",
+  "description": "8-skill library for business and commercial decisions: unit economics, LTV/CAC, forecasting, ROI, and revenue strategy.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "business",
+    "commercial",
+    "revenue",
+    "economics",
+    "finance"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

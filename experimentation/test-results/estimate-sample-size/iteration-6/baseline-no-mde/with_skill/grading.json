@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly identifies MDE (minimum detectable effect) as a missing required input",
+      "passed": true,
+      "evidence": "Output has a dedicated section titled 'Missing Required Input: Minimum Detectable Effect (MDE)' that explicitly states: 'What's **not** specified is the **minimum detectable effect**' and explains why it's needed."
+    },
+    {
+      "text": "Output does NOT commit to a single sample size as the definitive answer",
+      "passed": true,
+      "evidence": "Output explicitly states 'Without a defined MDE, I cannot give you a single sample size' and provides scenario-based estimates instead of a single committed answer."
+    },
+    {
+      "text": "Output provides labeled scenario estimates for at least 2 different MDE assumptions, each clearly tied to an assumed MDE value",
+      "passed": true,
+      "evidence": "Output provides three labeled scenarios (A, B, C) with distinct MDE values: +0.5pp (8.2% → 8.7%), +1.0pp (8.2% → 9.2%), and +2.0pp (8.2% → 10.2%). Each scenario is clearly labeled with the assumed MDE and resulting sample sizes."
+    },
+    {
+      "text": "Output explains why MDE matters for the calculation (larger effect → smaller sample needed)",
+      "passed": true,
+      "evidence": "Output explicitly explains the inverse relationship: 'Larger improvements require fewer users (detecting a 2pp uplift needs a much smaller sample than detecting a 0.2pp uplift)' and 'Smaller improvements require more users'. The section 'Why This Matters for Your Decision' reinforces this: 'As you can see, the required sample size scales dramatically with the size of the effect you want to detect.'"
+    },
+    {
+      "text": "Output does NOT generate a single committed duration estimate as if the sample size were determined",
+      "passed": true,
+      "evidence": "Output provides duration estimates only as part of scenario analysis (11.9 weeks for Scenario A, 3.0 weeks for Scenario B, 0.8 weeks for Scenario C). Durations are tied to specific MDE assumptions, not presented as a single committed duration."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output identifies that extending the test duration from 21 to 25 days because 'results weren't conclusive enough' constitutes flexible stopping — the team acted on interim results",
+      "passed": true,
+      "evidence": "Output explicitly identifies 'Flexible Stopping (Primary Risk)' and quotes the outcome-dependent decision: 'Results weren't conclusive enough at the 3-week mark, so we gave it a few more days' and 'stopped when results looked clearer on day 25'"
+    },
+    {
+      "text": "Output does NOT give a 'Trust' or 'High confidence' verdict given the stopping decision was outcome-dependent",
+      "passed": true,
+      "evidence": "Output verdict is 'Low to Manageable Confidence' and recommendation is 'Treat Cautiously' — explicitly rejects trust certification"
+    },
+    {
+      "text": "Output distinguishes between passive daily monitoring (acceptable) and acting on interim results by extending the test window (a validity risk)",
+      "passed": true,
+      "evidence": "Output states 'The team monitored daily and made a stopping decision based on how conclusive the results appeared' and explicitly notes this 'violates the principle that stopping should follow a predetermined rule, not result appearance'"
+    },
+    {
+      "text": "Output classifies the stopping behaviour as at least a Manageable risk, or stronger — not dismisses it as irrelevant",
+      "passed": true,
+      "evidence": "Output classifies flexible stopping as 'Primary Risk' under 'Major Risks' section and marks it as 'Manageable but Serious' in Fatal vs Manageable section"
+    },
+    {
+      "text": "Output recommends 'Treat cautiously' or equivalent, and suggests pre-committing stopping rules in future experiments",
+      "passed": true,
+      "evidence": "Output explicitly recommends 'Treat Cautiously' and advises 'Verify the result through a fresh rerun with predefined sample size AND stopping rule'"
+    }
+  ]
+}

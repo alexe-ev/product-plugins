@@ -1,43 +1,43 @@
 ## Input
 
-Product: Finly — a B2C mobile app for personal finance.
+Product: Petly — a B2C marketplace connecting pet owners with local service providers (groomers, walkers, sitters, vets).
 
-Observations from 10 user interviews (6 churned, 4 retained):
+Observations from 10 user interviews (5 churned, 5 retained):
 
-1. "I connected my bank and checked it a couple of times and then just... forgot about it." — 6 of 10 users
-2. "I like seeing my savings go up, even if it's slow. It gives me a reason to check in." — 3 of 4 retained users
-3. "It shows me I overspent on food but doesn't tell me what to do about it." — 5 of 10 users
-4. "After payday I feel like I should look at my finances but I don't know where to start." — 4 of 10 users
-5. "Honestly it kind of made me feel bad about myself, so I stopped opening it." — 2 churned users
-6. All 4 retained users described a self-created weekly or payday check-in ritual. No churned user described a consistent return trigger.
-7. All 4 retained users set a savings goal within the first 3 days. Only 1 of 6 churned users did.
+1. "I booked a dog walker once but I didn't know them and it felt weird handing over my keys." — 4 of 10 users
+2. "Once I found a groomer my dog was comfortable with, I never searched again. I just rebook." — 4 of 5 retained users
+3. "The ratings don't tell me anything. Everyone has 4.8 stars." — 6 of 10 users
+4. "I signed up because I needed someone last minute, but the soonest available was three days later." — 3 of 10 users
+5. "Honestly I just ask my neighbour now. At least I know them." — 3 of 5 churned users
+6. All 5 retained users described their primary provider by name and personal details ("she always sends me photos"). No churned user mentioned a provider by name.
+7. 4 of 5 retained users found their primary provider through a recommendation from a friend, not through the app's search or ranking.
 
-Prior assumption the team held: Churn was assumed to be caused by UX friction during onboarding or setup complexity.
+Prior assumption the team held: Churn was assumed to be caused by insufficient provider supply or poor search results.
 
 ## Expected output
 
-Insight 1: Users who set a savings goal in the first 3 days retain significantly better — goal-setting is the mechanism that transforms the app from a ledger into a progress tool.
-- Supporting evidence: All 4 retained users set a goal within 3 days; only 1 of 6 churned users did. Retained users explicitly reference goals when describing why they return. Churned users describe no such frame.
-- Evidence quality: Pattern — consistent across 4+ data points; directional correlation, not statistically proven.
+Insight 1: Trust, not supply, is the primary barrier to first booking. Pet owners are entrusting a stranger with their home and their animal, and the platform provides no meaningful trust signal beyond a generic star rating.
+- Supporting evidence: "It felt weird handing over my keys" — 4 of 10 users. Churned users defaulted to known alternatives (neighbours) rather than booking from the app. No churned user mentioned lack of providers as the reason for leaving.
+- Evidence quality: Pattern — consistent across 4+ data points; trust language spontaneous and unprompted.
 
-Insight 2: Spend categorisation without a forward-looking context creates a judgment experience, not a control experience — users see what went wrong but have no path to what to do next.
-- Supporting evidence: "It shows me I overspent but doesn't tell me what to do about it" — 5 of 10 users. Churned users disproportionately used negative emotional language ("feel bad about myself") when describing spend tracking.
-- Evidence quality: Pattern — 5 of 10 direct quotes; emotional framing consistent across churned group.
+Insight 2: The marketplace's value shifts entirely after the first successful match. Once a pet owner finds a provider they trust, they stop searching and the app becomes a rebooking tool, not a discovery tool.
+- Supporting evidence: 4 of 5 retained users described rebooking the same provider repeatedly. No retained user was actively browsing or comparing providers. The app's search and ranking features are irrelevant to retained users.
+- Evidence quality: Pattern — complete behavioural split between retained (rebooking) and churned (never found a match) groups.
 
-Insight 3: Finly has no built-in re-entry trigger — retained users succeed because they created their own ritual; churned users had nothing to pull them back.
-- Supporting evidence: All 4 retained users described a self-made ritual (payday check-in, Sunday planning). Zero churned users described any consistent return moment.
-- Evidence quality: Pattern — complete split between retained and churned groups on this dimension.
+Insight 3: Star ratings provide no differentiation and therefore no decision support. When every provider has 4.8 stars, the rating system fails its primary function.
+- Supporting evidence: "The ratings don't tell me anything" — 6 of 10 users. No user described ratings as useful in their decision. Retained users found their provider through personal recommendation, bypassing the rating system entirely.
+- Evidence quality: Strongly supported — 6 of 10 interviews; consistent across both retained and churned groups.
 
-Insight 4: Payday is a high-motivation moment for financial engagement that the product is not currently capitalising on.
-- Supporting evidence: 4 of 10 users spontaneously mentioned payday as the moment they feel most motivated to engage with their finances. No current Finly feature or notification addresses this specific moment.
-- Evidence quality: Pattern — 4 of 10 spontaneous mentions; not prompted by interviewer.
+Insight 4: Most retained users found their provider through off-platform recommendations, not through the app. The platform's own discovery mechanism is not producing successful matches.
+- Supporting evidence: 4 of 5 retained users found their primary provider through a friend's recommendation. The app's search, filters, and ranking were not the path to match for the majority of successful relationships.
+- Evidence quality: Pattern — 4 of 5 retained users; suggests the marketplace's core matching function is underperforming.
 
-Insight 5: Financial anxiety is the primary emotional context in which Finly is used — the product either reduces it or amplifies it depending on whether the user has a savings goal.
-- Supporting evidence: Emotional language (anxious, stressed, in control, on top of things) appeared in 8 of 10 interviews. The valence split cleanly between retained (positive) and churned (negative) users.
-- Evidence quality: Strongly supported — 8 of 10 interviews; clean directional split.
+Insight 5: Urgency-driven sign-ups encounter availability gaps that immediately invalidate the value proposition. Users who need someone today are told the soonest option is days away.
+- Supporting evidence: "I needed someone last minute, but the soonest available was three days later" — 3 of 10 users. These users described the experience as a deal-breaker, not a minor inconvenience.
+- Evidence quality: Pattern — 3 of 10 users; consistent emotional response (frustration turning to abandonment).
 
-Contradictory or complicating data: One churned user did not describe anxiety or negative emotion. They described low engagement as "I just wasn't thinking about money at all" — no negative experience, simply low motivation. This may indicate a distinct low-engagement segment not captured by the anxiety frame. Worth investigating separately.
+Contradictory or complicating data: One retained user continued using the app despite never finding a single preferred provider. They described booking different walkers each time and not minding the variation. This user may represent a distinct low-attachment segment where convenience matters more than trust. Worth investigating whether this pattern exists at scale or is an outlier.
 
-What changes relative to prior assumptions: The team assumed churn was caused by UX friction or setup complexity. The data suggests the cause is motivational, not navigational — users are not confused by the product; they are not compelled to return to it. This changes the nature of the solution space: UX improvements alone are unlikely to resolve the retention problem.
+What changes relative to prior assumptions: The team assumed churn was caused by insufficient provider supply. The data suggests the cause is a trust gap at the point of first booking, not a supply gap. Users are not failing to find providers — they are failing to trust them enough to book. This reframes the solution space from "add more providers" to "make providers trustworthy before the first booking."
 
-Gaps: No data on whether notifications drive return visits. Variable income users not included. Long-term retention dynamics (beyond 30 days) not explored. No competitive context — users mentioned spreadsheets and bank apps as alternatives but were not asked to compare in depth.
+Gaps: No data on provider-side experience — what do providers see and how does it affect their availability and responsiveness? No data on whether verified reviews or provider video introductions would reduce the trust gap. Urgency use case not explored in depth — would same-day availability change the acquisition and retention curve? Geographic variation not explored.

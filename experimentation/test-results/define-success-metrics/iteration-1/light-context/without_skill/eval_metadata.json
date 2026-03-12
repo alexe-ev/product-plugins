@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "light-context",
+  "prompt": "I need success metrics for an experiment. Hypothesis: If we simplify sign-up, activation will increase.",
+  "assertions": [
+    "Output identifies activation rate as the likely primary metric",
+    "Output explicitly marks key parts as provisional due to missing context",
+    "Output asks for or notes missing information (activation definition, funnel stage)",
+    "Output includes guardrail metrics",
+    "Output warns that success threshold must be confirmed before planning",
+    "Output does NOT confidently lock a single metric as if context were complete"
+  ]
+}

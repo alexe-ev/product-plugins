@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly identifies standard deviation (SD) as a missing required input for this continuous metric",
+      "passed": true,
+      "evidence": "Response states: 'I cannot provide a single definitive sample size without the standard deviation (SD) of your baseline metric.' The entire 'Critical Missing Input: Standard Deviation' section flags SD as required and missing."
+    },
+    {
+      "text": "Output does NOT commit to a single sample size without clearly flagging the SD assumption",
+      "passed": true,
+      "evidence": "Response avoids stating a single sample size. Instead, it presents 5 scenario estimates in a table, each explicitly labeled with the assumed SD value (1.5 min, 2.0 min, 3.0 min, 4.0 min, 5.0 min). Each row clearly shows the SD assumption before any n is provided."
+    },
+    {
+      "text": "Output explains how to obtain SD (historical data, pilot test, prior experiments) or what information would enable a reliable estimate",
+      "passed": true,
+      "evidence": "The 'How to Obtain Standard Deviation' section provides 4 concrete methods: (1) Historical Data (recommended), (2) Pilot Test, (3) Prior Experiments, and (4) Benchmarking. Each includes a brief explanation of how to execute it."
+    },
+    {
+      "text": "If providing scenario estimates, each scenario is clearly labeled with the assumed SD value",
+      "passed": true,
+      "evidence": "The scenario table has a column 'Assumed SD' that explicitly labels each row with the SD value used (1.5 min through 5.0 min). All scenarios are tied directly to their SD assumptions before sample sizes are shown."
+    },
+    {
+      "text": "Output does NOT fabricate a specific SD and present the result as a reliable answer",
+      "passed": true,
+      "evidence": "The response does not make up an SD value. It explicitly states the SD is unknown and recommends historical data as the preferred method to determine it. Scenarios are presented as illustrative sensitivity analysis, not as a recommended answer."
+    }
+  ]
+}

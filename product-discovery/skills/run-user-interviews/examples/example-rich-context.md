@@ -1,55 +1,54 @@
 ## Input
 
-Product: Finly — a B2C mobile app for personal finance.
+Product: Rentr — a B2C marketplace for long-term apartment rentals in major European cities. Tenants search listings, schedule viewings, and sign leases through the platform.
 
-Research goal: Understand why new users disengage after their first week — to inform a product decision between investing in progress visibility features or redesigning the re-entry notification system.
+Research goal: Understand why tenants who complete 3+ viewing requests rarely sign a lease through the platform — to inform a product decision between improving the viewing-to-lease conversion flow or investing in better listing quality and transparency.
 
-Target segment: New Finly users who signed up in the last 90 days. Mix of churned (no sessions after day 7) and retained (3+ sessions in first two weeks). All connected at least one bank account.
+Target segment: Tenants who registered on Rentr in the last 6 months and requested at least 3 viewings but did not sign a lease through the platform. Mix of users who found a place elsewhere (5 interviews) and users still searching (3 interviews).
 
-Number of interviews: 8 total (4 churned, 4 retained). Hypothesis to explore (not test): users don't see progress quickly enough to feel motivated to return.
+Number of interviews: 8 total. Hypothesis to explore (not test): tenants lose trust in the platform during the viewing stage because listings don't match reality.
 
 ## Expected output
 
-Research goal: Understand the motivations, expectations, and friction points of new users in their first two weeks — to determine whether progress visibility or re-entry triggers are the higher-impact investment for improving Day 14 retention.
+Research goal: Understand the motivations, expectations, and friction points tenants experience between requesting a viewing and signing a lease — to determine whether the conversion gap is caused by poor listing quality, a broken viewing experience, or tenants completing the transaction off-platform.
 
-Decisions this research will inform: Build direction choice between progress tracking feature and notification redesign.
+Decisions this research will inform: Build direction choice between listing quality enforcement (verification, standardised photos) and viewing-to-lease flow improvements (in-app scheduling, digital lease signing).
 
 Participant profile:
-- New Finly users (signed up in last 90 days)
-- Group A (4 interviews): Churned — no session recorded after day 7
-- Group B (4 interviews): Retained — 3 or more sessions in the first two weeks
-- All: Connected at least one bank account
-- Age range: 22–32; any income level or employment type
+- Tenants registered on Rentr in the last 6 months
+- Group A (5 interviews): Found a place elsewhere — completed at least 3 viewing requests on Rentr but signed a lease off-platform or through another channel
+- Group B (3 interviews): Still searching — completed at least 3 viewing requests and remain active on the platform
+- All: Located in cities where Rentr operates; any age, income, or household type
 
-Recruiting criteria: Pull from sign-up cohort in product database. Email churned users with a small incentive (e.g. gift card) to improve response rate. Retained users can be reached via in-app prompt.
+Recruiting criteria: Pull from viewing-request data in the product database. Email Group A with a small incentive (gift card). Group B can be reached via in-app notification.
 
-Target number: 8 interviews (4 per group). This is sufficient to identify consistent patterns within each behavioural group. Add 2 more if patterns are unclear after first 6.
+Target number: 8 interviews (5 + 3 split). This is sufficient to identify consistent patterns across both groups. Add 2 more to Group A if patterns are unclear after first 6.
 
 Interview guide:
 
 Warm-up (5 min):
-- "Tell me a bit about how you manage your money day-to-day — not about any app, just in general."
-- "What made you decide to look for a personal finance app?"
+- "Tell me about the last time you moved or looked for a place to rent. What was that experience like?"
+- "What made you try Rentr specifically?"
 
 Context-setting (10 min):
-- "Walk me through the first time you opened Finly — what were you expecting to happen?"
-- "What did you actually do in the first few days after signing up?"
-- "Did anything surprise you about the experience, positively or negatively?"
+- "Walk me through your first few days using Rentr. What were you looking for and how did you search?"
+- "How did you decide which places to request a viewing for?"
+- "Did the listings give you enough information to feel confident requesting a viewing?"
 
 Core questions (20 min):
-- "Tell me about a moment when you felt the app was genuinely useful to you."
-- "Tell me about a moment when you thought about opening the app but chose not to. What was going on?"
-- "What does a useful week with a finance app look like to you — what would it give you?"
-- "If you stepped away from the app for a while, what was happening at that point?"
-- (For retained only) "You've kept coming back — what keeps bringing you back?"
-- (For churned only) "If the app had done one thing differently in that first week, what might have kept you using it?"
+- "Tell me about a viewing that went well. What made it good?"
+- "Tell me about a viewing that was disappointing. What happened?"
+- "After a viewing, what happened next? Walk me through the steps between seeing the place and making a decision."
+- "Was there a moment when you considered completing the process outside of Rentr — through the landlord directly, or another channel? What drove that?"
+- (For Group A) "You ended up finding a place elsewhere. What was different about that experience?"
+- (For Group B) "You're still searching. What's keeping you on Rentr, and what's frustrating you?"
 
 Wrap-up (5 min):
-- "Is there anything you wish a finance app would do that none of them currently does?"
-- "What do you use instead when you want to think about your money or spending?"
+- "If you could change one thing about how apartment search platforms work, what would it be?"
+- "What do you use besides Rentr when looking for a place — and why?"
 
-Note-taking protocol: Assign one dedicated note-taker per session. Capture direct quotes in a separate column from paraphrased observations. Tag each note with the relevant research question (Q1–Q3). Flag emotional language (anxiety, frustration, confidence) for later theme mapping.
+Note-taking protocol: Assign one dedicated note-taker per session. Capture direct quotes in a separate column from paraphrased observations. Tag each note with the relevant research question. Flag moments where the tenant described going off-platform and the reason.
 
-Synthesis plan: Run an affinity mapping session within 48 hours of the final interview. Organise notes by theme, not by participant. Separate observations (what users said or did) from interpretations (what it means). Produce top 3–5 insights within one week of completing interviews.
+Synthesis plan: Run an affinity mapping session within 48 hours of the final interview. Organise notes by theme, not by participant. Separate observations from interpretations. Produce top 3–5 insights within one week of completing interviews.
 
-Number of interviews and rationale: 8 interviews (4 churned, 4 retained) is sufficient for initial pattern saturation when comparing two distinct behavioural groups. The contrast between churned and retained responses is the primary analytical lens.
+Number of interviews and rationale: 8 interviews across two behavioural groups is sufficient for initial pattern saturation. The contrast between tenants who left the platform and those who stayed is the primary analytical lens.

@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Lines 9-10: 'If we implement a search bar with category/status/team filters on the main dashboard, then users will be able to find their target project 50% faster than before, resulting in a measurable decrease in time-to-project-access and improved user satisfaction scores.'"
+    },
+    {
+      "text": "Missing information is explicitly listed with specific items",
+      "passed": false,
+      "evidence": "The output contains 'Assumptions' (lines 12-17), 'Key Metrics' (lines 19-26), 'Success Criteria' (lines 28-32), and 'Risks & Considerations' (lines 43-48), but NO section explicitly labeled 'Missing Information,' 'Gaps,' or 'Unknowns.' Assumptions are assumptions, not explicitly listed missing information."
+    },
+    {
+      "text": "Confidence level is stated as provisional or context-informed",
+      "passed": false,
+      "evidence": "No confidence level statement found in the output. No mention of 'provisional,' 'context-informed,' 'uncertain,' or similar language."
+    },
+    {
+      "text": "Target segment uncertainty is acknowledged",
+      "passed": false,
+      "evidence": "No explicit acknowledgment of target segment uncertainty. Line 10 makes a specific claim ('50% faster') without acknowledging which segment this applies to or segment uncertainty."
+    },
+    {
+      "text": "No fabricated quantitative impact numbers",
+      "passed": false,
+      "evidence": "Line 10: '50% faster'; Line 30: '40% of users adopt... within 2 weeks'; Line 30: 'decreases by 30-50%'; Line 31: 'improve by 2+ points'; Line 32: '<5% error rate'. These specific success criteria numbers are presented without explicit caveats about missing baseline data."
+    },
+    {
+      "text": "Downstream handoff or next steps mentioned",
+      "passed": true,
+      "evidence": "Lines 50-56: 'Next Steps' section with 6 items outlining validation, filter determination, prototype creation, experiment setup, analytics tracking, and A/B testing."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 4,
+    "total": 6,
+    "pass_rate": 0.33
+  }
+}

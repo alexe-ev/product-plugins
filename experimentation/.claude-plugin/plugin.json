@@ -1,0 +1,17 @@
+{
+  "name": "experimentation",
+  "version": "1.0.0",
+  "description": "8-skill library for product experimentation: hypothesis formulation, sample sizing, experiment design, and result analysis.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "experimentation",
+    "ab-test",
+    "hypothesis",
+    "statistics"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

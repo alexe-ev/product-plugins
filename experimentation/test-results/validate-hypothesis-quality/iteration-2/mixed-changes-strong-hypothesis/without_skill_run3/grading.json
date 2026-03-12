@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Output identifies that two changes are mixed into one hypothesis (personalized recommendations + simplified navigation)", "passed": true, "evidence": "Testability section: 'Two simultaneous changes make it harder to isolate which change drives the result'"},
+    {"text": "Verdict is NOT 'valid for experiment design' — should be 'weak' or 'valid for exploration'", "passed": false, "evidence": "Decision Framework: 'Run Experiment Now? Conditional: YES, but with reservations' — verdict leans toward conditionally ready"},
+    {"text": "Output suggests splitting into two separate hypotheses", "passed": false, "evidence": "Does not suggest splitting — recommends specifying each change better, but not separating them into two hypotheses"},
+    {"text": "The 15% effect size is questioned or flagged as needing evidence basis", "passed": true, "evidence": "'Is 15% realistic? Based on benchmarking or estimation?' and 'Consider 5-10% as more conservative'"},
+    {"text": "A readiness statement is present and explicitly says NOT ready for experiment design", "passed": false, "evidence": "Verdict is 'Conditional YES, with reservations' — not an explicit NOT ready statement"},
+    {"text": "Output does not include experiment design elements such as sample size, test duration, or traffic splits", "passed": false, "evidence": "Includes 'Power analysis: Calculate required sample size', 'Success thresholds (e.g., 95% confidence interval)', 'Sufficient traffic for statistical power'"},
+    {"text": "Output classifies the hypothesis using one of the four defined verdict tiers (valid for exploration, valid for experiment design, weak, invalid)", "passed": false, "evidence": "Uses score-based system (7/10) — not one of the four defined tiers"}
+  ],
+  "summary": {"passed": 2, "failed": 5, "total": 7, "pass_rate": 0.286}
+}

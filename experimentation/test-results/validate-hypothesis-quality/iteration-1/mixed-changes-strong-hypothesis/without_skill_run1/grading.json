@@ -1,0 +1,9 @@
+{"expectations":[
+{"text":"Output identifies that two changes are mixed into one hypothesis","passed":true,"evidence":"Lines 24-31: 'Conflates Two Distinct Changes — Cannot isolate which intervention drives the result.'"},
+{"text":"Verdict is NOT valid for experiment design","passed":true,"evidence":"Line 140: 'Hypothesis is directionally sound but oversimplified.' Line 148: 'Restructure into separate, more conservative hypotheses.' No 'valid for experiment design' verdict."},
+{"text":"Output suggests splitting into two separate hypotheses","passed":true,"evidence":"Lines 78-81: 'Split test into separate experiments.' Lines 107-116: Three refined hypothesis statements provided."},
+{"text":"The 15% effect size is questioned or flagged","passed":true,"evidence":"Lines 41-49: '15% Increase is Optimistic — 5-8% more realistic for single interventions.'"},
+{"text":"An improved version of the hypothesis is provided","passed":true,"evidence":"Lines 107-116: Three refined hypotheses (Primary, Secondary, Combined) with specific percentages."},
+{"text":"Missing information section is present with specific items","passed":true,"evidence":"Lines 70-75: Data requirements checklist (5 items). Lines 86-91: Confounding variables (5 items)."},
+{"text":"Output does not include experiment design elements such as sample size, test duration, or traffic splits","passed":false,"evidence":"Lines 77-84: 'Experimental Design Recommendations' with sample sizes '350-500 orders per group', duration '4-6 weeks minimum', statistical power analysis."}
+],"summary":{"passed":6,"failed":1,"total":7,"pass_rate":0.857}}

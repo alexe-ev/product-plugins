@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Lines 17-19: 'If we change the button color for [unspecified user segment], we expect [conversion metric] to increase, because a different color may improve visual prominence, clarity, or emotional resonance'"
+    },
+    {
+      "text": "The 30% uplift is flagged as unsubstantiated or lacking evidence",
+      "passed": true,
+      "evidence": "Lines 10-11 flag the 30% uplift as 'without supporting evidence or justification... an unsupported assumption'. Lines 57-66 recommend removal or evidence-based justification of the claim"
+    },
+    {
+      "text": "Confidence level is explicitly stated as provisional",
+      "passed": true,
+      "evidence": "Line 88: 'Confidence Level: PROVISIONAL' with detailed reasoning in lines 90-94"
+    },
+    {
+      "text": "Missing information is extensively listed (5+ items)",
+      "passed": true,
+      "evidence": "Lines 70-83 list 10 distinct missing items: product area, button identity, target segment, current baseline, funnel stage, button color change, rationale for color choice, causal mechanism, prior evidence, business goal"
+    },
+    {
+      "text": "Discovery questions or recommended next steps are suggested",
+      "passed": true,
+      "evidence": "Lines 98-107 provide 'Recommendation for Next Steps' with 6 specific action items: validate problem, root cause analysis, hypothesis refinement, remove forced numbers, define metric, segment clarity"
+    },
+    {
+      "text": "The hypothesis does NOT present 30% as an accepted fact",
+      "passed": true,
+      "evidence": "Line 11 flags 30% as 'unsupported assumption' and lines 63-66 recommend removal of the claim until historical data or expert justification is available"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  }
+}

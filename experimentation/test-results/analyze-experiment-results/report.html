@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eval Report: analyze-experiment-results</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a;
+    --border: #2d3148; --accent: #6c8aff; --accent2: #a78bfa;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #94a3b8; --dim: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 14px; line-height: 1.6; padding: 40px 24px; }
+  .container { max-width: 980px; margin: 0 auto; }
+
+  .skill-tag { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  h1 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  h2 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  section { margin-bottom: 40px; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 40px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 7px; }
+  .kpi-value { font-size: 26px; font-weight: 700; line-height: 1; }
+  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+  .cmp-table { width: 100%; border-collapse: collapse; }
+  .cmp-table th { background: var(--surface2); padding: 9px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--border); }
+  .cmp-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .eval-name { font-weight: 600; color: var(--text); }
+  .eval-sub { font-size: 11px; color: var(--dim); margin-top: 2px; }
+
+  .score-pass { color: var(--green); font-weight: 700; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+  .dot-pass { background: var(--green); }
+
+  .delta-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .delta-zero { background: rgba(148,163,184,.1); color: var(--muted); }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+  .tag-green { background: rgba(52,211,153,.12); color: var(--green); }
+  .tag-blue { background: rgba(108,138,255,.12); color: var(--accent); }
+  .tag-purple { background: rgba(167,139,250,.12); color: var(--accent2); }
+
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .insight { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .insight.highlight { border-color: rgba(108,138,255,.35); background: rgba(108,138,255,.05); }
+  .insight-icon { font-size: 16px; margin-bottom: 7px; }
+  .insight-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+  .insight-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .taxonomy { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .taxonomy-row { display: grid; grid-template-columns: 1fr 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid var(--border); }
+  .taxonomy-row:last-child { border-bottom: none; }
+  .taxonomy-row.header { background: var(--surface2); }
+  .tax-cell { padding: 10px 14px; font-size: 12px; }
+  .tax-cell.header { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+  .tax-name { font-weight: 600; color: var(--text); }
+  .tax-desc { color: var(--muted); }
+
+  .recs { display: flex; flex-direction: column; gap: 10px; }
+  .rec { display: flex; gap: 14px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; }
+  .rec-num { font-size: 16px; font-weight: 800; color: var(--accent); opacity: .4; flex-shrink: 0; padding-top: 1px; }
+  .rec-prio { display: inline-block; padding: 2px 7px; border-radius: 8px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+  .prio-high { background: rgba(248,113,113,.12); color: var(--red, #f87171); }
+  .prio-med { background: rgba(251,191,36,.12); color: var(--yellow); }
+  .rec-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .rec-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .verdict { background: linear-gradient(135deg, rgba(108,138,255,.07), rgba(167,139,250,.07)); border: 1px solid rgba(108,138,255,.28); border-radius: 12px; padding: 24px 28px; }
+  .verdict-nums { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .v-big { font-size: 42px; font-weight: 800; line-height: 1; color: var(--green); }
+  .v-vs { font-size: 18px; color: var(--dim); }
+  .v-tie { font-size: 42px; font-weight: 800; line-height: 1; color: var(--green); }
+  .verdict-text { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .verdict-text strong { color: #fff; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+  code { background: rgba(108,138,255,.1); color: var(--accent); padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: monospace; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="skill-tag">Skill Evaluation Report</div>
+  <h1>analyze-experiment-results</h1>
+  <div class="subtitle">2 итерации · 6 eval-кейсов · расчётно-интерпретационный skill · ключевой вывод: baseline уже силён в этой области</div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">with_skill</div>
+      <div class="kpi-value" style="color:var(--green)">100%</div>
+      <div class="kpi-sub">30/30 assertions pass</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">without_skill</div>
+      <div class="kpi-value" style="color:var(--green)">100%</div>
+      <div class="kpi-sub">30/30 assertions pass</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Разрыв</div>
+      <div class="kpi-value">0pp</div>
+      <div class="kpi-sub">Все итерации, все кейсы</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Самый hard кейс</div>
+      <div class="kpi-value" style="font-size:16px; color:var(--muted)">Tie</div>
+      <div class="kpi-sub">Novelty decay, volume confound, borderline</div>
+    </div>
+  </div>
+
+  <!-- Iteration 1 -->
+  <section>
+    <h2>Итерация 1 — стандартные adversarial кейсы</h2>
+    <table class="cmp-table">
+      <thead><tr><th>Eval</th><th>Паттерн</th><th>with_skill</th><th>without_skill</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="eval-name">guardrail-conflict</div><div class="eval-sub">Tutorial completion +6pp, Day-7 retention −4pp</div></td>
+          <td><span class="tag tag-blue">Guardrail vs primary</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">stat-not-practical</div><div class="eval-sub">p=0.031, эффект +0.015pp при MDE +0.5pp</div></td>
+          <td><span class="tag tag-blue">Stat ≠ practical</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">peeking-underpowered</div><div class="eval-sub">Остановили на day 10 при p&lt;0.05, n=49% от плана</div></td>
+          <td><span class="tag tag-blue">Unsafe procedure</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Iteration 2 -->
+  <section>
+    <h2>Итерация 2 — сложные, нестандартные кейсы</h2>
+    <table class="cmp-table">
+      <thead><tr><th>Eval</th><th>Паттерн</th><th>with_skill</th><th>without_skill</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="eval-name">volume-inflation</div><div class="eval-sub">Open rate +31%, но тест отправил в 2× больше нотификаций; opt-out удвоился</div></td>
+          <td><span class="tag tag-purple">Confound + guardrail</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">borderline-marginal</div><div class="eval-sub">p=0.09, эффект ниже MDE, CI через ноль, оба guardrail слегка хуже</div></td>
+          <td><span class="tag tag-purple">Всё "почти"</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">novelty-effect-decay</div><div class="eval-sub">p=0.004 overall, Week 1: +17%, Week 2: +2.3%</div></td>
+          <td><span class="tag tag-purple">Time-series trap</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Key findings -->
+  <section>
+    <h2>Ключевые выводы</h2>
+    <div class="insight-grid">
+      <div class="insight highlight">
+        <div class="insight-icon">🧠</div>
+        <div class="insight-title">Baseline уже обучен на этой области</div>
+        <div class="insight-body">Экспериментальная аналитика — хорошо задокументированная область с устойчивым корпусом литературы. Паттерны guardrail conflict, peeking, stat vs practical significance, novelty effect — всё это «учебниковые» ошибки, которые модель знает без подсказок. Скил не добавляет нового знания.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🏗️</div>
+        <div class="insight-title">Ценность — в структуре, не в рассуждениях</div>
+        <div class="insight-body">Скил задаёт конкретный output format (6 обязательных секций) и result classification vocabulary (Positive / Positive with caution / Negative / Neutral / Inconclusive / Descriptive only). Без скила baseline даёт правильные ответы, но в произвольном формате. Скил нормализует это для downstream handoff.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🔍</div>
+        <div class="insight-title">Дизайн eval'ов был недостаточно слепым</div>
+        <div class="insight-body">Все «ловушки» были явно указаны в промпте (82k vs 45k notifications, Week 1: +17% vs Week 2: +2.3%). Baseline решал задачу чтения, а не рассуждения. Реальный тест потребовал бы скрытых сигналов или вычислений, которые нужно сделать самостоятельно.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">📊</div>
+        <div class="insight-title">Сравнение с другими скилами</div>
+        <div class="insight-body">estimate-sample-size: разрыв появился через конкретный формульный баг. design-experiment-plan: разрыв через pseudo-complete ловушки. analyze-experiment-results: нет формульных багов и нет restraint-поведения которое базовая модель нарушала бы. Другой тип скила — другой тип ценности.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skill type taxonomy -->
+  <section>
+    <h2>Типология скилов по механизму ценности</h2>
+    <div class="taxonomy">
+      <div class="taxonomy-row header">
+        <div class="tax-cell header">Скил</div>
+        <div class="tax-cell header">Механизм ценности</div>
+        <div class="tax-cell header">Разрыв</div>
+        <div class="tax-cell header">Тип</div>
+      </div>
+      <div class="taxonomy-row">
+        <div class="tax-cell"><span class="tax-name">estimate-sample-size</span></div>
+        <div class="tax-cell tax-desc">REFERENCE.md кодирует точную формулу — без неё модель применяет ×2 вариант</div>
+        <div class="tax-cell" style="color:var(--green); font-weight:700">+13–50pp</div>
+        <div class="tax-cell"><span class="tag tag-green">Расчётный</span></div>
+      </div>
+      <div class="taxonomy-row">
+        <div class="tax-cell"><span class="tax-name">design-experiment-plan</span></div>
+        <div class="tax-cell tax-desc">SKILL.md переопределяет дефолтное "помочь" на "остановиться и проверить" при pseudo-complete данных</div>
+        <div class="tax-cell" style="color:var(--green); font-weight:700">+80pp adv</div>
+        <div class="tax-cell"><span class="tag tag-blue">Restraint</span></div>
+      </div>
+      <div class="taxonomy-row">
+        <div class="tax-cell"><span class="tax-name">analyze-experiment-results</span></div>
+        <div class="tax-cell tax-desc">Структурирует вывод и задаёт result vocabulary — рассуждения baseline уже достаточно сильные</div>
+        <div class="tax-cell" style="color:var(--muted); font-weight:700">≈0pp</div>
+        <div class="tax-cell"><span class="tag tag-purple">Структурный</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations -->
+  <section>
+    <h2>Рекомендации</h2>
+    <div class="recs">
+      <div class="rec">
+        <div class="rec-num">1</div>
+        <div>
+          <span class="rec-prio prio-high">Высокий</span>
+          <div class="rec-title">Найти кейсы где сигнал неявный и требует вычисления</div>
+          <div class="rec-body">Следующая итерация должна содержать кейсы, где «ловушка» не написана явно. Например: дать только сырые данные (control: 1,245 конверсий из 18,700; test: 1,389 из 19,100) без p-value — и проверить, правильно ли модель вычислит и интерпретирует результат. Или дать segment cuts с Simpson's paradox без указания на проблему.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">2</div>
+        <div>
+          <span class="rec-prio prio-med">Средний</span>
+          <div class="rec-title">Протестировать downstream handoff: соблюдение output format</div>
+          <div class="rec-body">Ценность скила — в стандартизации. Стоит добавить assertion, которая проверяет, что ВСЕ 6 обязательных секций присутствуют в выводе с правильной структурой. Это то, где baseline без скила может производить правильные рассуждения в произвольном формате.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">3</div>
+        <div>
+          <span class="rec-prio prio-med">Средний</span>
+          <div class="rec-title">Simpson's paradox как следующий кейс</div>
+          <div class="rec-body">Aggregate result positive, но при разбивке по сегментам (mobile vs desktop, new vs returning) оба сегмента показывают negative или neutral. Это реальный паттерн где даже опытные аналитики ошибаются. Baseline может его поймать, может нет — стоит проверить.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <div class="verdict">
+    <div class="verdict-nums">
+      <span class="v-big">100%</span>
+      <span class="v-vs">vs</span>
+      <span class="v-tie">100%</span>
+    </div>
+    <div class="verdict-text">
+      <strong>Нулевой разрыв — значимый результат, а не провал теста.</strong>
+      analyze-experiment-results — это структурный скил: его ценность в нормализации формата вывода
+      и result classification vocabulary для downstream handoff, а не в исправлении ошибок рассуждения.
+      Baseline уже хорошо обучен на паттернах экспериментальной аналитики.
+      Чтобы найти реальный разрыв, нужны кейсы с <strong>неявными сигналами</strong>
+      (Simpson's paradox без подсказки, вычисление из сырых чисел) или
+      <strong>строгая проверка output format</strong> — 6 секций, правильные classification labels.
+    </div>
+  </div>
+
+  <div style="text-align:center; color:var(--dim); font-size:11px; padding-top:20px; border-top:1px solid var(--border); margin-top:24px;">
+    analyze-experiment-results · 2 итерации · 6 eval-кейсов · 2026-03-11
+  </div>
+
+</div>
+</body>
+</html>

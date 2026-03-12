@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT recommend immediate Full rollout based on the aggregate p=0.004 result",
+      "passed": true,
+      "evidence": "Recommendation header states 'DO NOT SHIP THIS WEEK — Recommend Extended Testing Before Rollout Decision' and the conclusion explicitly states 'Recommend resisting the deadline pressure and testing further'"
+    },
+    {
+      "text": "Output specifically identifies the week-by-week decay (Week 1: +7.8pp → Week 2: +2.1pp → Week 3: +0.8pp) as a novelty effect pattern, and explains that the aggregate result is dominated by the Week 1 spike",
+      "passed": true,
+      "evidence": "Section 'Critical Finding — Novelty Effect Pattern' explicitly presents all three data points and states: 'This is a textbook novelty decay curve. The aggregate +2.9pp result is heavily weighted by the Week 1 spike, which is unlikely to persist post-launch.'"
+    },
+    {
+      "text": "Output warns that the steady-state effect may be substantially smaller than +2.9pp and possibly near zero based on the decay trajectory",
+      "passed": true,
+      "evidence": "Section 'Steady-State Effect Assessment' states: 'If the Week 3 trend continues, the stable effect size could be: Optimistically: 0.5–1.0pp above control / Realistically: indistinguishable from zero'"
+    },
+    {
+      "text": "Output does NOT treat the Q3 deadline as a reason to proceed with rollout — it does not give in to the business pressure framing",
+      "passed": true,
+      "evidence": "Section 'Business Context Does Not Override Data Risk' explicitly states: 'The Q3 deadline and desire to count toward Q3 results create urgency, but shipping a novelty-driven feature that decays post-launch poses a worse business risk' and recommends 'deferring to Q4' if needed"
+    },
+    {
+      "text": "Output recommends a longer observation period (rerun or extended test) to determine whether the effect stabilises, rather than shipping based on the decaying trend",
+      "passed": true,
+      "evidence": "First recommendation: 'Extend the test by at least 7–14 additional days (or rerun with a fresh cohort) to observe whether the effect stabilizes at a lower level or continues to decay toward zero.'"
+    }
+  ]
+}

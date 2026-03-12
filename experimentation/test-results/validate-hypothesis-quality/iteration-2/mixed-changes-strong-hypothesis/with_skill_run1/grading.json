@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Output identifies that two changes are mixed into one hypothesis (personalized recommendations + simplified navigation)", "passed": true, "evidence": "Identifies 'Multiple bundled changes' as critical weakness — both changes named explicitly"},
+    {"text": "Verdict is NOT 'valid for experiment design' — should be 'weak' or 'valid for exploration'", "passed": true, "evidence": "Verdict: 'Valid for exploration, but NOT valid for experiment design'"},
+    {"text": "Output suggests splitting into two separate hypotheses", "passed": true, "evidence": "Provides Option A and Option B as split hypotheses"},
+    {"text": "The 15% effect size is questioned or flagged as needing evidence basis", "passed": true, "evidence": "Flags '15% uplift in average check size is substantial for a mature product' and 'No basis provided'"},
+    {"text": "A readiness statement is present and explicitly says NOT ready for experiment design", "passed": true, "evidence": "Readiness Statement: 'This hypothesis is NOT ready for experiment design'"},
+    {"text": "Output does not include experiment design elements such as sample size, test duration, or traffic splits", "passed": true, "evidence": "No sample sizes, durations, or traffic splits in output"},
+    {"text": "Output classifies the hypothesis using one of the four defined verdict tiers (valid for exploration, valid for experiment design, weak, invalid)", "passed": true, "evidence": "Uses 'Valid for exploration' — one of the four defined tiers"}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

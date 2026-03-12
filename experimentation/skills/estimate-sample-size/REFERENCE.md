@@ -116,11 +116,28 @@ Example logic:
 ### 1. Conversion / rate metrics
 This is the cleanest case.
 
-Use:
-- baseline conversion
-- target conversion implied by MDE
-- chosen significance level
-- chosen power
+**Explicit formula (use this exactly):**
+
+```
+n_per_group = (z_α/2 + z_β)² × (p1×(1−p1) + p2×(1−p2)) / (p2 − p1)²
+```
+
+Standard z-values:
+- 95% confidence (two-sided): z_α/2 = 1.96
+- 80% power: z_β = 0.84
+- 90% power: z_β = 1.28
+
+So for the common 95% / 80% case: (1.96 + 0.84)² = **7.84**
+
+**Do not multiply by 2.** The formula already accounts for both groups via the `p1×(1−p1) + p2×(1−p2)` term. Adding an extra ×2 is a common error that doubles the required sample size.
+
+Example (baseline 3.2%, MDE +0.3pp → target 3.5%, 95%/80%):
+- Numerator: 7.84 × (0.032×0.968 + 0.035×0.965) = 7.84 × (0.030976 + 0.033775) = 7.84 × 0.064751 ≈ 0.5077
+- Denominator: (0.035 − 0.032)² = 0.000009
+- n per group ≈ 0.5077 / 0.000009 ≈ **56,400**
+- Total ≈ 112,800
+
+Total sample size = n_per_group × 2 (one for each variant).
 
 Typical outputs:
 - sample size per group
@@ -133,6 +150,16 @@ Examples:
 - time spent
 - average session length
 
+**Explicit formula:**
+
+```
+n_per_group = (z_α/2 + z_β)² × 2σ² / δ²
+```
+
+Where σ = standard deviation of the metric and δ = minimum detectable difference.
+
+For 95%/80%: n_per_group = 7.84 × 2σ² / δ²
+
 These require dispersion assumptions.
 If standard deviation or variance is missing, the estimate is weaker.
 
@@ -141,13 +168,125 @@ In such cases the skill should:
 - ask for standard deviation or historical variance if available
 - avoid pretending the answer is exact
 
-### 3. Revenue-like or skewed metrics
-These are often noisy and non-normal.
+### 3. Revenue-per-user / right-skewed metrics
 
-The skill should:
-- use extra caution
-- avoid oversimplifying
-- warn that variance assumptions strongly affect reliability
+Revenue and monetisation metrics (ARPU, LTV, revenue per session) are often right-skewed: a small number of high-value users pulls the mean and inflates variance.
+
+**Step 1 — Calculate coefficient of variation (CV):**
+
+```
+CV = σ / μ    (standard deviation divided by mean)
+```
+
+- CV < 1: mild skew — standard continuous formula is acceptable with a caveat
+- CV ≥ 1: high skew — standard formula underestimates required n; apply extra caution
+- CV ≥ 2: severe skew — strongly recommend log-transformation approach or outlier capping
+
+**Step 2a — Standard formula (acceptable for CV < 1, rough for CV ≥ 1):**
+
+Same as continuous metric formula:
+```
+n_per_group = (z_α/2 + z_β)² × 2σ² / δ²
+```
+
+For CV ≥ 1 this UNDERESTIMATES required sample size. Always state this explicitly.
+
+**Step 2b — Log-normal formula (recommended when CV ≥ 1):**
+
+```
+σ_log = sqrt( ln(1 + CV²) )
+δ_log = ln(1 + δ_abs / μ_baseline)      ← relative effect on log scale
+n_per_group = (z_α/2 + z_β)² × 2 × σ_log² / δ_log²
+```
+
+Example (mean $20, SD $60, CV=3.0, MDE +$3, 95%/80%):
+- σ_log = sqrt(ln(1+9)) = sqrt(2.303) ≈ 1.517
+- δ_log = ln(1 + 3/20) = ln(1.15) ≈ 0.1398
+- n = 7.84 × 2 × 2.302 / 0.0195 ≈ 1,848/group
+
+**Always recommend:** cap outliers at the 99th percentile before running the experiment.
+Outlier capping reduces effective variance and makes the test feasible without losing material signal.
+
+**Mandatory caveat for all skewed-metric estimates:** state that the estimate is sensitive to variance assumptions and that actual SD should be validated before committing to the timeline.
+
+### 4. Retention rate with cohort dilution
+
+Retention is a binomial metric (user retained: yes/no), but it has a complication: not all users enrolled at the start of the experiment will still be attributable at the measurement deadline. This is called **cohort dilution**.
+
+**Step 1 — Calculate effective sample size using standard binomial formula:**
+
+```
+n_effective_per_group = (z_α/2 + z_β)² × (r1×(1−r1) + r2×(1−r2)) / (r2 − r1)²
+```
+
+Where r1 = baseline retention rate, r2 = target retention rate.
+
+**Step 2 — Apply dilution adjustment to get enrolled sample:**
+
+```
+dilution_rate = fraction of enrolled users who become unmeasurable before the retention window closes
+n_enrolled_per_group = n_effective_per_group / (1 − dilution_rate)
+```
+
+Common dilution causes: account deletions, app uninstalls, attribution loss, users who never return.
+If dilution rate is unknown, flag this as an assumption and suggest 10–20% as a conservative default.
+
+**Step 3 — Duration uses enrolled (not effective) sample:**
+
+```
+total_enrolled = n_enrolled_per_group × 2
+duration = total_enrolled / eligible_new_users_per_period
+```
+
+Note: for retention experiments, "eligible traffic" means **new users entering the cohort per period**, not total active users.
+
+Example (r1=42%, r2=45%, dilution=15%, 95%/80%, 5k new users/week):
+- n_effective = 7.84 × (0.2436 + 0.2475) / 0.0009 = 7.84 × 545.7 ≈ 4,278/group
+- n_enrolled = 4,278 / 0.85 ≈ 5,033/group
+- total = 10,066 → duration = 10,066 / 5,000 ≈ **2.0 weeks**
+
+### 5. Multi-variant tests (3+ arms)
+
+Running multiple treatment arms against one control increases the risk of false positives. Use **Bonferroni correction** to maintain the desired family-wise error rate.
+
+**K = number of treatment arms** (control arm is not counted).
+
+**Bonferroni correction:**
+```
+α_per_comparison = α_family / K
+z_adj = z at (1 − α_per_comparison / 2)    ← two-tailed adjusted z-value
+```
+
+Standard adjusted z-values for α_family = 0.05 (95% confidence), 80% power:
+
+| Arms total | K (comparisons) | α_per | z_adj | (z_adj + 0.84)² |
+|-----------|----------------|-------|-------|-----------------|
+| 2 (standard) | 1 | 0.050 | 1.96 | 7.84 |
+| 3 | 2 | 0.025 | 2.24 | 9.49 |
+| 4 | 3 | 0.017 | 2.39 | 10.43 |
+| 5 | 4 | 0.013 | 2.50 | 11.16 |
+
+**Formula per arm (same metric formula, but use z_adj instead of 1.96):**
+
+Conversion:
+```
+n_per_arm = (z_adj + z_β)² × (p1×(1−p1) + p2×(1−p2)) / (p2 − p1)²
+```
+
+**Total sample = n_per_arm × (K + 1)**  (all arms including control)
+
+**Duration:**
+```
+duration = n_per_arm × (K + 1) / eligible_traffic_per_period
+```
+
+Example (3-arm test: control 12%, both treatments target 13.5%, 95% family-wise/80% power, 6k/week):
+- K=2, z_adj=2.24, combined (2.24+0.84)² = 9.49
+- n_per_arm = 9.49 × (0.12×0.88 + 0.135×0.865) / (0.015)²
+- = 9.49 × 0.2224 / 0.000225 ≈ **9,379/arm**
+- Total = 9,379 × 3 = 28,137 → duration = 28,137 / 6,000 ≈ **4.7 weeks**
+
+Compare to naïve 2-variant approach (no correction): 7.84 × 0.2224 / 0.000225 ≈ 7,750/arm — Bonferroni adds ~21% more per arm plus a third arm, making multi-variant tests significantly more expensive.
 
 ---
 
@@ -185,6 +324,34 @@ Acceptable fallback:
 
 Not acceptable:
 - silently choosing an arbitrary MDE as if it were fact
+
+---
+
+## How to handle missing SD for continuous or skewed metrics
+
+Standard deviation is a required input for continuous and skewed metrics. Without it, no defensible sample size can be calculated.
+
+If SD is missing:
+- state clearly that SD is required before calculation is possible
+- do NOT pick an arbitrary SD and proceed as if it were fact
+- offer guidance on how to obtain SD: historical data, pilot test, prior experiments, industry benchmarks
+- if the user insists on an estimate, provide labeled scenarios tied to assumed SD values with an explicit warning that accuracy depends on the assumption
+
+Good pattern:
+- "For continuous metrics, sample size depends on the standard deviation. Without historical SD data, I cannot give a reliable estimate. If SD is approximately X, the sample size would be Y. If SD is approximately 2X, it would be Z."
+
+---
+
+## How to handle missing eligible traffic when duration is requested
+
+If eligible traffic is missing but a duration estimate is requested:
+- calculate sample size if all other inputs are present
+- state that duration cannot be estimated without traffic data
+- do NOT invent a plausible-sounding traffic number
+- ask for eligible users per week/month (not total users)
+
+Good pattern:
+- “Based on your inputs, you need approximately X users per group (Y total). To estimate how long the test will run, I need to know how many eligible users you have per week.”
 
 ---
 

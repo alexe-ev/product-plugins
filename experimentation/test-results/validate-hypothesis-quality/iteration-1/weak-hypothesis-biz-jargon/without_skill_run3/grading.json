@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is 'weak' or 'invalid'", "passed": true, "evidence": "Rating 2/5 'Требует существенного уточнения', overall score communicates weakness clearly"},
+    {"text": "Output flags that 'improving UX' is too vague — no specific change is defined", "passed": true, "evidence": "Table row: 'UX онбординга | Слишком широко' with specific examples of what it could mean"},
+    {"text": "Output flags that 'activation' is not defined as a measurable metric", "passed": true, "evidence": "Table row: 'активация | Расплывчато | Что считается активацией?'"},
+    {"text": "Target segment vagueness is noted (which new users? platform? channel?)", "passed": true, "evidence": "Table row: 'новых пользователей | Неясна когорта | Все новые пользователи или отдельный сегмент?' and 'Бизнес-контекст: Какой тип продукта?'"},
+    {"text": "An improved/rewritten version of the hypothesis is provided", "passed": true, "evidence": "Section 7.1 provides SMART reformulation with specific metrics and targets"},
+    {"text": "Missing information lists at least 4 specific items", "passed": true, "evidence": "Section 2.2 lists 4 missing variables; Section 4 details required data categories"},
+    {"text": "Readiness for next step is clearly stated as NOT ready for experiment design", "passed": false, "evidence": "While stating 'недостаточно конкретна для валидации в текущем виде', includes full RCT experiment design (Этап 3) with sample sizes and durations, sending mixed signal"}
+  ],
+  "summary": {"passed": 6, "failed": 1, "total": 7, "pass_rate": 0.857}
+}

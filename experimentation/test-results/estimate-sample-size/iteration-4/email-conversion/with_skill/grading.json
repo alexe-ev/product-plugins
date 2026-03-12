@@ -1,0 +1,46 @@
+{
+  "expectations": [
+    {
+      "text": "Output provides sample size per group in the range 6,000–8,000",
+      "passed": true,
+      "evidence": "Output states 'Sample size per group: 6,926 users' (line 50). Value 6,926 falls within the range 6,000–8,000."
+    },
+    {
+      "text": "Output provides total sample size in the range 12,000–16,000",
+      "passed": true,
+      "evidence": "Output states 'Total sample size: 13,852 users' (line 52). Value 13,852 falls within the range 12,000–16,000."
+    },
+    {
+      "text": "Output estimates duration in the range 1.4–2.1 weeks using 8,000/week traffic",
+      "passed": true,
+      "evidence": "Output states 'Estimated duration: Approximately 1.7 weeks of eligible traffic' (line 54). Calculation shown: 13,852 / 8,000 = 1.73 weeks ≈ 1.7 weeks. Value 1.7 falls within the range 1.4–2.1 weeks."
+    },
+    {
+      "text": "Output lists all key inputs: baseline 22%, MDE +2pp, confidence 95%, power 80%",
+      "passed": true,
+      "evidence": "All inputs are present in 'Input Summary' section (lines 4-10) and 'Inputs Used' section (lines 56-63): Baseline 22% (line 5), MDE +2 percentage points (line 6, calculated as 0.22 → 0.24), Confidence level 95% (line 7), Power 80% (line 8). Also in 'Inputs Used': 'Baseline 22%', 'Target 24%' (which is baseline + MDE), 'Confidence 95%', 'Power 80%'."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 2514
+  },
+  "timing": {
+    "executor_duration_seconds": 32.6
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "All assertions verified successfully.",
+      "Calculations are mathematically sound and documented step-by-step.",
+      "Output is comprehensive, clear, and professionally formatted.",
+      "All required inputs are explicitly stated and calculations are traceable."
+    ],
+    "overall": "PASS - All 4 assertions met. Output demonstrates correct statistical calculation for sample size estimation with proper documentation, clear inputs, and results within specified ranges."
+  }
+}

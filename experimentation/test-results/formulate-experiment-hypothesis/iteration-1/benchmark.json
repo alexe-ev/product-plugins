@@ -1,0 +1,312 @@
+{
+  "metadata": {
+    "skill_name": "formulate-experiment-hypothesis",
+    "skill_path": "/sessions/eloquent-wizardly-ride/mnt/ai-product-ops/experimentation/skills/formulate-experiment-hypothesis",
+    "executor_model": "claude-sonnet-4-20250514",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-03-11T14:00:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 3
+  },
+
+  "runs": [
+    {
+      "eval_id": 1, "eval_name": "Rich context: split hypotheses",
+      "configuration": "with_skill", "run_number": 1,
+      "result": {"pass_rate": 1.00, "passed": 9, "failed": 0, "total": 9, "time_seconds": 52.5, "tokens": 29874, "tool_calls": 11, "errors": 0},
+      "expectations": [
+        {"text": "Output contains two separate hypotheses, not a single bundled one", "passed": true, "evidence": "Two distinct sections: Hypothesis 1 (Video Reviews) and Hypothesis 2 (Checkout Simplification)"},
+        {"text": "Each hypothesis follows 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Both hypotheses use the standard If/expect/because format"},
+        {"text": "Target segment is identified for each hypothesis", "passed": true, "evidence": "H1: Android smartphone buyers browsing product cards; H2: Android smartphone buyers in checkout flow"},
+        {"text": "Primary metric is identified for each hypothesis", "passed": true, "evidence": "H1: product card view → purchase; H2: cart/checkout initiation → purchase"},
+        {"text": "Expected direction is stated for each hypothesis", "passed": true, "evidence": "Both state Increase"},
+        {"text": "Causal mechanism is explained for each hypothesis", "passed": true, "evidence": "H1: social proof/trust; H2: friction reduction"},
+        {"text": "Missing information section is present", "passed": true, "evidence": "Both hypotheses list missing info"},
+        {"text": "The user's 5% target is not accepted uncritically as a guaranteed outcome", "passed": true, "evidence": "Noted as within theoretical range but not guaranteed, real-world results may vary"},
+        {"text": "Confidence level is explicitly stated", "passed": true, "evidence": "Both state Context-informed"}
+      ]
+    },
+    {
+      "eval_id": 1, "eval_name": "Rich context: split hypotheses",
+      "configuration": "with_skill", "run_number": 2,
+      "result": {"pass_rate": 1.00, "passed": 9, "failed": 0, "total": 9, "time_seconds": 37.6, "tokens": 28336, "tool_calls": 7, "errors": 0},
+      "expectations": [
+        {"text": "Output contains two separate hypotheses, not a single bundled one", "passed": true, "evidence": "Clear separation into Hypothesis 1 (Video Reviews) and Hypothesis 2 (Checkout Reduction)"},
+        {"text": "Each hypothesis follows 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Both use standard format"},
+        {"text": "Target segment is identified for each hypothesis", "passed": true, "evidence": "Android smartphone buyers specified separately for each"},
+        {"text": "Primary metric is identified for each hypothesis", "passed": true, "evidence": "Distinct metrics per hypothesis"},
+        {"text": "Expected direction is stated for each hypothesis", "passed": true, "evidence": "Increase stated for both"},
+        {"text": "Causal mechanism is explained for each hypothesis", "passed": true, "evidence": "Video: social proof; Checkout: friction reduction"},
+        {"text": "Missing information section is present", "passed": true, "evidence": "Missing information listed for both"},
+        {"text": "The user's 5% target is not accepted uncritically as a guaranteed outcome", "passed": true, "evidence": "Estimated ranges given, not accepted as guaranteed"},
+        {"text": "Confidence level is explicitly stated", "passed": true, "evidence": "Context-informed stated for both"}
+      ]
+    },
+    {
+      "eval_id": 1, "eval_name": "Rich context: split hypotheses",
+      "configuration": "with_skill", "run_number": 3,
+      "result": {"pass_rate": 1.00, "passed": 9, "failed": 0, "total": 9, "time_seconds": 48.2, "tokens": 27345, "tool_calls": 9, "errors": 0},
+      "expectations": [
+        {"text": "Output contains two separate hypotheses, not a single bundled one", "passed": true, "evidence": "Two independently structured hypotheses"},
+        {"text": "Each hypothesis follows 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Standard format used"},
+        {"text": "Target segment is identified for each hypothesis", "passed": true, "evidence": "Android buyers specified per hypothesis"},
+        {"text": "Primary metric is identified for each hypothesis", "passed": true, "evidence": "Distinct metrics per hypothesis"},
+        {"text": "Expected direction is stated for each hypothesis", "passed": true, "evidence": "Increase"},
+        {"text": "Causal mechanism is explained for each hypothesis", "passed": true, "evidence": "Video trust; checkout friction"},
+        {"text": "Missing information section is present", "passed": true, "evidence": "Both have missing info sections"},
+        {"text": "The user's 5% target is not accepted uncritically as a guaranteed outcome", "passed": true, "evidence": "Estimated ranges +0.5-1.5% and +1.0-2.0%, not guaranteed"},
+        {"text": "Confidence level is explicitly stated", "passed": true, "evidence": "Context-informed"}
+      ]
+    },
+    {
+      "eval_id": 1, "eval_name": "Rich context: split hypotheses",
+      "configuration": "without_skill", "run_number": 1,
+      "result": {"pass_rate": 0.33, "passed": 3, "failed": 6, "total": 9, "time_seconds": 100.0, "tokens": 29858, "tool_calls": 4, "errors": 0},
+      "expectations": [
+        {"text": "Output contains two separate hypotheses, not a single bundled one", "passed": false, "evidence": "Combined both interventions into one unified hypothesis"},
+        {"text": "Each hypothesis follows 'If we change X for Y, we expect Z' format", "passed": false, "evidence": "Only one bundled statement"},
+        {"text": "Target segment is identified for each hypothesis", "passed": true, "evidence": "Android smartphone buyers identified (once, for combined)"},
+        {"text": "Primary metric is identified for each hypothesis", "passed": false, "evidence": "Single metric for combined hypothesis"},
+        {"text": "Expected direction is stated for each hypothesis", "passed": true, "evidence": "Increase stated"},
+        {"text": "Causal mechanism is explained for each hypothesis", "passed": false, "evidence": "Combined, not per hypothesis"},
+        {"text": "Missing information section is present", "passed": false, "evidence": "No explicit missing information section"},
+        {"text": "The user's 5% target is not accepted uncritically as a guaranteed outcome", "passed": true, "evidence": "Treated as success threshold"},
+        {"text": "Confidence level is explicitly stated", "passed": false, "evidence": "No explicit confidence level statement"}
+      ]
+    },
+    {
+      "eval_id": 1, "eval_name": "Rich context: split hypotheses",
+      "configuration": "without_skill", "run_number": 2,
+      "result": {"pass_rate": 0.22, "passed": 2, "failed": 7, "total": 9, "time_seconds": 22.6, "tokens": 22342, "tool_calls": 1, "errors": 0},
+      "expectations": [
+        {"text": "Output contains two separate hypotheses, not a single bundled one", "passed": false, "evidence": "Primary hypothesis bundles both interventions"},
+        {"text": "Each hypothesis follows 'If we change X for Y, we expect Z' format", "passed": false, "evidence": "Combined format only"},
+        {"text": "Target segment is identified for each hypothesis", "passed": true, "evidence": "Android buyers mentioned"},
+        {"text": "Primary metric is identified for each hypothesis", "passed": false, "evidence": "Single combined metric"},
+        {"text": "Expected direction is stated for each hypothesis", "passed": true, "evidence": "Increase stated"},
+        {"text": "Causal mechanism is explained for each hypothesis", "passed": false, "evidence": "Synergistic combined mechanism only"},
+        {"text": "Missing information section is present", "passed": false, "evidence": "No missing info section"},
+        {"text": "The user's 5% target is not accepted uncritically as a guaranteed outcome", "passed": false, "evidence": "5% target presented as ambitious but defensible without sufficient uncertainty"},
+        {"text": "Confidence level is explicitly stated", "passed": false, "evidence": "No confidence level"}
+      ]
+    },
+    {
+      "eval_id": 1, "eval_name": "Rich context: split hypotheses",
+      "configuration": "without_skill", "run_number": 3,
+      "result": {"pass_rate": 0.22, "passed": 2, "failed": 7, "total": 9, "time_seconds": 21.0, "tokens": 22447, "tool_calls": 1, "errors": 0},
+      "expectations": [
+        {"text": "Output contains two separate hypotheses, not a single bundled one", "passed": false, "evidence": "Both interventions bundled into single hypothesis"},
+        {"text": "Each hypothesis follows 'If we change X for Y, we expect Z' format", "passed": false, "evidence": "Combined If/Then statement"},
+        {"text": "Target segment is identified for each hypothesis", "passed": true, "evidence": "Android buyers specified"},
+        {"text": "Primary metric is identified for each hypothesis", "passed": false, "evidence": "Single combined metric"},
+        {"text": "Expected direction is stated for each hypothesis", "passed": true, "evidence": "Increase stated"},
+        {"text": "Causal mechanism is explained for each hypothesis", "passed": false, "evidence": "Combined mechanism only"},
+        {"text": "Missing information section is present", "passed": false, "evidence": "No missing info section"},
+        {"text": "The user's 5% target is not accepted uncritically as a guaranteed outcome", "passed": false, "evidence": "5% target broken down as assumption without uncertainty"},
+        {"text": "Confidence level is explicitly stated", "passed": false, "evidence": "No confidence level"}
+      ]
+    },
+    {
+      "eval_id": 2, "eval_name": "Light context: missing info",
+      "configuration": "with_skill", "run_number": 1,
+      "result": {"pass_rate": 1.00, "passed": 6, "failed": 0, "total": 6, "time_seconds": 61.2, "tokens": 28083, "tool_calls": 8, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Standard If/expect/because format used"},
+        {"text": "Missing information is explicitly listed with specific items", "passed": true, "evidence": "5 major categories with sub-items"},
+        {"text": "Confidence level is stated as provisional or context-informed", "passed": true, "evidence": "PROVISIONAL explicitly stated"},
+        {"text": "Target segment uncertainty is acknowledged", "passed": true, "evidence": "Low confidence on segment with multiple interpretations listed"},
+        {"text": "No fabricated quantitative impact numbers", "passed": true, "evidence": "Quantitative estimate: Not defined yet"},
+        {"text": "Downstream handoff or next steps mentioned", "passed": true, "evidence": "Three downstream skills listed"}
+      ]
+    },
+    {
+      "eval_id": 2, "eval_name": "Light context: missing info",
+      "configuration": "with_skill", "run_number": 2,
+      "result": {"pass_rate": 1.00, "passed": 6, "failed": 0, "total": 6, "time_seconds": 26.2, "tokens": 24727, "tool_calls": 6, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Standard format"},
+        {"text": "Missing information is explicitly listed with specific items", "passed": true, "evidence": "8 specific missing items listed"},
+        {"text": "Confidence level is stated as provisional or context-informed", "passed": true, "evidence": "Provisional stated"},
+        {"text": "Target segment uncertainty is acknowledged", "passed": true, "evidence": "Segment not confirmed, caveated"},
+        {"text": "No fabricated quantitative impact numbers", "passed": true, "evidence": "No quantitative targets invented"},
+        {"text": "Downstream handoff or next steps mentioned", "passed": true, "evidence": "Next steps listed"}
+      ]
+    },
+    {
+      "eval_id": 2, "eval_name": "Light context: missing info",
+      "configuration": "with_skill", "run_number": 3,
+      "result": {"pass_rate": 1.00, "passed": 6, "failed": 0, "total": 6, "time_seconds": 33.3, "tokens": 26957, "tool_calls": 9, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Standard format"},
+        {"text": "Missing information is explicitly listed with specific items", "passed": true, "evidence": "5 categories with specific sub-items"},
+        {"text": "Confidence level is stated as provisional or context-informed", "passed": true, "evidence": "Provisional stated with reasoning"},
+        {"text": "Target segment uncertainty is acknowledged", "passed": true, "evidence": "Segment specificity flagged as needing confirmation"},
+        {"text": "No fabricated quantitative impact numbers", "passed": true, "evidence": "Not quantified yet, missing baseline data stated"},
+        {"text": "Downstream handoff or next steps mentioned", "passed": true, "evidence": "Downstream skills and pre-conditions listed"}
+      ]
+    },
+    {
+      "eval_id": 2, "eval_name": "Light context: missing info",
+      "configuration": "without_skill", "run_number": 1,
+      "result": {"pass_rate": 0.50, "passed": 3, "failed": 3, "total": 6, "time_seconds": 39.5, "tokens": 24104, "tool_calls": 3, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "H1 hypothesis present"},
+        {"text": "Missing information is explicitly listed with specific items", "passed": false, "evidence": "Open Questions only, not structured missing info"},
+        {"text": "Confidence level is stated as provisional or context-informed", "passed": false, "evidence": "No confidence level stated"},
+        {"text": "Target segment uncertainty is acknowledged", "passed": true, "evidence": "Power users vs casual users mentioned"},
+        {"text": "No fabricated quantitative impact numbers", "passed": false, "evidence": "Fabricated: <30 seconds, 40% reduction, 15+ NPS without baseline"},
+        {"text": "Downstream handoff or next steps mentioned", "passed": true, "evidence": "7 next steps listed"}
+      ]
+    },
+    {
+      "eval_id": 2, "eval_name": "Light context: missing info",
+      "configuration": "without_skill", "run_number": 2,
+      "result": {"pass_rate": 0.33, "passed": 2, "failed": 4, "total": 6, "time_seconds": 14.0, "tokens": 21542, "tool_calls": 1, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Hypothesis format present"},
+        {"text": "Missing information is explicitly listed with specific items", "passed": false, "evidence": "No explicit missing info section, only Assumptions"},
+        {"text": "Confidence level is stated as provisional or context-informed", "passed": false, "evidence": "No confidence level"},
+        {"text": "Target segment uncertainty is acknowledged", "passed": false, "evidence": "Segment not acknowledged as uncertain"},
+        {"text": "No fabricated quantitative impact numbers", "passed": false, "evidence": "Fabricated: 50% faster, 40% adoption, 30-50% decrease, 2+ NPS"},
+        {"text": "Downstream handoff or next steps mentioned", "passed": true, "evidence": "Next steps present"}
+      ]
+    },
+    {
+      "eval_id": 2, "eval_name": "Light context: missing info",
+      "configuration": "without_skill", "run_number": 3,
+      "result": {"pass_rate": 0.33, "passed": 2, "failed": 4, "total": 6, "time_seconds": 12.5, "tokens": 21553, "tool_calls": 1, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Hypothesis format present"},
+        {"text": "Missing information is explicitly listed with specific items", "passed": false, "evidence": "No explicit missing info section"},
+        {"text": "Confidence level is stated as provisional or context-informed", "passed": false, "evidence": "No confidence level"},
+        {"text": "Target segment uncertainty is acknowledged", "passed": false, "evidence": "Segment not caveated"},
+        {"text": "No fabricated quantitative impact numbers", "passed": false, "evidence": "Fabricated success criteria: >=40%, >=25%, >=15%"},
+        {"text": "Downstream handoff or next steps mentioned", "passed": true, "evidence": "Next steps present"}
+      ]
+    },
+    {
+      "eval_id": 3, "eval_name": "Poor context: forced numbers",
+      "configuration": "with_skill", "run_number": 1,
+      "result": {"pass_rate": 1.00, "passed": 6, "failed": 0, "total": 6, "time_seconds": 61.1, "tokens": 30590, "tool_calls": 12, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Standard If/expect/because format"},
+        {"text": "The 30% uplift is flagged as unsubstantiated or lacking evidence", "passed": true, "evidence": "Explicitly flagged with no evidence basis"},
+        {"text": "Confidence level is explicitly stated as provisional", "passed": true, "evidence": "Provisional stated"},
+        {"text": "Missing information is extensively listed (5+ items)", "passed": true, "evidence": "12 items listed (7 critical + 5 important)"},
+        {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "6 specific next steps"},
+        {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": true, "evidence": "Marked as unsubstantiated, requires validation"}
+      ]
+    },
+    {
+      "eval_id": 3, "eval_name": "Poor context: forced numbers",
+      "configuration": "with_skill", "run_number": 2,
+      "result": {"pass_rate": 1.00, "passed": 6, "failed": 0, "total": 6, "time_seconds": 27.4, "tokens": 24418, "tool_calls": 3, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Standard format"},
+        {"text": "The 30% uplift is flagged as unsubstantiated or lacking evidence", "passed": true, "evidence": "30% claim flagged as unsupported"},
+        {"text": "Confidence level is explicitly stated as provisional", "passed": true, "evidence": "PROVISIONAL stated in section heading"},
+        {"text": "Missing information is extensively listed (5+ items)", "passed": true, "evidence": "9 distinct missing items"},
+        {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "Detailed next steps"},
+        {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": true, "evidence": "Strongly rejected, requires validation"}
+      ]
+    },
+    {
+      "eval_id": 3, "eval_name": "Poor context: forced numbers",
+      "configuration": "with_skill", "run_number": 3,
+      "result": {"pass_rate": 1.00, "passed": 6, "failed": 0, "total": 6, "time_seconds": 27.2, "tokens": 24395, "tool_calls": 2, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Standard format"},
+        {"text": "The 30% uplift is flagged as unsubstantiated or lacking evidence", "passed": true, "evidence": "Flagged as unsupported assumption"},
+        {"text": "Confidence level is explicitly stated as provisional", "passed": true, "evidence": "PROVISIONAL stated"},
+        {"text": "Missing information is extensively listed (5+ items)", "passed": true, "evidence": "10 distinct missing items"},
+        {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "6 concrete next-step recommendations"},
+        {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": true, "evidence": "Actively rejected without proper evidence"}
+      ]
+    },
+    {
+      "eval_id": 3, "eval_name": "Poor context: forced numbers",
+      "configuration": "without_skill", "run_number": 1,
+      "result": {"pass_rate": 0.67, "passed": 4, "failed": 2, "total": 6, "time_seconds": 65.9, "tokens": 26386, "tool_calls": 4, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "IF-THEN-BECAUSE format"},
+        {"text": "The 30% uplift is flagged as unsubstantiated or lacking evidence", "passed": true, "evidence": "Flagged as unrealistic, 5-15% realistic"},
+        {"text": "Confidence level is explicitly stated as provisional", "passed": false, "evidence": "Status: Ready for Experiment Execution — no provisional label"},
+        {"text": "Missing information is extensively listed (5+ items)", "passed": false, "evidence": "No explicit missing info section"},
+        {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "4-phase implementation plan"},
+        {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": true, "evidence": "Described as stretch goal, 5-15% realistic"}
+      ]
+    },
+    {
+      "eval_id": 3, "eval_name": "Poor context: forced numbers",
+      "configuration": "without_skill", "run_number": 2,
+      "result": {"pass_rate": 0.50, "passed": 3, "failed": 3, "total": 6, "time_seconds": 17.2, "tokens": 22030, "tool_calls": 1, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": false, "evidence": "Scientific H0/H1 format used instead of If/then/because"},
+        {"text": "The 30% uplift is flagged as unsubstantiated or lacking evidence", "passed": true, "evidence": "30% flagged as unrealistic"},
+        {"text": "Confidence level is explicitly stated as provisional", "passed": false, "evidence": "No provisional label"},
+        {"text": "Missing information is extensively listed (5+ items)", "passed": false, "evidence": "Gaps scattered in prose, not enumerated"},
+        {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "Recommended next steps present"},
+        {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": true, "evidence": "Critical note on 30% ambition"}
+      ]
+    },
+    {
+      "eval_id": 3, "eval_name": "Poor context: forced numbers",
+      "configuration": "without_skill", "run_number": 3,
+      "result": {"pass_rate": 0.67, "passed": 4, "failed": 2, "total": 6, "time_seconds": 10.7, "tokens": 21323, "tool_calls": 1, "errors": 0},
+      "expectations": [
+        {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "If/then format present"},
+        {"text": "The 30% uplift is flagged as unsubstantiated or lacking evidence", "passed": true, "evidence": "Flagged as ambitious, requiring validation"},
+        {"text": "Confidence level is explicitly stated as provisional", "passed": false, "evidence": "No explicit provisional label"},
+        {"text": "Missing information is extensively listed (5+ items)", "passed": false, "evidence": "Considerations listed in prose, not enumerated as missing info"},
+        {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "Recommendations present"},
+        {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": true, "evidence": "Treated as stretch goal, not fact"}
+      ]
+    }
+  ],
+
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.000, "stddev": 0.000, "min": 1.00, "max": 1.00},
+      "time_seconds": {"mean": 41.5, "stddev": 14.3, "min": 26.2, "max": 61.2},
+      "tokens": {"mean": 27103, "stddev": 2227, "min": 24395, "max": 30590}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.419, "stddev": 0.164, "min": 0.22, "max": 0.67},
+      "time_seconds": {"mean": 36.0, "stddev": 30.4, "min": 10.7, "max": 100.0},
+      "tokens": {"mean": 23943, "stddev": 3089, "min": 21323, "max": 29858}
+    },
+    "delta": {
+      "pass_rate": "+0.581",
+      "time_seconds": "+5.5",
+      "tokens": "+3160"
+    },
+    "per_eval": {
+      "eval_1": {
+        "with_skill":    {"pass_rate": {"mean": 1.000, "stddev": 0.000}},
+        "without_skill": {"pass_rate": {"mean": 0.257, "stddev": 0.052}},
+        "delta": "+0.743"
+      },
+      "eval_2": {
+        "with_skill":    {"pass_rate": {"mean": 1.000, "stddev": 0.000}},
+        "without_skill": {"pass_rate": {"mean": 0.387, "stddev": 0.080}},
+        "delta": "+0.613"
+      },
+      "eval_3": {
+        "with_skill":    {"pass_rate": {"mean": 1.000, "stddev": 0.000}},
+        "without_skill": {"pass_rate": {"mean": 0.613, "stddev": 0.080}},
+        "delta": "+0.387"
+      }
+    }
+  },
+
+  "notes": [
+    "WITH SKILL: pass rate 100% ± 0% across ALL 9 runs — perfectly deterministic output regardless of run",
+    "WITHOUT SKILL: pass rate 42% ± 16% — significant variance driven mainly by Eval 1 (0.22–0.33 range)",
+    "Eval 1 (split hypotheses) shows the largest delta (+0.74): baseline NEVER splits interventions across all 3 runs, skill ALWAYS does",
+    "Eval 3 (forced numbers) shows smallest delta (+0.39): even without skill the model flags 30% as unrealistic — this assertion is partially non-discriminating",
+    "WITHOUT SKILL time variance is high (stddev=30.4s): run1 took 100s (went into full experiment design), run2-3 took 10-22s (short outputs) — scope creep is inconsistent",
+    "Skill adds ~3160 tokens on average (+13%) — cost of reading SKILL.md — but eliminates all output variance and scope creep",
+    "Assertion 'Confidence level explicitly stated as provisional' is highly discriminating for Eval 2-3: baseline never uses the label, skill always does",
+    "Assertion 'No fabricated quantitative impact numbers' is highly discriminating for Eval 2: baseline fabricates concrete targets (30s, 40%, 15 NPS) in 2/3 runs"
+  ]
+}

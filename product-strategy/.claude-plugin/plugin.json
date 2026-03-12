@@ -1,0 +1,18 @@
+{
+  "name": "product-strategy",
+  "version": "1.0.0",
+  "description": "9-skill library for product strategy: vision, market fit, positioning, portfolio, and competitive strategy.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "strategy",
+    "vision",
+    "positioning",
+    "market-fit",
+    "competitive"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

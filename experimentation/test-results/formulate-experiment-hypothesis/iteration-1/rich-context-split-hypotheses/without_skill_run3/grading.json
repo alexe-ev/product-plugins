@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains two separate hypotheses, not a single bundled one",
+      "passed": false,
+      "evidence": "Primary Hypothesis (lines 14-37) bundles both interventions: 'If we implement seller video reviews on product cards AND streamline the checkout process from 4 steps to 2 steps, THEN we will increase the conversion rate from 3.2% to 5%...' This is a single combined hypothesis, not two separate hypotheses. Secondary Hypotheses 2a and 2b (lines 40-53) are labeled as isolated impact hypotheses but are positioned as secondary, not as the primary split structure."
+    },
+    {
+      "text": "Each hypothesis follows 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Primary hypothesis (lines 16-17): 'If we implement seller video reviews on product cards AND streamline the checkout process from 4 steps to 2 steps, THEN we will increase the conversion rate from 3.2% to 5% (or higher) for Android mobile web users purchasing used smartphones.' Follows If/Then/because format at lines 18-37."
+    },
+    {
+      "text": "Target segment is identified for each hypothesis",
+      "passed": false,
+      "evidence": "Only one target segment identified for the bundled hypothesis: 'Android mobile web users purchasing used smartphones' (line 16). Secondary hypotheses reference the same segment. No separate segment analysis for video vs checkout. Assertion requires target segment for 'each hypothesis' - fails because there is only one hypothesis structure."
+    },
+    {
+      "text": "Primary metric is identified for each hypothesis",
+      "passed": false,
+      "evidence": "Only one primary metric stated: 'Primary Metric: Conversion rate (product card → completed purchase)' (line 70). This applies to the bundled hypothesis. No separate primary metrics for the video or checkout sub-hypotheses. Secondary metrics listed (lines 71-80) but primary metric is singular."
+    },
+    {
+      "text": "Expected direction is stated for each hypothesis",
+      "passed": false,
+      "evidence": "Only one expected direction for the combined hypothesis: 'increase the conversion rate from 3.2% to 5%' (line 16). Secondary hypotheses 2a and 2b show expected lifts (lines 45, 51) but the primary hypothesis structure does not present separate directional statements for separate hypotheses."
+    },
+    {
+      "text": "Causal mechanism is explained for each hypothesis",
+      "passed": false,
+      "evidence": "Mechanisms provided in bundled form (lines 18-37). Hypothesis Rationale section lists three numbered mechanisms (lines 20-36) addressing video, checkout, and combined effect, but they are components of a single hypothesis rather than separate causal mechanisms for separate hypotheses."
+    },
+    {
+      "text": "Missing information section is present",
+      "passed": false,
+      "evidence": "No dedicated 'Missing Information' section. Output includes 'Risk Factors & Mitigation' (lines 92-99) and 'Implementation Notes' (lines 119-125) but lacks a structured missing information section identifying what data gaps exist before testing can proceed."
+    },
+    {
+      "text": "The user's 5% target is not accepted uncritically as a guaranteed outcome",
+      "passed": false,
+      "evidence": "The 5% target is presented with breakdown assumptions (lines 84-87): 'Video reviews: +30% relative lift; Checkout streamlining: +20% relative lift; Interaction/synergy effects: +6% additional relative lift' totaling the target. While success criteria are conditional (lines 105-115), the primary hypothesis frames 5% as the expected outcome. Risk mitigation strategies are provided, but the target itself is not treated with sufficient uncertainty about whether it will be achieved."
+    },
+    {
+      "text": "Confidence level is explicitly stated",
+      "passed": false,
+      "evidence": "No explicit confidence level statement about hypothesis framing. Statistical confidence is mentioned (line 88: '95% CI') referring to test design, but no explicit assessment of hypothesis confidence (e.g., 'Context-informed', 'Speculative', etc.). The rationale and risk discussion imply moderate confidence but do not state it explicitly as a confidence level."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 7,
+    "total": 9,
+    "pass_rate": 0.22
+  }
+}

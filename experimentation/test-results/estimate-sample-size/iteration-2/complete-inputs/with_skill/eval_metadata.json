@@ -1,0 +1,49 @@
+{
+  "eval_id": 1,
+  "eval_name": "complete-inputs",
+  "prompt": "Food delivery: click-to-order rate, baseline 7.8%, MDE +0.8pp, 95%/80%, 35k/week eligible",
+  "assertions": [
+    {
+      "assertion_id": 1,
+      "assertion_type": "calculation",
+      "description": "Sample size per group should be approximately 18,542 users",
+      "status": "pass"
+    },
+    {
+      "assertion_id": 2,
+      "assertion_type": "calculation",
+      "description": "Total sample size should be approximately 37,084 users",
+      "status": "pass"
+    },
+    {
+      "assertion_id": 3,
+      "assertion_type": "calculation",
+      "description": "Estimated duration should be approximately 1.1 weeks",
+      "status": "pass"
+    },
+    {
+      "assertion_id": 4,
+      "assertion_type": "completeness",
+      "description": "All inputs provided (baseline, MDE, confidence, power, eligible traffic, split)",
+      "status": "pass"
+    },
+    {
+      "assertion_id": 5,
+      "assertion_type": "methodology",
+      "description": "Output uses appropriate two-proportion z-test formula for conversion metrics",
+      "status": "pass"
+    },
+    {
+      "assertion_id": 6,
+      "assertion_type": "feasibility",
+      "description": "Test is feasible with short duration and manageable sample size relative to available traffic",
+      "status": "pass"
+    },
+    {
+      "assertion_id": 7,
+      "assertion_type": "downstream_ready",
+      "description": "Output includes all required elements for downstream handoff (assumptions, caveats, next steps)",
+      "status": "pass"
+    }
+  ]
+}

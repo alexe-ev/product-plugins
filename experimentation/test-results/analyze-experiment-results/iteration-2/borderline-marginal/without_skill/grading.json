@@ -1,0 +1,31 @@
+{
+  "expectations": [
+    {
+      "text": "Output classifies the result as Inconclusive — correctly noting that p=0.09 misses the significance threshold AND the observed effect (+1.1pp) is below the pre-defined MDE (+1.5pp)",
+      "passed": true,
+      "evidence": "Output explicitly states 'Result Classification: Inconclusive — Do Not Ship' and directly addresses both criteria: (1) 'p-value = 0.09 (misses 0.05 threshold)' and (2) 'observed effect is both statistically insignificant AND below the pre-defined minimum detectable effect' with specific comparison of +1.1pp vs +1.5pp target"
+    },
+    {
+      "text": "Output explicitly calls out that the 95% CI (−0.2pp to +2.4pp) crosses zero, meaning the data is consistent with both a positive and a negative true effect",
+      "passed": true,
+      "evidence": "Output states '95% CI: −0.2pp to +2.4pp (crosses zero)' and explains: 'The confidence interval crossing zero indicates the true effect could be negative, neutral, or positive'"
+    },
+    {
+      "text": "Output flags the guardrail trends (checkout time +9.4%, payment errors +0.3pp) as concerning signals that should not be dismissed simply because no hard thresholds were pre-defined",
+      "passed": true,
+      "evidence": "Output explicitly flags both guardrails as concerning: 'Significant increase suggests the simplified layout may have added friction' for checkout time, and 'Higher error rate aligns with the checkout time increase, suggesting usability issues' for payment errors. Adds: 'While no hard thresholds were pre-defined for guardrails, these directional shifts are meaningful signals that should not be dismissed'"
+    },
+    {
+      "text": "Output does NOT recommend shipping and does NOT characterise the result as 'directionally promising enough to ship'",
+      "passed": true,
+      "evidence": "Output unambiguously recommends: 'Do not ship. The evidence does not support deployment' with four specific reasons listed. No language suggesting directional promise or potential for shipping"
+    },
+    {
+      "text": "Output notes that the slight underpowering (95% of planned sample) is a contributing factor and recommends either a properly powered follow-up or iterating on the variant before re-testing",
+      "passed": true,
+      "evidence": "Output includes 'Sample Size Assessment' section noting 'Slight underpowering may have reduced statistical power to detect a true +1.5pp effect'. Next Steps includes 'Option A: Iterate on the variant... then re-test with full planned sample size' and 'Option C: If re-testing, ensure full sample collection'"
+    }
+  ],
+  "overall_passed": true,
+  "summary": "All five assertions passed. The response correctly classified the result as inconclusive, provided appropriate statistical reasoning, flagged guardrail concerns, declined to recommend shipping, and addressed sample size considerations with actionable next steps."
+}

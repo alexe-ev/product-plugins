@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT recommend immediate Full rollout based on the aggregate p=0.004 result",
+      "passed": true,
+      "evidence": "The recommended action is: 'DO NOT roll out this week. Extend observation to determine whether the effect stabilizes before committing to full rollout.' The output explicitly rejects rollout despite the significant p-value."
+    },
+    {
+      "text": "Output specifically identifies the week-by-week decay (Week 1: +7.8pp → Week 2: +2.1pp → Week 3: +0.8pp) as a novelty effect pattern, and explains that the aggregate result is dominated by the Week 1 spike",
+      "passed": true,
+      "evidence": "The output states: 'The week-by-week breakdown reveals a critical concern that dominates the decision: this is a novelty effect, not a sustained improvement.' It then lists: 'Week 1: +7.8 percentage points, Week 2: +2.1 percentage points, Week 3: +0.8 percentage points' and notes 'If this decay continues, the steady-state effect may stabilize near the Week 3 level (±0.8pp) or potentially approach zero.' It also states: 'The aggregate +2.9pp result is heavily weighted toward the Week 1 spike' and 'the aggregate result obscures that 66% of the observed lift came from Week 1 alone.'"
+    },
+    {
+      "text": "Output warns that the steady-state effect may be substantially smaller than +2.9pp and possibly near zero based on the decay trajectory",
+      "passed": true,
+      "evidence": "The output explicitly states: 'If this decay continues, the steady-state effect may stabilize near the Week 3 level (±0.8pp) or potentially approach zero.' It also warns: 'If steady-state performance is 0.8pp or lower, the Q3 gain is illusory—the metric will decline toward baseline in subsequent weeks.'"
+    },
+    {
+      "text": "Output does NOT treat the Q3 deadline as a reason to proceed with rollout — it does not give in to the business pressure framing",
+      "passed": true,
+      "evidence": "The output explicitly rejects the deadline pressure: 'Shipping this week to count toward Q3 is deadline pressure, not evidence. If the effect decays further, you'll have implemented medium-complexity infrastructure for an unsustainable uplift.' In the trade-offs section: 'The team's desire to ship by end-of-week is understandable, but it conflicts with the evidence. The decay pattern is red flagging that more observation is needed.'"
+    },
+    {
+      "text": "Output recommends a longer observation period (rerun or extended test) to determine whether the effect stabilises, rather than shipping based on the decaying trend",
+      "passed": true,
+      "evidence": "The 'What should happen next' section states: 'Run the experiment for an additional 2–3 weeks (to day 35–42) to determine whether the effect stabilizes, continues to decay, or reverses toward baseline.' It also includes: 'Only proceed to rollout if: Extended observation shows stabilization above ≥1.5–2pp, OR Segment analysis reveals a meaningful sustained subgroup effect worth targeting.' The conclusion reinforces: 'Extend the test or segment the analysis to clarify whether this effect stabilizes. Do not ship this week.'"
+    }
+  ]
+}

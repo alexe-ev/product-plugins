@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Lines 5-7: 'If we add search with filters to the home page for users needing to locate projects, we expect project discovery time to decrease, because search functionality reduces the effort required to find projects compared to manual navigation.'"
+    },
+    {
+      "text": "Missing information is explicitly listed with specific items",
+      "passed": true,
+      "evidence": "Section 'Missing Information' (lines 79-104) with 5 major categories: 'Segment clarity' (lines 83-86), 'Current state' (lines 88-91), 'Metric definition' (lines 93-96), 'Scope and constraints' (lines 98-100), 'Business context' (lines 102-104)"
+    },
+    {
+      "text": "Confidence level is stated as provisional or context-informed",
+      "passed": true,
+      "evidence": "Lines 109-110: 'Confidence: PROVISIONAL' with reasoning provided in following lines"
+    },
+    {
+      "text": "Target segment uncertainty is acknowledged",
+      "passed": true,
+      "evidence": "Lines 12-22 explicitly state segment uncertainty: 'Low confidence' rating and lists three possible interpretations - 'All active users', 'New users during onboarding', 'Power users with large project portfolios'"
+    },
+    {
+      "text": "No fabricated quantitative impact numbers",
+      "passed": true,
+      "evidence": "Lines 64-75: 'Quantitative estimate: Not defined yet' with explicit reasoning: 'No baseline data provided on current discovery time, success rates, or user effort.' Numbers requested but not invented."
+    },
+    {
+      "text": "Downstream handoff or next steps mentioned",
+      "passed": true,
+      "evidence": "Section 'Downstream Handoff' (lines 127-138) explicitly lists three downstream skills needed: 'validate-hypothesis-quality', 'define-success-metrics', 'design-experiment-plan' with specific items to resolve before handoff"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  }
+}

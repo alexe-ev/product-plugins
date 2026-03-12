@@ -1,0 +1,57 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT provide a specific numerical sample size estimate",
+      "passed": false,
+      "evidence": "Output provides specific sample sizes: Scenario 1: ~3,600 conversions per variation, 7,200 total; Scenario 2: ~2,300 per variation, 4,600 total; Scenario 3: ~1,600 per variation, 3,200 total; Scenario 4: ~4,700 per variation, 9,400 total"
+    },
+    {
+      "text": "Output does NOT provide a specific duration estimate in weeks or days",
+      "passed": false,
+      "evidence": "Output provides specific duration estimates: Scenario 1: ~1.6 weeks; Scenario 2: ~1 week; Scenario 3: ~0.7 weeks; Scenario 4: ~2.1 weeks; Recommendation: 1-2 weeks"
+    },
+    {
+      "text": "Output identifies MDE (minimum detectable effect) as a missing mandatory input",
+      "passed": true,
+      "evidence": "Section 'Key Challenge: Missing Critical Inputs' explicitly lists '1. **Minimum Detectable Effect (MDE)**' as first critical parameter needed"
+    },
+    {
+      "text": "Output identifies confidence level or significance level as a missing mandatory input",
+      "passed": true,
+      "evidence": "Section 'Key Challenge: Missing Critical Inputs' lists '2. **Statistical Confidence Level**' with description of probability of avoiding Type I errors"
+    },
+    {
+      "text": "Output identifies statistical power as a missing mandatory input",
+      "passed": true,
+      "evidence": "Section 'Key Challenge: Missing Critical Inputs' lists '3. **Statistical Power**' with description of probability of detecting effect if it truly exists"
+    },
+    {
+      "text": "Output returns a checklist or list of required inputs before estimation can proceed",
+      "passed": true,
+      "evidence": "Output contains 'Key Challenge: Missing Critical Inputs' section with three numbered items (MDE, Confidence Level, Power), and 'Next Steps to Finalize Duration' section with numbered steps 1-3 defining required inputs"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.67
+  },
+  "execution_metrics": {
+    "output_chars": 4157
+  },
+  "timing": {
+    "executor_duration_seconds": 23.1
+  },
+  "claims": [
+    "The output violates assertions 1 and 2 by providing scenario-based sample size and duration estimates despite missing inputs being identified as required"
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      "The output should withhold ALL numerical estimates until the user provides the three critical missing inputs (MDE, confidence level, power)",
+      "Consider removing the Scenario Analysis section entirely and replacing it with a message that explains why these cannot be calculated without the mandatory inputs",
+      "The 'Recommended Approach' section providing '1-2 weeks' duration also violates assertion 2"
+    ],
+    "overall": "The output demonstrates good understanding of the required inputs and clearly identifies what's missing. However, it contradicts itself by then proceeding to provide specific numerical estimates in multiple scenarios. The assertions require that when inputs are missing, NO specific estimates should be provided—even as examples or scenarios. The current output fails on this critical requirement."
+  }
+}

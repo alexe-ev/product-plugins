@@ -1,0 +1,18 @@
+{
+  "name": "product-planning",
+  "version": "1.0.0",
+  "description": "8-skill library for product planning: OKRs, roadmapping, requirements, and delivery coordination.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "planning",
+    "roadmap",
+    "okrs",
+    "requirements",
+    "delivery"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

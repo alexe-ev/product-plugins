@@ -1,0 +1,57 @@
+{
+  "expectations": [
+    {
+      "text": "Output identifies 30-day retention (or functionally equivalent metric) as primary",
+      "passed": true,
+      "evidence": "Line 12 explicitly marks '30-Day Retention Rate' as 'PRIMARY KPI' with definition on lines 13-17. Also appears in success criteria summary table (line 151) marked as 'Primary' priority."
+    },
+    {
+      "text": "Output includes guardrail metrics addressing notification opt-outs or user anxiety",
+      "passed": true,
+      "evidence": "Lines 49-67 contain dedicated 'Guardian Metrics' section. Notification Opt-Out Rate defined on lines 51-55. Anxiety/Negative Sentiment Proxy Metrics on lines 57-66 include in-app feedback sentiment, support tickets related to spending anxiety, and feature avoidance metrics."
+    },
+    {
+      "text": "Output includes success threshold or explains it must be defined by the team",
+      "passed": true,
+      "evidence": "All metrics include explicit success thresholds. Primary metric (line 14): '≥5% relative increase from control group'. Guardian metrics have thresholds on lines 53, 59, 62, 65. Supporting metrics establish quantified targets throughout."
+    },
+    {
+      "text": "Output marks minimum meaningful effect as provisional or to-be-agreed",
+      "passed": true,
+      "evidence": "Lines 162-163 state 'Define baseline metrics from historical control cohort' as next step. Lines 172-180 include 'Questions to Consider Before Launch' section that signals the 5% threshold depends on baseline establishment and team decisions about feature placement, timing, and content before launch."
+    },
+    {
+      "text": "Output does NOT treat revenue or DAU as primary given the retention-focused hypothesis",
+      "passed": true,
+      "evidence": "Primary metric is exclusively 30-day retention (line 12). No revenue metrics appear anywhere in output. No DAU metrics mentioned. Success criteria summary table (lines 149-156) lists only retention-focused and engagement metrics as primary/guardian priorities."
+    },
+    {
+      "text": "Output explains why the chosen primary metric is closest to the hypothesis outcome",
+      "passed": true,
+      "evidence": "Line 4 states hypothesis: 'more users will stay active past day 30'. Line 15 rationale: 'This directly measures the hypothesis — the spending summary should give users a compelling reason to return'. The connection between metric (30-day retention) and hypothesis outcome is explicitly stated."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 8754
+  },
+  "timing": {
+    "executor_duration_seconds": 33.5
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "Output demonstrates strong hypothesis-driven metric selection with clear retention focus",
+      "Guardian metrics comprehensively address both notification risk and anxiety concerns",
+      "Explicit decision rules and monitoring cadence support clear experiment governance",
+      "Success thresholds appropriately calibrated (5% for primary, 3% for leading indicator)",
+      "Next steps correctly identify baseline definition as prerequisite, making thresholds team-dependent"
+    ],
+    "overall": "Excellent execution. Output fully satisfies all assertions. Framework demonstrates rigorous, hypothesis-aligned success metrics design with appropriate guardrails for the spending-anxiety risk profile. Primary metric directly measures hypothesis outcome (30-day retention from weekly engagement). Guardian metrics systematically address notification and anxiety risks. Thresholds marked as team-dependent through baseline definition requirement."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "eval_id": 1,
+  "eval_name": "complete-inputs",
+  "prompt": "Food delivery A/B test: click-to-order rate, baseline 7.8%, MDE +0.8pp, 95% confidence, 80% power, 35k users/week",
+  "assertions": [
+    {
+      "assertion_id": "sample-size-calculation",
+      "description": "Sample size per group should be approximately 18,439 users",
+      "expected_value": 18439,
+      "tolerance": 50,
+      "metric": "n_per_group"
+    },
+    {
+      "assertion_id": "total-sample-size",
+      "description": "Total sample size for both groups should be approximately 36,878 users",
+      "expected_value": 36878,
+      "tolerance": 100,
+      "metric": "total_sample_size"
+    },
+    {
+      "assertion_id": "test-duration",
+      "description": "Estimated test duration should be approximately 8 days with given traffic",
+      "expected_value": 8,
+      "tolerance": 1,
+      "metric": "duration_days"
+    },
+    {
+      "assertion_id": "feasibility-check",
+      "description": "Test should be marginally feasible (requires ~1.05x weekly traffic)",
+      "expected_value": "MARGINALLY_FEASIBLE",
+      "metric": "feasibility_status"
+    },
+    {
+      "assertion_id": "statistical-power",
+      "description": "Test design achieves 80% statistical power at 95% confidence level",
+      "expected_value": 0.80,
+      "tolerance": 0.01,
+      "metric": "statistical_power"
+    },
+    {
+      "assertion_id": "relative-uplift",
+      "description": "Relative uplift from baseline should be approximately 10.3%",
+      "expected_value": 10.3,
+      "tolerance": 0.2,
+      "metric": "relative_uplift_percent"
+    }
+  ]
+}

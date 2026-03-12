@@ -1,0 +1,18 @@
+{
+  "name": "risk-compliance",
+  "version": "1.0.0",
+  "description": "8-skill library for risk and compliance: risk registers, privacy assessment, ethical frameworks, and responsible AI.",
+  "author": {
+    "name": "Evgeny Alexeev"
+  },
+  "keywords": [
+    "risk",
+    "compliance",
+    "privacy",
+    "ethics",
+    "responsible-ai"
+  ],
+  "skills": [
+    "./skills/"
+  ]
+}

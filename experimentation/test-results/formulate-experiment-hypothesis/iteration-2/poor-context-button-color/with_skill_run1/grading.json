@@ -1,0 +1,11 @@
+{
+  "expectations": [
+    {"text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format", "passed": true, "evidence": "Lines 37-39: 'If we change the button color for [unspecified user segment], we expect [conversion metric type] to increase, because button color may improve visual contrast, clarity, or call-to-action prominence...'"},
+    {"text": "Output does not contain experiment design elements such as sample size, statistical significance thresholds, test duration, or rollout plans", "passed": true, "evidence": "No sample sizes, p-values, test durations, traffic splits, or rollout plans in the output. Lines 129-131 explicitly state 'NOT yet ready for: design-experiment-plan, sample size or duration estimation' — the output maintains scope discipline."},
+    {"text": "Confidence level is explicitly stated as provisional", "passed": true, "evidence": "Line 111: 'PROVISIONAL' with 5-point justification for why it's provisional."},
+    {"text": "Missing information is extensively listed (5+ items)", "passed": true, "evidence": "Lines 86-93: 8 numbered items under 'Missing Information (Critical)' including button identity, segment, metric definition, baseline, evidence basis, and impact rationale."},
+    {"text": "Discovery questions or recommended next steps are suggested", "passed": true, "evidence": "Lines 97-105: 'Suggested Next Steps (Discovery)' with 5 items explicitly framed as pre-validation discovery."},
+    {"text": "The hypothesis does NOT present 30% as an accepted fact", "passed": true, "evidence": "Lines 72-80: 'NOT DEFINED — Impact assumption is unsupported.' Explicitly flags the 30% as needing validation with 4 reasons why it cannot be adopted."}
+  ],
+  "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.00}
+}

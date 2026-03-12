@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Lines 6-7: 'If we change the button color to a more visually prominent and psychologically compelling shade, then user engagement with the call-to-action will increase, resulting in a higher conversion rate'"
+    },
+    {
+      "text": "The 30% uplift is flagged as unsubstantiated or lacking evidence",
+      "passed": true,
+      "evidence": "Lines 17-23 present critical considerations stating the 30% target is 'ambitious without understanding' baseline and other factors. Line 32 recommends the 30% target 'should be validated against historical performance data and industry benchmarks rather than accepted as a predetermined outcome'"
+    },
+    {
+      "text": "Confidence level is explicitly stated as provisional",
+      "passed": false,
+      "evidence": "The word 'provisional' does not appear. The output mentions 'Critical Considerations' and recommendations but does not explicitly classify or state a confidence level at any point."
+    },
+    {
+      "text": "Missing information is extensively listed (5+ items)",
+      "passed": false,
+      "evidence": "Lines 18-23 present considerations embedded in prose format (baseline, competitive context, user journey, friction points, conversion inhibitors) but do NOT provide a structured enumerated list of 5+ distinct missing information items. The gaps are implicit rather than explicitly catalogued."
+    },
+    {
+      "text": "Discovery questions or recommended next steps are suggested",
+      "passed": true,
+      "evidence": "Lines 25-29 provide data-driven recommendations (user research, incremental testing, multivariate monitoring, clear success metrics). Line 31-32 provides recommendation for controlled A/B testing with expectations management."
+    },
+    {
+      "text": "The hypothesis does NOT present 30% as an accepted fact",
+      "passed": true,
+      "evidence": "Lines 4 and 15 present 30% expectation, but line 18 immediately qualifies it as 'ambitious without understanding' various factors. Line 32 states the 30% target should be 'validated... rather than accepted as a predetermined outcome'"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.67
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "expectations": [
+    {
+      "text": "Output offers multiple metric options conditioned on possible test goals",
+      "passed": true,
+      "evidence": "Output provides 4 primary metric types (Conversion, Engagement, Business, Quality/Experience) with multiple sub-options. Section 'Sample Metric Selection Examples' shows 3 different scenarios (E-commerce, SaaS, Content/Media) with different metric choices conditioned on context."
+    },
+    {
+      "text": "Output lists what must be confirmed before metrics can be finalized",
+      "passed": true,
+      "evidence": "The 'Next Steps' section (lines 84-93) explicitly lists 6 questions that must be answered: (1) primary business objective, (2) user action measuring success, (3) secondary metrics, (4) guardrail metrics, (5) traffic/time availability, (6) minimum detectable change. States 'Once you answer these questions, you can select appropriate metrics.'"
+    },
+    {
+      "text": "Output does NOT commit to a single metric as definitively correct",
+      "passed": true,
+      "evidence": "Output uses framing language 'consider' and 'to consider' throughout. Overview explicitly states 'without specific context about your product or test, here are the key metric categories to consider.' Three different sample scenarios show different primary metrics for different contexts. No single metric is declared universally correct."
+    },
+    {
+      "text": "Output identifies at least 3 distinct possible goals or product contexts",
+      "passed": true,
+      "evidence": "Section 'Sample Metric Selection Examples' identifies exactly 3 distinct contexts with corresponding metrics: (1) E-commerce Site with conversion rate as primary, (2) SaaS Product with feature adoption/DAU as primary, (3) Content/Media Platform with session duration/return rate as primary."
+    },
+    {
+      "text": "Output explicitly marks all choices as provisional or conditional",
+      "passed": false,
+      "evidence": "While the output is structurally conditional and uses advisory language ('consider,' 'typically,' 'should'), it does NOT explicitly mark choices as 'provisional' or use explicit conditional markers (e.g., 'IF your goal is...', 'CONDITIONALLY...', 'PROVISIONAL...'). Sample examples use 'For an E-commerce Site:' but lack explicit conditional language like 'IF you are an e-commerce site' or 'CONDITIONAL ON being an e-commerce site.' Language is advisory but lacks explicit provisional markers."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.80
+  },
+  "execution_metrics": {
+    "output_chars": 3624,
+    "output_word_count": 670,
+    "output_lines": 96
+  },
+  "timing": {
+    "executor_duration_seconds": 19.9,
+    "total_tokens": 22757
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "To pass assertion 5, add explicit conditional language markers such as 'IF your goal is...', 'CONDITIONAL ON...', 'PROVISIONALLY...', or 'SUBJECT TO CONFIRMATION...' when presenting metric options.",
+      "Consider rephrasing sample scenarios from 'For an E-commerce Site:' to 'IF you are an e-commerce business, PROVISIONALLY consider:' to make the conditionality more explicit.",
+      "Use section headers that emphasize conditionality, such as 'Provisional Metric Selections Conditioned on Context' rather than 'Sample Metric Selection Examples'."
+    ],
+    "overall": "The output demonstrates strong performance on 4 of 5 assertions. It effectively presents multiple metric options, identifies prerequisites for finalization, avoids single definitive metrics, and identifies distinct product contexts. The primary gap is the lack of explicit provisional/conditional language markers. The output is implicitly conditional in structure but uses advisory language rather than explicitly labeling choices as provisional. With language revisions to add explicit conditional markers, this output would achieve 100% assertion compliance."
+  }
+}

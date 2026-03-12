@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly flags that stopping the test when p < 0.05 was first observed (optional stopping / peeking) inflates the false positive rate and makes the stated p-value unreliable",
+      "passed": true,
+      "evidence": "You stopped the test the moment you crossed p < 0.05 on day 10. This is optional stopping or 'peeking' — continuously monitoring results and stopping when you hit significance. This practice inflates the false positive rate substantially... The true false positive rate under optional stopping could easily exceed 10-15%, making the reported p-value of 0.041 **unreliable and misleading**."
+    },
+    {
+      "text": "Output explicitly flags that the test is underpowered — only 4,200 per group were collected out of the planned 8,500, representing approximately 49% of the required sample",
+      "passed": true,
+      "evidence": "You collected only 4,200 users per group at stopping time, but your pre-registered plan was 8,500 per group (over 21 days). You've achieved roughly **49% of your target sample size**."
+    },
+    {
+      "text": "Output does NOT validate the 'time to ship' conclusion — explicitly states the result cannot be treated as a reliable positive finding under these conditions",
+      "passed": true,
+      "evidence": "STOP: Do not ship this change. This result cannot be treated as a reliable positive finding... Do not ship based on this result alone."
+    },
+    {
+      "text": "Output classifies the result as 'Unsafe interpretation', 'Inconclusive', or equivalent — not as a valid positive",
+      "passed": true,
+      "evidence": "Classification: **Unsafe Interpretation**. This result is **inconclusive** and does not meet the bar for a reliable positive finding."
+    },
+    {
+      "text": "Output provides a path forward: re-run the test with pre-committed stopping rules, or use a sequential testing framework designed for interim analysis",
+      "passed": true,
+      "evidence": "Option A (Recommended): Re-run the test with pre-committed stopping rules... Option B: Use a sequential testing framework (e.g., Bayesian sequential design, group sequential testing with pre-committed interim analysis rules) that properly accounts for multiple looks at the data."
+    }
+  ]
+}

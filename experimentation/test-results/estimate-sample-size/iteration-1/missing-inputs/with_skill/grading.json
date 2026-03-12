@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT provide a specific numerical sample size estimate",
+      "passed": false,
+      "evidence": "Lines 86-102 contain 'Scenario-Based Guidance' with specific numbers: Scenario A (~5,900 per group, ~11,800 total), Scenario B (~23,500 per group, ~47,000 total), Scenario C (~4,500 per group, ~9,000 total)"
+    },
+    {
+      "text": "Output does NOT provide a specific duration estimate in weeks or days",
+      "passed": false,
+      "evidence": "Lines 86-102 provide specific duration estimates: Scenario A (~2.6 weeks), Scenario B (~10.4 weeks), Scenario C (~2 weeks)"
+    },
+    {
+      "text": "Output identifies MDE (minimum detectable effect) as a missing mandatory input",
+      "passed": true,
+      "evidence": "Line 20: '### 1. Minimum Detectable Effect (MDE)' under 'Missing Mandatory Inputs' with explanation of why it matters"
+    },
+    {
+      "text": "Output identifies confidence level or significance level as a missing mandatory input",
+      "passed": true,
+      "evidence": "Line 31: '### 2. Confidence Level (Significance)' under 'Missing Mandatory Inputs' with explanation"
+    },
+    {
+      "text": "Output identifies statistical power as a missing mandatory input",
+      "passed": true,
+      "evidence": "Line 41: '### 3. Statistical Power' under 'Missing Mandatory Inputs' with explanation"
+    },
+    {
+      "text": "Output returns a checklist or list of required inputs before estimation can proceed",
+      "passed": true,
+      "evidence": "Lines 63-78: 'How to Move Forward: Setup Checklist' with checkbox items for MDE, Confidence Level, and Statistical Power"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.67
+  },
+  "execution_metrics": {
+    "output_chars": 5742
+  },
+  "timing": {
+    "executor_duration_seconds": 40.4
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "Remove the 'Scenario-Based Guidance' section (lines 82-102) or clearly mark it as strictly illustrative without any numerical values",
+      "If scenarios are provided, ensure they do NOT include specific sample size or duration estimates, even as examples",
+      "The framing 'These are **not estimates** but illustrative scenarios only' (line 84) does not prevent the output from violating assertions 1 and 2, which require withholding ALL numerical estimates"
+    ],
+    "overall": "Output correctly identifies all three mandatory missing inputs and provides a useful checklist. However, it fails the core assertions because the scenario section provides specific numerical sample sizes and duration estimates, which violates the requirement to withhold all numerical estimates. The scenarios appear designed to help planning, but they directly contradict assertions 1 and 2 by providing 'illustrative' but nonetheless concrete numbers."
+  }
+}

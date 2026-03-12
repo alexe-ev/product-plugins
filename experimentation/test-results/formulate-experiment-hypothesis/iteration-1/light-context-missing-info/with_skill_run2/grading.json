@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Lines 7-9: 'If we add a search feature with filters to the homepage, we expect the project discovery rate (or successful project location time) to increase, because users will be able to query and filter projects by relevant criteria rather than relying on browsing or scrolling.'"
+    },
+    {
+      "text": "Missing information is explicitly listed with specific items",
+      "passed": true,
+      "evidence": "Lines 29-37: 'Missing Information' section with 8 numbered specific items (product area clarity, user segmentation, current baseline, scope of search, filter criteria, success definition, platform scope, existing functionality)."
+    },
+    {
+      "text": "Confidence level is stated as provisional or context-informed",
+      "passed": true,
+      "evidence": "Line 40: 'Provisional' with explanation of why the framing is provisional in lines 42."
+    },
+    {
+      "text": "Target segment uncertainty is acknowledged",
+      "passed": true,
+      "evidence": "Lines 12-13: 'Likely: Users with 2+ projects who frequently need to locate a specific project. Not explicitly confirmed: whether this affects all users, only active users, or specific company sizes.'"
+    },
+    {
+      "text": "No fabricated quantitative impact numbers",
+      "passed": true,
+      "evidence": "Line 27 states 'Not quantified at this stage' and uses conditional exploratory language ('if users are currently spending 30+ seconds') rather than claiming specific expected impact outcomes."
+    },
+    {
+      "text": "Downstream handoff or next steps mentioned",
+      "passed": true,
+      "evidence": "Lines 44-48: 'Recommended Next Steps' section with 4 clear items outlining validation, clarification, definition, and refinement steps."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  }
+}

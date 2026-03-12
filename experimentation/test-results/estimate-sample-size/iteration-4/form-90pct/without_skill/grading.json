@@ -1,0 +1,48 @@
+{
+  "expectations": [
+    {
+      "text": "Output provides sample size per group in the range 2,600–3,500",
+      "passed": true,
+      "evidence": "Output states 3,018 per group (line 54), which falls within the range 2,600–3,500"
+    },
+    {
+      "text": "Output provides total sample size in the range 5,200–7,000",
+      "passed": true,
+      "evidence": "Output states 6,036 total (line 61), which falls within the range 5,200–7,000"
+    },
+    {
+      "text": "Output estimates duration in the range 0.85–1.35 weeks using 5,500/week traffic",
+      "passed": false,
+      "evidence": "Output states duration is 0.549 weeks for one group (line 69) or 5-6 days for full sample (lines 70, 87). 0.549 weeks is well below the 0.85–1.35 week range. The output recommends 1-2 weeks for robustness, but the calculated minimum duration is 0.549 weeks, not in the specified range"
+    },
+    {
+      "text": "Output explicitly uses z_beta = 1.28 (or states 90% power requires a higher z-value than 80% power)",
+      "passed": true,
+      "evidence": "Output explicitly states z_beta (one-tailed, 90% power): 1.28 on line 15, and uses this value in calculations on lines 41 and 50"
+    },
+    {
+      "text": "Output result is meaningfully larger than if 80% power had been used (which would give ~2,250/group)",
+      "passed": true,
+      "evidence": "Output provides 3,018/group for 90% power (line 54). This is 34.1% larger than the baseline 2,250/group for 80% power, which qualifies as meaningfully larger"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.80
+  },
+  "execution_metrics": {
+    "output_chars": 2973
+  },
+  "timing": {
+    "executor_duration_seconds": 20.7
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "The duration assertion failure stems from a calculation/presentation issue: the output correctly calculates 0.549 weeks for one group (3,018 ÷ 5,500), but the range 0.85–1.35 weeks appears to expect a different duration metric. For two groups requiring 6,036 total, the duration would be 6,036 ÷ 5,500 = 1.097 weeks, which DOES fall within 0.85–1.35. The output may have interpreted the duration question as time to collect one group's sample rather than total time to collect both groups"
+    ],
+    "overall": "Output correctly calculates sample sizes and power analysis parameters. Four of five assertions pass. The primary issue is duration interpretation: the output calculates 0.549 weeks (time per group), while the assertion likely expects ~1.097 weeks (time for both groups), which would actually fall within the 0.85–1.35 range. The mathematical foundation (z_beta = 1.28, sample size = 3,018/group = 6,036 total) is sound and all values are accurate."
+  }
+}

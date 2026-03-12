@@ -1,0 +1,51 @@
+{
+  "expectations": [
+    {
+      "text": "Output offers multiple metric options conditioned on possible test goals",
+      "passed": true,
+      "evidence": "Output provides four distinct metric options (A-D) explicitly conditioned on different test goals: 'If the test affects user onboarding', 'If the test affects purchase or checkout behavior', 'If the test affects ongoing engagement or habit', and 'If the test affects monetization'. Each option includes primary metrics, secondary metrics, and guardrails tailored to that specific goal."
+    },
+    {
+      "text": "Output lists what must be confirmed before metrics can be finalized",
+      "passed": true,
+      "evidence": "Section 'What Is Missing (Must Be Confirmed)' lists 6 items that must be confirmed: (1) user outcome to improve, (2) funnel stage affected, (3) business goal, (4) actual hypothesis, (5) risky side effects, (6) minimum meaningful effect. Additional 'What to Do Next' section provides 5 confirmation steps."
+    },
+    {
+      "text": "Output does NOT commit to a single metric as definitively correct",
+      "passed": true,
+      "evidence": "Output explicitly avoids committing to a single metric. Uses language like 'Provisional', 'TBD' (appears 6 times in Output Structure), and states 'All metric choices are provisional' until context is clarified. Provides options rather than a single recommendation."
+    },
+    {
+      "text": "Output identifies at least 3 distinct possible goals or product contexts",
+      "passed": true,
+      "evidence": "Output identifies exactly 4 distinct goals/contexts: (1) onboarding/first-time activation (Option A), (2) purchase/checkout behavior (Option B), (3) engagement/habit (Option C), and (4) monetization/paying users (Option D). All are explicitly framed as conditional options."
+    },
+    {
+      "text": "Output explicitly marks all choices as provisional or conditional",
+      "passed": true,
+      "evidence": "Output uses multiple explicit markers: 'Provisional' appears in section headers and conclusion, 'If the test affects' prefaces all four options, guardrails listed under each option are conditional, 'TBD' marks all final outputs until confirmation, and closing statement emphasizes 'All metric choices are provisional'."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 2952
+  },
+  "timing": {
+    "executor_duration_seconds": 27.2
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      "Output demonstrates strong conditional framing and appropriate epistemic caution given poor context",
+      "The four-option framework (A-D) directly addresses ambiguity by mapping to common product stages",
+      "Structured 'What Is Missing' section sets clear expectations for follow-up conversation",
+      "Use of 'TBD' markers and 'Provisional' language consistently reinforces that recommendations are contingent on additional context"
+    ],
+    "overall": "All five assertions passed. The output successfully demonstrates the core requirement: offering multiple conditioned options without prematurely committing to a single metric, while clearly listing prerequisites for finalization. The response pattern is appropriate for poor-context scenarios where the tester must gather additional requirements before proceeding."
+  }
+}

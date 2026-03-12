@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output does NOT produce a complete or execution-ready experiment brief — switches to skeleton or checklist mode",
+      "passed": true,
+      "evidence": "Response labels multiple fields as 'To be defined' and explicitly ends with 'Planning scaffold only — not execution-ready. Core decisions on metric definition, success criteria, and valid stopping logic must be defined first.'"
+    },
+    {
+      "text": "Output explicitly flags 'stopping early when results look good' as a statistical validity risk (optional stopping, peeking, or p-hacking)",
+      "passed": true,
+      "evidence": "Dedicated section 'CRITICAL VALIDITY RISK: Early stopping' explains that 'Stopping when results \"look good\" inflates false positive rates' and identifies both 'Optional stopping / peeking' and 'P-hacking' as specific risks."
+    },
+    {
+      "text": "Output identifies at least 4 required inputs that are missing: what change is being tested, which users are affected, what the primary metric is, and what constitutes 'good results' or the success threshold",
+      "passed": true,
+      "evidence": "Numbered list of 6 missing inputs includes: (1) 'What change is being tested?', (2) 'Which users are affected?', (3) 'What is the primary metric?', (4) 'What constitutes \"good results\"?', plus stopping logic and duration."
+    },
+    {
+      "text": "Output does NOT fabricate a target segment, primary metric, or success threshold and present it as if it were provided by the user",
+      "passed": true,
+      "evidence": "Response explicitly states 'To be defined' for target audience and primary metric. Examples given in the metric section (e.g., 'Design completion rate?', 'Conversion rate?') are clearly presented as options for clarification, not assumed facts."
+    },
+    {
+      "text": "Output provides a path forward — either a list of questions to answer before planning can proceed, or a skeleton showing what needs to be filled in",
+      "passed": true,
+      "evidence": "Output provides both a skeleton with 'To be defined' fields and a numbered list of 6 specific questions under 'Minimum context required before this becomes execution-ready' that guide the user on what information to gather next."
+    }
+  ]
+}

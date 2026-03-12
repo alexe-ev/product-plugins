@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is 'weak' or 'invalid'", "passed": true, "evidence": "Verdict: '⚠️ WEAK - Requires Refinement' and '❌ REJECT as stated'"},
+    {"text": "Output flags that 'improving UX' is too vague — no specific change is defined", "passed": true, "evidence": "Section 'Vague Core Terms' lists 6 possible meanings of 'UX онбординга', flags 'Improvement is not defined'"},
+    {"text": "Output flags that 'activation' is not defined as a measurable metric", "passed": true, "evidence": "Lists 5 possible definitions of activation, notes ambiguity"},
+    {"text": "Target segment vagueness is noted (which new users? platform? channel?)", "passed": true, "evidence": "Missing Baseline Metrics section notes 'No comparison group identified'; confounding variables include traffic quality fluctuations"},
+    {"text": "An improved/rewritten version of the hypothesis is provided", "passed": true, "evidence": "Three hypothesis sets (A, B, C) with specific reformulations provided"},
+    {"text": "Missing information lists at least 4 specific items", "passed": true, "evidence": "Section 2 'Missing Baseline Metrics' has 4 items; Section 3 'Confounding Variables' has 6 items"},
+    {"text": "Readiness for next step is clearly stated as NOT ready for experiment design", "passed": true, "evidence": "States 'Current hypothesis: TOO WEAK for experimentation' and '❌ REJECT as stated'"}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

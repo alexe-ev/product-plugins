@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is 'weak' or 'invalid'", "passed": true, "evidence": "Output gives verdict 'Weak' consistently"},
+    {"text": "Output flags that 'improving UX' is too vague — no specific change is defined", "passed": true, "evidence": "Output identifies 'improving UX' as vague and lacking specificity"},
+    {"text": "Output flags that 'activation' is not defined as a measurable metric", "passed": true, "evidence": "Output notes activation is undefined and not measurable"},
+    {"text": "Target segment vagueness is noted (which new users? platform? channel?)", "passed": true, "evidence": "Output flags target segment as vague"},
+    {"text": "An improved/rewritten version of the hypothesis is provided", "passed": true, "evidence": "Improved version provided"},
+    {"text": "Missing information lists at least 4 specific items", "passed": true, "evidence": "Missing information section present with 4+ items"},
+    {"text": "Readiness for next step is clearly stated as NOT ready for experiment design", "passed": true, "evidence": "Clearly states not ready for experiment design"}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

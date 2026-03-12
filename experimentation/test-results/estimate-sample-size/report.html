@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eval Report: estimate-sample-size</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2d3148;
+    --accent: #6c8aff;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --orange: #fb923c;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --dim: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 40px 24px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* Header */
+  .header { margin-bottom: 40px; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+  .skill-name { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .badge-final { background: rgba(52,211,153,.15); color: var(--green); border: 1px solid rgba(52,211,153,.3); }
+
+  /* KPI row */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+  .kpi-value { font-size: 28px; font-weight: 700; color: #fff; line-height: 1; }
+  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .kpi-delta { color: var(--green); font-weight: 700; }
+  .kpi-delta-warn { color: var(--yellow); font-weight: 700; }
+
+  /* Section */
+  h2 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+  section { margin-bottom: 44px; }
+
+  /* Journey timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .iter { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .iter-header { background: var(--surface2); padding: 14px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+  .iter-num { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .iter-title { font-weight: 600; color: #fff; flex: 1; }
+  .iter-note { font-size: 12px; color: var(--muted); }
+  .iter-body { padding: 20px; background: var(--surface); }
+
+  /* Comparison table */
+  .cmp-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+  .cmp-table th { background: var(--surface2); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--border); }
+  .cmp-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table tr:hover td { background: rgba(108,138,255,.04); }
+  .eval-name { font-weight: 500; color: var(--text); }
+  .eval-sub { font-size: 11px; color: var(--dim); margin-top: 2px; }
+
+  .score { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; font-size: 14px; }
+  .score-pass { color: var(--green); }
+  .score-fail { color: var(--red); }
+  .score-partial { color: var(--yellow); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .dot-pass { background: var(--green); }
+  .dot-fail { background: var(--red); }
+  .dot-partial { background: var(--yellow); }
+
+  .delta-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+  .delta-pos { background: rgba(52,211,153,.12); color: var(--green); }
+  .delta-zero { background: rgba(148,163,184,.12); color: var(--muted); }
+  .delta-neg { background: rgba(248,113,113,.12); color: var(--red); }
+
+  /* Assertion breakdown */
+  .assertion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .assertion-col { }
+  .col-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 10px; }
+  .assertion-list { display: flex; flex-direction: column; gap: 6px; }
+  .assertion-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 10px; border-radius: 7px; border: 1px solid var(--border); background: var(--surface2); }
+  .a-icon { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+  .a-text { font-size: 12px; color: var(--muted); }
+  .a-text.fail { color: var(--text); }
+
+  /* Insight cards */
+  .insights { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+  .insight { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .insight-icon { font-size: 18px; margin-bottom: 8px; }
+  .insight-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .insight-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .insight.highlight { border-color: rgba(108,138,255,.4); background: rgba(108,138,255,.06); }
+  .insight.warn { border-color: rgba(251,191,36,.3); background: rgba(251,191,36,.05); }
+  .insight.success { border-color: rgba(52,211,153,.3); background: rgba(52,211,153,.05); }
+
+  /* Recommendations */
+  .recs { display: flex; flex-direction: column; gap: 12px; }
+  .rec { display: flex; gap: 14px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  .rec-num { font-size: 18px; font-weight: 800; color: var(--accent); opacity: .4; flex-shrink: 0; line-height: 1; padding-top: 2px; }
+  .rec-prio { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 5px; }
+  .prio-high { background: rgba(248,113,113,.15); color: var(--red); }
+  .prio-med { background: rgba(251,191,36,.15); color: var(--yellow); }
+  .prio-low { background: rgba(52,211,153,.15); color: var(--green); }
+  .rec-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+  .rec-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* Progress bars */
+  .progress-wrap { display: flex; align-items: center; gap: 10px; }
+  .progress-bar { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; }
+  .fill-green { background: var(--green); }
+  .fill-yellow { background: var(--yellow); }
+  .fill-red { background: var(--red); }
+  .progress-label { font-size: 12px; font-weight: 700; min-width: 36px; text-align: right; }
+
+  /* Cost/benefit */
+  .cb-table { width: 100%; border-collapse: collapse; }
+  .cb-table th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .cb-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; }
+  .cb-table tr:last-child td { border-bottom: none; }
+  .cb-aspect { font-weight: 600; color: var(--text); }
+  .cb-with { color: var(--green); }
+  .cb-without { color: var(--muted); }
+
+  .tag { display: inline-block; padding: 2px 7px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+  .tag-blue { background: rgba(108,138,255,.15); color: var(--accent); }
+  .tag-purple { background: rgba(167,139,250,.15); color: var(--accent2); }
+  .tag-green { background: rgba(52,211,153,.15); color: var(--green); }
+  .tag-yellow { background: rgba(251,191,36,.15); color: var(--yellow); }
+  .tag-red { background: rgba(248,113,113,.15); color: var(--red); }
+
+  /* Final verdict */
+  .verdict { background: linear-gradient(135deg, rgba(52,211,153,.08), rgba(108,138,255,.08)); border: 1px solid rgba(108,138,255,.3); border-radius: 14px; padding: 28px 32px; }
+  .verdict-score { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+  .verdict-big { font-size: 48px; font-weight: 800; color: var(--green); line-height: 1; }
+  .verdict-vs { font-size: 20px; color: var(--dim); }
+  .verdict-base { font-size: 48px; font-weight: 800; color: var(--yellow); line-height: 1; }
+  .verdict-text { font-size: 15px; color: var(--text); line-height: 1.7; }
+  .verdict-text strong { color: #fff; }
+
+  code { background: rgba(108,138,255,.12); color: var(--accent); padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; }
+
+  .formula-block { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: var(--accent); margin: 12px 0; line-height: 1.8; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  @media (max-width: 640px) {
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+    .assertion-grid { grid-template-columns: 1fr; }
+    .insights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="skill-name">Skill Evaluation Report</div>
+    <div class="header-top">
+      <div>
+        <h1>estimate-sample-size</h1>
+        <div class="subtitle">4 итерации · 3 сценария поведения · 9 уникальных eval-кейсов · обнаружен и исправлен баг формулы</div>
+      </div>
+      <span class="badge badge-final">✓ Итоговое состояние: работоспособен</span>
+    </div>
+  </div>
+
+  <!-- KPI row -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">with_skill (итог)</div>
+      <div class="kpi-value" style="color:var(--green)">93%</div>
+      <div class="kpi-sub">40 pass из 43 assertions<br><span class="kpi-delta">↑ с 77% в итерации 1</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">without_skill (итог)</div>
+      <div class="kpi-value" style="color:var(--yellow)">80%</div>
+      <div class="kpi-sub">34 pass из 43 assertions<br><span class="kpi-delta-warn">↑ с 74% в итерации 1</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Финальный разрыв</div>
+      <div class="kpi-value">+13pp</div>
+      <div class="kpi-sub">Итерация 4 (calc-only)<br>100% vs 86.7%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Главная находка</div>
+      <div class="kpi-value" style="font-size:18px; color:var(--yellow)">×2 баг</div>
+      <div class="kpi-sub">Формула без явного определения давала n×2 — исправлено в REFERENCE.md</div>
+    </div>
+  </div>
+
+  <!-- Journey -->
+  <section>
+    <h2>История итераций</h2>
+
+    <!-- Iter 1 -->
+    <div class="iter">
+      <div class="iter-header">
+        <div class="iter-num">Iter 1</div>
+        <div class="iter-title">Базовая проверка трёх режимов поведения</div>
+        <div class="iter-note">complete-inputs · missing-inputs · unsafe-traffic</div>
+      </div>
+      <div class="iter-body">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>Eval</th>
+              <th>with_skill</th>
+              <th>without_skill</th>
+              <th>Δ</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="eval-name">complete-inputs</div><div class="eval-sub">conversion 7.8%→8.6%, 35k/week</div></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>6/6</span></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>6/6</span></td>
+              <td><span class="delta-badge delta-zero">0</span></td>
+              <td><span class="tag tag-green">Tie</span></td>
+            </tr>
+            <tr>
+              <td><div class="eval-name">missing-inputs</div><div class="eval-sub">нет SD, нет baseline</div></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>4/6</span></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>4/6</span></td>
+              <td><span class="delta-badge delta-zero">0</span></td>
+              <td><span class="tag tag-yellow">Ошибка ассерций</span></td>
+            </tr>
+            <tr>
+              <td><div class="eval-name">unsafe-traffic</div><div class="eval-sub">25k зарегистрированных ≠ eligible</div></td>
+              <td><span class="score score-partial"><span class="dot dot-partial"></span>4/5</span></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>3/5</span></td>
+              <td><span class="delta-badge delta-pos">+20pp</span></td>
+              <td><span class="tag tag-yellow">Баг формулы</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 14px; background: rgba(251,191,36,.06); border:1px solid rgba(251,191,36,.2); border-radius:8px; font-size:12px; color:var(--muted);">
+          <strong style="color:var(--yellow)">Две проблемы обнаружены одновременно:</strong>
+          (1) Ассерции для <code>missing-inputs</code> запрещали любые числа — но REFERENCE.md явно разрешает «labeled scenario estimates». Нужна правка ассерций.
+          (2) Оба конфига в <code>unsafe-traffic</code> дали ~3,073/group вместо ожидаемых ~1,400–1,700 — признак системного ×2-бага в расчётах.
+        </div>
+      </div>
+    </div>
+
+    <!-- Iter 2 -->
+    <div class="iter">
+      <div class="iter-header">
+        <div class="iter-num">Iter 2</div>
+        <div class="iter-title">Исправленные ассерции + диагностика формулы</div>
+        <div class="iter-note">Ассерции для missing-inputs переписаны; формула ещё не добавлена в REFERENCE.md</div>
+      </div>
+      <div class="iter-body">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>Eval</th>
+              <th>with_skill</th>
+              <th>without_skill</th>
+              <th>Δ</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="eval-name">complete-inputs</div><div class="eval-sub">тот же кейс</div></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>6/6</span></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>3/6</span></td>
+              <td><span class="delta-badge delta-pos">+50pp</span></td>
+              <td><span class="tag tag-red">×2 баг у baseline</span></td>
+            </tr>
+            <tr>
+              <td><div class="eval-name">missing-inputs</div><div class="eval-sub">переписанные ассерции</div></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>6/6</span></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>4/6</span></td>
+              <td><span class="delta-badge delta-pos">+33pp</span></td>
+              <td><span class="tag tag-green">with_skill чище</span></td>
+            </tr>
+            <tr>
+              <td><div class="eval-name">unsafe-traffic</div><div class="eval-sub">тот же кейс</div></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>3/5</span></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>4/5</span></td>
+              <td><span class="delta-badge delta-neg">−20pp</span></td>
+              <td><span class="tag tag-yellow">×2 баг у обоих</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 14px; background: rgba(248,113,113,.06); border:1px solid rgba(248,113,113,.2); border-radius:8px; font-size:12px; color:var(--muted); margin-top:4px;">
+          <strong style="color:var(--red)">Баг подтверждён и локализован.</strong>
+          Baseline в <code>complete-inputs</code> дал 117,752/group — в 6.4× больше ожидаемого.
+          Причина: в REFERENCE.md нет явной формулы, модель применяет вариант с дополнительным ×2.
+          <br><strong style="color:#fff">→ Решение:</strong> добавить формулу с явным предупреждением «не умножать на 2».
+        </div>
+      </div>
+    </div>
+
+    <!-- Formula fix callout -->
+    <div style="background: rgba(108,138,255,.07); border:1px solid rgba(108,138,255,.35); border-radius:12px; padding:20px 24px; margin:-4px 0 16px 0;">
+      <div style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:10px;">🔧 Исправление REFERENCE.md — добавлена явная формула</div>
+      <div class="formula-block">
+n_per_group = (z_α/2 + z_β)² × (p1×(1−p1) + p2×(1−p2)) / (p2 − p1)²<br><br>
+Стандартные z-значения:<br>
+• 95% confidence (two-sided): z_α/2 = 1.96<br>
+• 80% power: z_β = 0.84  →  (1.96 + 0.84)² = 7.84<br>
+• 90% power: z_β = 1.28  →  (1.96 + 1.28)² = 10.50<br><br>
+⚠️  НЕ умножать на 2. Формула уже учитывает обе группы.
+      </div>
+      <div style="font-size:12px; color:var(--muted);">Также добавлена формула для continuous-метрик: <code>n = (z_α/2 + z_β)² × 2σ² / δ²</code></div>
+    </div>
+
+    <!-- Iter 3 -->
+    <div class="iter">
+      <div class="iter-header">
+        <div class="iter-num">Iter 3</div>
+        <div class="iter-title">Верификация исправления формулы</div>
+        <div class="iter-note">complete-inputs · unsafe-traffic — без missing-inputs</div>
+      </div>
+      <div class="iter-body">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>Eval</th>
+              <th>with_skill</th>
+              <th>without_skill</th>
+              <th>Δ</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="eval-name">complete-inputs</div><div class="eval-sub">тот же кейс</div></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>6/6</span></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>6/6</span></td>
+              <td><span class="delta-badge delta-zero">0</span></td>
+              <td><span class="tag tag-green">Баг устранён у обоих</span></td>
+            </tr>
+            <tr>
+              <td><div class="eval-name">unsafe-traffic</div><div class="eval-sub">тот же кейс</div></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+              <td><span class="delta-badge delta-zero">0</span></td>
+              <td><span class="tag tag-green">Оба верно предупреждают</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 14px; background: rgba(52,211,153,.06); border:1px solid rgba(52,211,153,.2); border-radius:8px; font-size:12px; color:var(--muted);">
+          <strong style="color:var(--green)">Исправление работает.</strong>
+          with_skill теперь корректно вычисляет ~1,537/group (ранее ~3,073). Baseline также исправился через ту же формулу в REFERENCE.md.
+          Базовые расчёты верны у обоих конфигов. Вопрос: есть ли расхождения на граничных случаях?
+        </div>
+      </div>
+    </div>
+
+    <!-- Iter 4 -->
+    <div class="iter">
+      <div class="iter-header">
+        <div class="iter-num">Iter 4</div>
+        <div class="iter-title">Точность расчётов — три граничных кейса</div>
+        <div class="iter-note">email-conversion · session-duration · form-90pct</div>
+      </div>
+      <div class="iter-body">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>Eval</th>
+              <th>Сценарий</th>
+              <th>with_skill</th>
+              <th>without_skill</th>
+              <th>Δ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="eval-name">email-conversion</div><div class="eval-sub">22%→24%, power 80%, 8k/week</div></td>
+              <td><span class="tag tag-blue">Conversion</span></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>4/4</span></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>4/4</span></td>
+              <td><span class="delta-badge delta-zero">0</span></td>
+            </tr>
+            <tr>
+              <td><div class="eval-name">session-duration</div><div class="eval-sub">SD=12min, MDE +0.8min, 15k/week</div></td>
+              <td><span class="tag tag-purple">Continuous</span></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>4/5</span></td>
+              <td><span class="delta-badge delta-pos">+20pp</span></td>
+            </tr>
+            <tr>
+              <td><div class="eval-name">form-90pct</div><div class="eval-sub">34%→38%, z_β=1.28, 5.5k/week</div></td>
+              <td><span class="tag tag-yellow">Power 90%</span></td>
+              <td><span class="score score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+              <td><span class="score score-fail"><span class="dot dot-fail"></span>4/5</span></td>
+              <td><span class="delta-badge delta-pos">+20pp</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;">
+          <div style="padding:12px 14px; background: rgba(248,113,113,.05); border:1px solid rgba(248,113,113,.15); border-radius:8px; font-size:12px; color:var(--muted);">
+            <strong style="color:var(--red)">session-duration: провал baseline</strong><br>
+            Не предупредил, что оценка зависит от допущения по SD — если реальное SD окажется другим, размер выборки изменится. with_skill добавляет эту оговорку.
+          </div>
+          <div style="padding:12px 14px; background: rgba(248,113,113,.05); border:1px solid rgba(248,113,113,.15); border-radius:8px; font-size:12px; color:var(--muted);">
+            <strong style="color:var(--red)">form-90pct: провал baseline</strong><br>
+            Считал duration как <code>n_per_group / traffic</code> вместо <code>n_total / traffic</code> — занизил длительность в 2 раза (0.55 вместо ~1.1 недели).
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Progression chart -->
+  <section>
+    <h2>Динамика по итерациям</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+      <div>
+        <h3>with_skill — % pass по итерациям</h3>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 1 (14/17)</span><span style="color:var(--green)">82%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:82%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 2 (15/17)</span><span style="color:var(--green)">88%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:88%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 3 (11/11)</span><span style="color:var(--green)">100%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:100%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 4 calc-only (14/14)</span><span style="color:var(--green)">100%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:100%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>without_skill — % pass по итерациям</h3>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 1 (13/17)</span><span style="color:var(--yellow)">76%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:76%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 2 (11/17)</span><span style="color:var(--red)">65%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-red" style="width:65%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 3 (11/11)</span><span style="color:var(--green)">100%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:100%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:4px;"><span>Iter 4 calc-only (12/14)</span><span style="color:var(--yellow)">86%</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:86%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px; padding:12px 14px; background:var(--surface); border:1px solid var(--border); border-radius:8px; font-size:12px; color:var(--muted);">
+      <strong style="color:#fff">Примечание:</strong> Падение without_skill в iter 2 — не регресс, а улучшение ассерций: строгие правки раскрыли реальный ×2-баг, который ранее не проверялся. Iter 3 = 100% у обоих благодаря исправлению REFERENCE.md.
+    </div>
+  </section>
+
+  <!-- Key insights -->
+  <section>
+    <h2>Ключевые выводы</h2>
+    <div class="insights">
+      <div class="insight highlight">
+        <div class="insight-icon">🔍</div>
+        <div class="insight-title">Главная находка: ×2-баг в расчётах</div>
+        <div class="insight-body">Без явной формулы в REFERENCE.md оба конфига систематически удваивали размер выборки. Стандартная формула двухвыборочного z-теста уже учитывает обе группы через сумму дисперсий — дополнительное ×2 ошибочно. Баг был обнаружен через eval-тестирование и исправлен напрямую в REFERENCE.md.</div>
+      </div>
+      <div class="insight success">
+        <div class="insight-icon">✅</div>
+        <div class="insight-title">with_skill стабильно обгоняет на граничных случаях</div>
+        <div class="insight-body">После исправления формулы оба конфига одинаково справляются со стандартными кейсами. Разрыв +13pp проявляется именно там, где нужна аккуратность: SD-оговорка для continuous-метрик и корректный расчёт total-duration вместо per-group.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">📋</div>
+        <div class="insight-title">missing-inputs: with_skill даёт более структурированный ответ</div>
+        <div class="insight-body">При неполных входных данных with_skill корректно оформляет labeled scenarios с явными условиями, не выдавая единственную «рекомендацию». Baseline в iter 2 давал unconditional duration в exec summary — нарушение принципа conditional framing.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">⚠️</div>
+        <div class="insight-title">unsafe-traffic: with_skill уверенно блокирует некорректные данные</div>
+        <div class="insight-body">Когда eligible users ≠ total registered, with_skill явно предупреждает и отказывается считать duration по некорректной базе. Baseline в iter 1 принял 25k зарегистрированных как eligible-трафик без предупреждения.</div>
+      </div>
+      <div class="insight warn">
+        <div class="insight-icon">⚙️</div>
+        <div class="insight-title">Итерация ассерций — необходимая часть процесса</div>
+        <div class="insight-body">Ассерции iter 1 для missing-inputs запрещали любые числа, но REFERENCE.md явно разрешает labeled scenario estimates. Строгость ассерций должна соответствовать задокументированному поведению скила, а не интуиции.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">📐</div>
+        <div class="insight-title">Continuous-метрики требуют дополнительной оговорки</div>
+        <div class="insight-body">Для continuous-метрик (session duration, revenue) размер выборки критически зависит от предполагаемого SD. with_skill добавляет предупреждение, что если реальное SD отличается от допущения — результат изменится. Это существенно для правильного планирования эксперимента.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations -->
+  <section>
+    <h2>Рекомендации</h2>
+    <div class="recs">
+      <div class="rec">
+        <div class="rec-num">1</div>
+        <div>
+          <span class="rec-prio prio-high">Высокий приоритет</span>
+          <div class="rec-title">Расширить calc-only тесты на больше типов метрик</div>
+          <div class="rec-body">Iter 4 покрывает conversion и continuous (session duration). Стоит добавить revenue-per-user (right-skewed, требует трансформации), retention rate (binomial но с учётом cohort dilution) и multi-variant (3+ ветки). Текущие 3 кейса не полностью покрывают пространство параметров.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">2</div>
+        <div>
+          <span class="rec-prio prio-high">Высокий приоритет</span>
+          <div class="rec-title">Добавить regression test для ×2-бага</div>
+          <div class="rec-body">Исправление в REFERENCE.md работает, но нет автоматического теста который поймает регрессию если формулу случайно изменят. Рекомендуется добавить assertion с точными ожидаемыми значениями (например, для стандартного 95%/80% кейса — конкретные числа в пределах ±5%) в постоянный eval suite.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">3</div>
+        <div>
+          <span class="rec-prio prio-med">Средний приоритет</span>
+          <div class="rec-title">Протестировать missing-inputs с частичными данными (3+ вариантов)</div>
+          <div class="rec-body">Текущий missing-inputs кейс покрывает полное отсутствие нескольких параметров. Интереснее проверить граничные случаи: есть baseline, нет MDE; есть MDE, нет SD; нет traffic. Поведение скила может различаться в зависимости от того, какие именно параметры отсутствуют.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">4</div>
+        <div>
+          <span class="rec-prio prio-med">Средний приоритет</span>
+          <div class="rec-title">Добавить в REFERENCE.md явный пример расчёта с пошаговыми вычислениями</div>
+          <div class="rec-body">Формула добавлена, но сквозной пример «от входных данных до результата» был бы полезен. Числовой пример с промежуточными значениями снижает вероятность новых вариаций ×2-бага и упрощает debugging.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">5</div>
+        <div>
+          <span class="rec-prio prio-low">Низкий приоритет</span>
+          <div class="rec-title">Рассмотреть тест на «одностороннее vs двустороннее» разграничение</div>
+          <div class="rec-body">Текущие тесты используют two-sided тесты (z_α/2 = 1.96). Есть сценарии где one-sided обоснован (например, «мы хотим знать только если новое лучше»). with_skill может вести себя иначе при явном указании one-sided hypothesis — это непроверенная зона.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Value assessment -->
+  <section>
+    <h2>Ценность скила</h2>
+    <table class="cb-table">
+      <thead>
+        <tr>
+          <th>Аспект</th>
+          <th>with_skill</th>
+          <th>without_skill</th>
+          <th>Вывод</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cb-aspect">Точность формулы conversion</td>
+          <td class="cb-with">✓ Корректно после фикса</td>
+          <td class="cb-without">✓ Корректно после фикса</td>
+          <td>Фикс REFERENCE.md исправил оба конфига</td>
+        </tr>
+        <tr>
+          <td class="cb-aspect">SD-caveat (continuous метрики)</td>
+          <td class="cb-with">✓ Всегда добавляет</td>
+          <td class="cb-without">✗ Пропускает</td>
+          <td>+20pp разрыв в iter 4</td>
+        </tr>
+        <tr>
+          <td class="cb-aspect">Duration расчёт (total vs per-group)</td>
+          <td class="cb-with">✓ Total sample / traffic</td>
+          <td class="cb-without">✗ Per-group / traffic (занижает ×2)</td>
+          <td>+20pp разрыв в iter 4</td>
+        </tr>
+        <tr>
+          <td class="cb-aspect">Conditional framing (missing inputs)</td>
+          <td class="cb-with">✓ Labeled scenarios с условиями</td>
+          <td class="cb-without">~ Иногда выдаёт unconditional summary</td>
+          <td>with_skill надёжнее</td>
+        </tr>
+        <tr>
+          <td class="cb-aspect">Unsafe traffic warning</td>
+          <td class="cb-with">✓ Явное предупреждение + блокировка</td>
+          <td class="cb-without">~ Иногда молчит об ошибке</td>
+          <td>with_skill безопаснее</td>
+        </tr>
+        <tr>
+          <td class="cb-aspect">Входные параметры перечисляются</td>
+          <td class="cb-with">✓ Всегда</td>
+          <td class="cb-without">✓ Чаще всего</td>
+          <td>Практически tie</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Final verdict -->
+  <section>
+    <div class="verdict">
+      <div class="verdict-score">
+        <span class="verdict-big">93%</span>
+        <span class="verdict-vs">vs</span>
+        <span class="verdict-base">80%</span>
+      </div>
+      <div class="verdict-text">
+        Скил <strong>estimate-sample-size</strong> работоспособен и добавляет реальную ценность.
+        Главная находка тестирования — <strong>систематический ×2-баг</strong> в расчётах, обнаруженный через eval
+        и исправленный напрямую в REFERENCE.md. После исправления оба конфига корректно считают стандартные кейсы.
+        Разрыв +13pp в финальных calc-only тестах показывает, что скил аккуратнее в <strong>двух граничных случаях</strong>:
+        предупреждение о зависимости от SD и правильный расчёт duration через total_sample.
+        Для production-использования рекомендуется добавить regression test на формулу и расширить покрытие типов метрик.
+      </div>
+    </div>
+  </section>
+
+  <div style="text-align:center; color:var(--dim); font-size:11px; padding-top:20px; border-top:1px solid var(--border);">
+    estimate-sample-size · 4 итерации · сгенерировано 2026-03-11
+  </div>
+
+</div>
+</body>
+</html>

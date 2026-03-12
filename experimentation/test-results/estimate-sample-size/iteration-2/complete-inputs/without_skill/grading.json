@@ -1,0 +1,60 @@
+{
+  "expectations": [
+    {
+      "text": "Output provides sample size per group in the range 15,000–22,000 users",
+      "passed": false,
+      "evidence": "Actual output states '117,752 users per group' (line 36: 'n = (7.84 × 0.150520) / 0.000064 = **117,752 users per group**'). This is 5.4× larger than the maximum expected value of 22,000."
+    },
+    {
+      "text": "Output provides total sample size (roughly double the per-group figure)",
+      "passed": true,
+      "evidence": "Per group: 117,752 users (line 42), Total: 235,504 users (line 43). Ratio: 235,504 ÷ 117,752 = 2.0 exactly."
+    },
+    {
+      "text": "Output estimates duration using eligible traffic of 35,000/week — result should be in the range 0.9–1.4 weeks",
+      "passed": false,
+      "evidence": "Actual output states '6.73 weeks' (line 49: 'Test Duration Required: 235,504 ÷ 35,000 = **6.73 weeks** (~47 days)'). This is 4.8× larger than the maximum expected value of 1.4 weeks."
+    },
+    {
+      "text": "Output lists all key inputs used: baseline 7.8%, MDE +0.8pp, confidence 95%, power 80%",
+      "passed": true,
+      "evidence": "Baseline Conversion Rate: 7.8% (line 11), MDE: +0.8 percentage points (line 12), Confidence Level: 95% (line 6), Statistical Power: 80% (line 7)."
+    },
+    {
+      "text": "Output states the assumptions used (e.g. two-variant test, stable traffic)",
+      "passed": false,
+      "evidence": "Two-variant assumption stated clearly: 'Two-proportion A/B test' (line 4). However, 'stable traffic' assumption is not explicitly stated in the assumptions section. Notes section (line 74) acknowledges real-world factors like seasonality may affect the estimate, but stable traffic is not listed as a stated assumption."
+    },
+    {
+      "text": "Output includes a feasibility note or comment on the estimate's reliability",
+      "passed": true,
+      "evidence": "Feasibility Analysis section (lines 47–51) provides duration estimates and status note. Notes section (lines 72–76) includes caveats about assumptions and real-world factors that may affect reliability."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 3,
+    "total": 6,
+    "pass_rate": 0.50
+  },
+  "execution_metrics": {
+    "output_chars": 2891
+  },
+  "timing": {
+    "executor_duration_seconds": 24.4
+  },
+  "claims": [
+    "The output uses a mathematically correct two-proportion A/B test formula but produces sample sizes that are significantly larger than the assertion range (117,752 vs expected 15,000–22,000).",
+    "This suggests either: (a) the assertions specify a different test design, (b) the underlying parameters (baseline, MDE, power, confidence) are different, or (c) the calculation methodology differs from what was expected.",
+    "The sample size calculation appears mathematically sound given the stated inputs (7.8% baseline, 0.8pp MDE, 95% confidence, 80% power with 50/50 split).",
+    "Duration calculation is correct given the sample size (235,504 ÷ 35,000 = 6.73 weeks) but fails the assertion range of 0.9–1.4 weeks by a factor of ~5."
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      "Verify that the baseline conversion rate, MDE, and statistical parameters in the assertions match the output. The 5–6× difference in sample size suggests fundamentally different inputs.",
+      "Check whether assertions 1 and 3 expected a different statistical test design (e.g., higher baseline rate, larger MDE, or different power requirement).",
+      "The output's calculation methodology and formula are correct; the mismatch appears to be in the input parameters rather than computation errors."
+    ],
+    "overall": "Output fails 50% of assertions (3/6 passed). Critical failures are assertions 1 and 3, which specify numeric ranges that the output significantly exceeds. The math within the output is sound, but the resulting sample sizes and duration are substantially larger than expected, suggesting a potential mismatch in the underlying parameters or test design between the output and the assertions."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output calculates sample size per group in the range 28,000–37,000",
+      "passed": true,
+      "evidence": "Calculated n per group = 32,188 users, which falls within [28,000, 37,000]"
+    },
+    {
+      "text": "Output calculates total sample size in the range 56,000–74,000",
+      "passed": true,
+      "evidence": "Calculated total sample = 64,376 users, which falls within [56,000, 74,000]"
+    },
+    {
+      "text": "Output explicitly states that duration cannot be estimated because eligible traffic was not provided",
+      "passed": true,
+      "evidence": "Output states: 'I cannot estimate how long the test will run without knowing your eligible traffic.'"
+    },
+    {
+      "text": "Output does NOT invent a traffic number and produce a duration estimate as if it were known",
+      "passed": true,
+      "evidence": "No actual duration estimate is provided. Hypothetical examples (e.g., '10,000 users/week') are clearly marked as conditional, not as factual estimates."
+    },
+    {
+      "text": "Output asks for eligible users per week (or per relevant period) to complete the duration estimate",
+      "passed": true,
+      "evidence": "Output explicitly requests: 'How many users visit your pricing page per week? (or per relevant period)'"
+    }
+  ]
+}

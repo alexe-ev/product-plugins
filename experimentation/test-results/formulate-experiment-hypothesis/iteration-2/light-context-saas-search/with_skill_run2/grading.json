@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains a hypothesis in the standard 'If we change X for Y, we expect Z' format",
+      "passed": true,
+      "evidence": "Lines 5-7 contain explicit hypothesis: 'If we add a search with filters feature to the home page for users trying to locate projects, we expect project discovery time and access efficiency to improve, because a dedicated search and filter mechanism reduces the friction of scanning through potentially long project lists.'"
+    },
+    {
+      "text": "Missing information is explicitly listed with specific items",
+      "passed": true,
+      "evidence": "Section 'Missing Information' (lines 37-44) provides 6 specific missing items: target segment clarity, current findability baseline, primary metric definition, scope of filters, measurement approach, and potential scope creep. Each item is phrased as a specific question or requirement."
+    },
+    {
+      "text": "Confidence level is stated as provisional or context-informed",
+      "passed": true,
+      "evidence": "Line 48 states 'Context-informed' as the confidence level. Lines 46-53 provide justification explaining the problem and intervention are clear but target segment, measurement approach, and expected impact baseline are not yet defined, qualifying it as context-informed rather than high confidence."
+    },
+    {
+      "text": "Target segment uncertainty is acknowledged",
+      "passed": true,
+      "evidence": "Lines 9-11 state the target segment but include explicit uncertainty: 'Likely includes all existing users, but with higher impact expected for power users managing many projects or teams with large project portfolios.' Additionally, line 39 in Missing Information explicitly asks 'Which user segment is most affected?' acknowledging this as unresolved."
+    },
+    {
+      "text": "No fabricated quantitative impact numbers",
+      "passed": true,
+      "evidence": "The output contains no specific quantitative impact predictions. Section 'Expected Impact Hypothesis' (lines 33-35) explicitly states: 'Not defined yet. The user statement indicates a problem and proposed solution but provides no baseline metrics, prior test results, or industry benchmarks to estimate directional uplift.' The output avoids inventing percentages or impact magnitudes."
+    },
+    {
+      "text": "Downstream handoff or next steps mentioned",
+      "passed": true,
+      "evidence": "Section 'Next Steps' (lines 57-62) explicitly lists downstream handoff points: 'validate-hypothesis-quality', 'define-success-metrics', and 'design-experiment-plan' with brief descriptions of each. This provides clear direction for the next phase of work."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  }
+}

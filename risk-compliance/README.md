@@ -42,4 +42,4 @@ risk-compliance/
 
 ## Status
 
-Planned — SKILL.md files are complete. Examples in progress.
+Ready — SKILL.md files and examples are complete.

@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output flags the allocation imbalance: total control enrollment (6,203 / ~46.5%) vs total test enrollment (7,143 / ~53.5%) deviates meaningfully from the intended 50/50 split, indicating a likely Sample Ratio Mismatch",
+      "passed": true,
+      "evidence": "Control enrollment: 6,203 users (46.5%), Test enrollment: 7,143 users (53.5%), Expected: 50/50 split, Deviation: ~950 additional users in test arm (7.6% imbalance)"
+    },
+    {
+      "text": "Output specifically notices the Day 3 anomaly in the test arm (1,287 test enrollments vs 415 control enrollments on Day 3, approximately 3× the typical daily test enrollment of ~440)",
+      "passed": true,
+      "evidence": "Control Day 3: 415 enrollments, Test Day 3: 1,287 enrollments, Test Day 3 is ~3.1× the control enrollment on the same day, Typical daily test enrollment: ~440 users, Day 3 test enrollment is ~2.9× typical"
+    },
+    {
+      "text": "Output does NOT certify the experiment as trustworthy and does NOT give a Trust or Proceed verdict based on p=0.031 alone",
+      "passed": true,
+      "evidence": "A p-value of 0.031 with an SRM is not trustworthy. The imbalance could artificially inflate or deflate the effect estimate. Verdict: HOLD — Do not proceed to shipping"
+    },
+    {
+      "text": "Output classifies the allocation imbalance / SRM as at least an Unresolved or Fatal risk — not dismisses it as a minor variance",
+      "passed": true,
+      "evidence": "Risks: FATAL/UNRESOLVED - Sample allocation failure indicates a potential systematic issue in how users are being assigned to treatment arms"
+    },
+    {
+      "text": "Output recommends investigating the root cause of the Day 3 enrollment spike and/or performing a formal SRM check before making a shipping decision",
+      "passed": true,
+      "evidence": "1. Investigate the root cause of the Day 3 enrollment spike (logging error, traffic routing, randomization bug, etc.). 2. Perform a formal SRM test (chi-square or similar) to quantify the statistical significance of the allocation imbalance."
+    }
+  ]
+}

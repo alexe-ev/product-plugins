@@ -1,0 +1,29 @@
+{
+  "expectations": [
+    {
+      "text": "Output explicitly states the plan is NOT execution-ready, launch-ready, or complete (uses language like 'partial', 'unresolved fields', 'not ready for launch', or equivalent)",
+      "passed": true,
+      "evidence": "Plan status: Partial planning skeleton — NOT execution-ready. Multiple critical fields remain unresolved and block launch."
+    },
+    {
+      "text": "Output lists at least 4 specific missing fields that block launch readiness (e.g.: exact primary metric definition, audience decision all-users vs new-only, minimum meaningful effect / success threshold, sample size estimate, stopping logic)",
+      "passed": true,
+      "evidence": "Missing fields that block launch readiness section lists: (1) Primary metric exact definition, (2) Audience decision — all logged-in users vs. new accounts ≤30 days, (3) Minimum meaningful effect — % uplift, absolute user count, or business outcome threshold, (4) Sample size and duration estimates — based on user volume and chosen effect size, (5) Stopping rule — fixed-horizon, sequential with guardrails, or hybrid checkpoint"
+    },
+    {
+      "text": "Output does NOT fabricate specific numeric values for missing fields — no invented sample sizes, specific % thresholds, or exact durations presented as if decided",
+      "passed": true,
+      "evidence": "Sample size section explicitly states 'no estimates available'. Effect threshold section provides examples like 'at least 15% relative' but frames them as OPTIONS to choose, not decisions made. Duration section flags '2–4 weeks' as a calendar guess, not a statistical commitment."
+    },
+    {
+      "text": "Output flags why the all-users vs new-accounts audience decision matters for the experiment design (contamination, learning curve, or metric sensitivity)",
+      "passed": true,
+      "evidence": "Why this matters section explains: All-users risks contamination from experienced users with established mental models, where learned behavior dilutes signal. New-only requires larger time buffer for sample accumulation and learning-curve noise. Notes that adoption improvements may not persist once users mature beyond 30 days."
+    },
+    {
+      "text": "Output provides a partial structure with available information filled in (change description, plausible metric candidates, guardrail suggestions) while marking unresolved fields as requiring definition",
+      "passed": true,
+      "evidence": "Change description fully stated: collapse 7-item sidebar to 4 top-level tabs. Hypothesis clearly articulated. Metrics section lists 4 plausible activation/adoption candidates. Guardrails section suggests: navigation search usage, session drop-off, page load time, support contact rate. All unresolved sections explicitly marked with UNRESOLVED label followed by guidance on what must be decided."
+    }
+  ]
+}

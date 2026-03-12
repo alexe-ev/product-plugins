@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eval Report: validate-experiment-quality</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a;
+    --border: #2d3148; --accent: #6c8aff; --accent2: #a78bfa;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #94a3b8; --dim: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 14px; line-height: 1.6; padding: 40px 24px; }
+  .container { max-width: 980px; margin: 0 auto; }
+
+  .skill-tag { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  h1 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  h2 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  section { margin-bottom: 40px; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 40px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 7px; }
+  .kpi-value { font-size: 26px; font-weight: 700; line-height: 1; }
+  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+  .cmp-table { width: 100%; border-collapse: collapse; }
+  .cmp-table th { background: var(--surface2); padding: 9px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--border); }
+  .cmp-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .eval-name { font-weight: 600; color: var(--text); }
+  .eval-sub { font-size: 11px; color: var(--dim); margin-top: 2px; }
+
+  .score-pass { color: var(--green); font-weight: 700; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+  .dot-pass { background: var(--green); }
+
+  .delta-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .delta-zero { background: rgba(148,163,184,.1); color: var(--muted); }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+  .tag-green { background: rgba(52,211,153,.12); color: var(--green); }
+  .tag-blue { background: rgba(108,138,255,.12); color: var(--accent); }
+  .tag-purple { background: rgba(167,139,250,.12); color: var(--accent2); }
+  .tag-yellow { background: rgba(251,191,36,.12); color: var(--yellow); }
+  .tag-red { background: rgba(248,113,113,.12); color: var(--red); }
+
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .insight { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .insight.highlight { border-color: rgba(108,138,255,.35); background: rgba(108,138,255,.05); }
+  .insight-icon { font-size: 16px; margin-bottom: 7px; }
+  .insight-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+  .insight-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .taxonomy { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .taxonomy-row { display: grid; grid-template-columns: 1fr 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid var(--border); }
+  .taxonomy-row:last-child { border-bottom: none; }
+  .taxonomy-row.header { background: var(--surface2); }
+  .tax-cell { padding: 10px 14px; font-size: 12px; }
+  .tax-cell.header { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+  .tax-name { font-weight: 600; color: var(--text); }
+  .tax-desc { color: var(--muted); }
+
+  .recs { display: flex; flex-direction: column; gap: 10px; }
+  .rec { display: flex; gap: 14px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; }
+  .rec-num { font-size: 16px; font-weight: 800; color: var(--accent); opacity: .4; flex-shrink: 0; padding-top: 1px; }
+  .rec-prio { display: inline-block; padding: 2px 7px; border-radius: 8px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+  .prio-high { background: rgba(248,113,113,.12); color: var(--red, #f87171); }
+  .prio-med { background: rgba(251,191,36,.12); color: var(--yellow); }
+  .rec-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .rec-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .iter-header { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+  .iter-badge { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .iter-desc { font-size: 12px; color: var(--muted); }
+  .iter-score { margin-left: auto; font-size: 13px; font-weight: 700; color: var(--green); }
+
+  .verdict { background: linear-gradient(135deg, rgba(108,138,255,.07), rgba(167,139,250,.07)); border: 1px solid rgba(108,138,255,.28); border-radius: 12px; padding: 24px 28px; }
+  .verdict-nums { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .v-big { font-size: 42px; font-weight: 800; line-height: 1; color: var(--green); }
+  .v-vs { font-size: 18px; color: var(--dim); }
+  .verdict-text { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .verdict-text strong { color: #fff; }
+
+  .quote-block { background: rgba(108,138,255,.06); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 10px 0; font-size: 12px; color: var(--muted); line-height: 1.65; font-style: italic; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+  code { background: rgba(108,138,255,.1); color: var(--accent); padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: monospace; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="skill-tag">Skill Evaluation Report</div>
+  <h1>validate-experiment-quality</h1>
+  <div class="subtitle">2 итерации · 6 eval-кейсов · аудит процедурной чистоты · ключевой вывод: base model уже силён — даже на implicit сигналах</div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">with_skill</div>
+      <div class="kpi-value" style="color:var(--green)">100%</div>
+      <div class="kpi-sub">30/30 assertions pass</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">without_skill</div>
+      <div class="kpi-value" style="color:var(--green)">100%</div>
+      <div class="kpi-sub">30/30 assertions pass</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Разрыв</div>
+      <div class="kpi-value">0pp</div>
+      <div class="kpi-sub">Обе итерации, все кейсы</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Hardest case</div>
+      <div class="kpi-value" style="font-size:15px; color:var(--muted)">Tie</div>
+      <div class="kpi-sub">SRM + CUPED + Bonferroni</div>
+    </div>
+  </div>
+
+  <!-- Iteration 1 -->
+  <section>
+    <div class="iter-header">
+      <span class="iter-badge">Итерация 1</span>
+      <span class="iter-desc">Явные adversarial кейсы — словесные сигналы проблем</span>
+      <span class="iter-score">15/15 · 15/15 · Δ=0</span>
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th>Eval</th><th>Паттерн</th><th>with_skill</th><th>without_skill</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="eval-name">covert-flexible-stopping</div><div class="eval-sub">Тест расширен с 21→25 дней «не было достаточно убедительно»</div></td>
+          <td><span class="tag tag-purple">Covert peeking</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">strong-result-weak-evidence</div><div class="eval-sub">p=0.0001, +35% uplift, почти нет процедурных данных</div></td>
+          <td><span class="tag tag-blue">Outcome ≠ process</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="eval-name">post-hoc-metric-switch</div><div class="eval-sub">Planned metric p=0.18, команда переключается на revenue p=0.031</div></td>
+          <td><span class="tag tag-yellow">HARKing</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Iteration 2 -->
+  <section>
+    <div class="iter-header">
+      <span class="iter-badge">Итерация 2</span>
+      <span class="iter-desc">Имплицитные числовые ловушки — без словесных подсказок</span>
+      <span class="iter-score">15/15 · 15/15 · Δ=0</span>
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th>Eval</th><th>Ловушка</th><th>with_skill</th><th>without_skill</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="eval-name">implicit-srm-enrollment-spike</div>
+            <div class="eval-sub">Per-day таблица: control 6,203 (46.5%) / test 7,143 (53.5%); day-3 spike 1,287 vs 415</div>
+          </td>
+          <td><span class="tag tag-red">SRM в числах</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="eval-name">cuped-significance-flip</div>
+            <div class="eval-sub">Pre-CUPED p=0.091 (ниже MDE), post-CUPED p=0.028; covariate «pre-experiment engagement» без спецификации</div>
+          </td>
+          <td><span class="tag tag-red">Data leakage risk</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="eval-name">segment-slicing-no-correction</div>
+            <div class="eval-sub">Overall p=0.14, 3 сегмента после факта; «power users» p=0.031 (Bonferroni: 0.0167)</div>
+          </td>
+          <td><span class="tag tag-red">Bonferroni trap</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="score-pass"><span class="dot dot-pass"></span>5/5</span></td>
+          <td><span class="delta-badge delta-zero">0</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- CUPED evidence deep-dive -->
+  <section>
+    <h2>Самый сложный кейс: CUPED significance flip</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Без словесных подсказок: только pre-p=0.091, post-p=0.028, «pre-experiment engagement as covariate». Базовая модель без скила написала:</p>
+    <div class="quote-block">
+      «A large significance flip can indicate either legitimate noise reduction or potential data quality issues. The covariate 'pre-experiment engagement' is severely underspecified — no metric definition, no time window, no confirmation of non-overlap. If the pre-experiment window includes any days during the 21-day test period, the covariate becomes post-treatment measurement that itself responds to the treatment, inducing bias rather than reducing it.»
+    </div>
+    <p style="font-size:12px; color:var(--dim); margin-top:8px;">Модель самостоятельно идентифицировала data leakage risk, правильно назвала механизм (post-treatment measurement) и применила Bonferroni к двум тестам. Скил ничего нового не добавил.</p>
+  </section>
+
+  <!-- Key findings -->
+  <section>
+    <h2>Ключевые выводы</h2>
+    <div class="insight-grid">
+      <div class="insight highlight">
+        <div class="insight-icon">🧠</div>
+        <div class="insight-title">Implicit числовые ловушки тоже не работают</div>
+        <div class="insight-body">Гипотеза: если убрать словесные сигналы и дать только числа (таблица enrollment, p-values без комментариев) — baseline споткнётся. Нет. Модель просуммировала колонки таблицы, вычислила χ² для SRM, применила Bonferroni для 3 сегментов, идентифицировала data leakage в CUPED — без подсказок.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">📊</div>
+        <div class="insight-title">SRM, CUPED leakage, Bonferroni — всё знает</div>
+        <div class="insight-body">Три технически сложных паттерна, которые обычно требуют специальной подготовки: SRM detection из raw enrollment, data leakage через post-treatment covariate, и multiple comparison correction для post-hoc сегментирования. Baseline знает все три. Область слишком хорошо задокументирована в открытом корпусе.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🎯</div>
+        <div class="insight-title">Реальная ценность скила: структура + restraint</div>
+        <div class="insight-body">Ценность в двух вещах: (1) стандартизированный риск-словарь (Fatal/Manageable/Unresolved) для downstream handoff; (2) явный запрет на Trust verdict при неполной процедурной информации — baseline иногда пишет «вероятно нормально» вместо полного списка missing evidence.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🏗️</div>
+        <div class="insight-title">Паттерн подтверждён на 4х скилах</div>
+        <div class="insight-body">validate-experiment-quality — четвёртый скил, где 0pp разрыв при reasoning-based задачах. Устойчивый вывод: conceptual + procedural knowledge area → baseline сильный. Calculation + restraint override → скил добавляет ценность. Этот скил — structural типа.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skill type taxonomy (all 4) -->
+  <section>
+    <h2>Финальная типология скилов — все 4</h2>
+    <div class="taxonomy">
+      <div class="taxonomy-row header">
+        <div class="tax-cell header">Скил</div>
+        <div class="tax-cell header">Механизм ценности</div>
+        <div class="tax-cell header">Разрыв</div>
+        <div class="tax-cell header">Тип</div>
+      </div>
+      <div class="taxonomy-row">
+        <div class="tax-cell"><span class="tax-name">estimate-sample-size</span></div>
+        <div class="tax-cell tax-desc">REFERENCE.md кодирует формулу log-normal, Bonferroni z-adj, dilution — без неё модель применяет ×2 wrong formula</div>
+        <div class="tax-cell" style="color:var(--green); font-weight:700">+13–50pp</div>
+        <div class="tax-cell"><span class="tag tag-green">Расчётный</span></div>
+      </div>
+      <div class="taxonomy-row">
+        <div class="tax-cell"><span class="tax-name">design-experiment-plan</span></div>
+        <div class="tax-cell tax-desc">SKILL.md переопределяет дефолт «помочь» → «остановиться и проверить» при pseudo-complete входных данных</div>
+        <div class="tax-cell" style="color:var(--green); font-weight:700">+80pp adv</div>
+        <div class="tax-cell"><span class="tag tag-blue">Restraint</span></div>
+      </div>
+      <div class="taxonomy-row">
+        <div class="tax-cell"><span class="tax-name">analyze-experiment-results</span></div>
+        <div class="tax-cell tax-desc">Задаёт 6-секционный output format и result vocabulary (Positive / Caution / etc.) — рассуждения baseline уже сильные</div>
+        <div class="tax-cell" style="color:var(--muted); font-weight:700">≈0pp</div>
+        <div class="tax-cell"><span class="tag tag-purple">Структурный</span></div>
+      </div>
+      <div class="taxonomy-row">
+        <div class="tax-cell"><span class="tax-name">validate-experiment-quality</span></div>
+        <div class="tax-cell tax-desc">Задаёт риск-словарь Fatal/Manageable/Unresolved и audit checklist — baseline знает SRM, CUPED leakage, Bonferroni</div>
+        <div class="tax-cell" style="color:var(--muted); font-weight:700">≈0pp</div>
+        <div class="tax-cell"><span class="tag tag-purple">Структурный</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations -->
+  <section>
+    <h2>Куда копать дальше</h2>
+    <div class="recs">
+      <div class="rec">
+        <div class="rec-num">1</div>
+        <div>
+          <span class="rec-prio prio-high">Высокий</span>
+          <div class="rec-title">Missing evidence audit — единственный необнаруженный restraint</div>
+          <div class="rec-body">Не тестировали сценарий: эксперимент с полностью отсутствующими процедурными полями при видимо чистом результате. Baseline может написать «вероятно нормально» вместо явного перечисления всех missing items + отказа от Trust verdict. Это потенциальный Gap — единственный restraint, который мы не проверили напрямую.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">2</div>
+        <div>
+          <span class="rec-prio prio-high">Высокий</span>
+          <div class="rec-title">Output structure assertion — проверить соблюдение риск-словаря</div>
+          <div class="rec-body">Добавить assertion на формат: вывод должен содержать явные секции Fatal / Manageable / Unresolved из REFERENCE.md. Baseline без скила может дать правильный содержательный вывод без этих категорий — что ломает downstream handoff в recommend-post-test-decision. Это структурная ценность скила, которую мы не измерили.</div>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">3</div>
+        <div>
+          <span class="rec-prio prio-med">Средний</span>
+          <div class="rec-title">Simpson's paradox + interaction effect без подсказки</div>
+          <div class="rec-body">Дать aggregate positive, но в segment breakdown все сегменты negative или neutral. Это более редкий паттерн, чем Bonferroni. Baseline может знать Simpson's paradox теоретически, но распознать его в конкретных числах без «это выглядит как Simpson» — более сложная задача.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <div class="verdict">
+    <div class="verdict-nums">
+      <span class="v-big">100%</span>
+      <span class="v-vs">vs</span>
+      <span class="v-big">100%</span>
+    </div>
+    <div class="verdict-text">
+      <strong>0pp разрыв устойчив даже на implicit числовых ловушках.</strong>
+      Две итерации, 6 eval-кейсов, от явных словесных паттернов до скрытых числовых аномалий (SRM в таблице, CUPED significance flip, Bonferroni для post-hoc сегментов) —
+      базовая модель проходит все без скила.
+      Это <strong>structural skill</strong>: его ценность в нормализации риск-словаря и audit checklist для downstream handoff,
+      а не в исправлении ошибок рассуждения.
+      Потенциальный реальный Gap — <strong>missing evidence restraint</strong>:
+      заставить модель явно перечислить все отсутствующие процедурные свидетельства
+      и отказаться от Trust verdict вместо «вероятно нормально».
+    </div>
+  </div>
+
+  <div style="text-align:center; color:var(--dim); font-size:11px; padding-top:20px; border-top:1px solid var(--border); margin-top:24px;">
+    validate-experiment-quality · 2 итерации · 6 eval-кейсов · 2026-03-11
+  </div>
+
+</div>
+</body>
+</html>

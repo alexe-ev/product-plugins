@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "Verdict is 'valid for experiment design'", "passed": true, "evidence": "Verdict: 'Valid for experiment design' and 'VALID FOR EXPERIMENT DESIGN' in readiness state"},
+    {"text": "Output confirms the hypothesis has a specific change (text reviews → video reviews)", "passed": true, "evidence": "Checklist item 1: 'Replace text reviews with video reviews on product card'"},
+    {"text": "Output confirms the target segment is clear (mobile users, Electronics category)", "passed": true, "evidence": "Checklist item 3: 'Mobile users in Electronics category'"},
+    {"text": "Output confirms the primary metric is measurable (add-to-cart conversion)", "passed": true, "evidence": "Checklist item 2: 'Add-to-cart conversion rate'"},
+    {"text": "Output confirms causal mechanism is plausible", "passed": true, "evidence": "Checklist item 4: 'Video → increased trust → reduced uncertainty → higher conversion'"},
+    {"text": "Minor gaps are noted (e.g. guardrail metrics, rollback plan) but do NOT block approval", "passed": true, "evidence": "Weaknesses note guardrails, video format, statistical power; 'Context gaps blocking the next step: None critical'"},
+    {"text": "Output does NOT destructively rewrite or weaken a strong hypothesis", "passed": true, "evidence": "Improved version labeled 'Ready for Design' adds guardrails without weakening original hypothesis"}
+  ],
+  "summary": {"passed": 7, "failed": 0, "total": 7, "pass_rate": 1.0}
+}

@@ -31,6 +31,7 @@ result analysis
 quality validation
     ↓
 decision
+```
 
 Each step is split into a separate skill so the agent can use them independently or combine them when needed.
 

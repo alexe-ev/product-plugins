@@ -1,1 +1,4 @@
 .DS_Store
+
+# Eval/test result artifacts
+**/test-results/

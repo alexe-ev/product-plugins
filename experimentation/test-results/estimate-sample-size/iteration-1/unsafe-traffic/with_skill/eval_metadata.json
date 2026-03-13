@@ -1,6 +1,0 @@
-{
-  "eval_id": 3,
-  "eval_name": "unsafe-traffic",
-  "prompt": "B2B onboarding wizard: baseline 41%, MDE +5pp, 95%/80% — 25k total users but only 15% new sign-ups are eligible",
-  "assertions": []
-}

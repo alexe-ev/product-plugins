@@ -1,9 +1,0 @@
-{"expectations":[
-{"text":"Output identifies that two changes are mixed into one hypothesis","passed":true,"evidence":"Lines 18-21: 'Multiple independent changes mixed into one hypothesis' — personalized recommendations and catalog navigation identified separately."},
-{"text":"Verdict is NOT valid for experiment design","passed":true,"evidence":"Line 12: Verdict is 'Weak — Mixed changes in single hypothesis'."},
-{"text":"Output suggests splitting into two separate hypotheses","passed":true,"evidence":"Lines 45-55: Two improved hypotheses provided — Hypothesis A (Personalized Recommendations) and Hypothesis B (Catalog Navigation Simplification)."},
-{"text":"The 15% effect size is questioned or flagged","passed":true,"evidence":"Lines 39-41: 'No minimum meaningful effect threshold — 15% is stated as expected, but no economic threshold for success is defined.'"},
-{"text":"An improved version of the hypothesis is provided","passed":true,"evidence":"Lines 47-55: Two concrete improved hypotheses with specific changes, segments, metrics, and causal mechanisms."},
-{"text":"Missing information section is present with specific items","passed":true,"evidence":"Lines 59-66: Six specific items listed including metric definition, active buyer definition, guardrails, economic threshold, scope, baseline."},
-{"text":"Output does not include experiment design elements such as sample size, test duration, or traffic splits","passed":true,"evidence":"No sample sizes, p-values, test durations, or traffic splits in the output. References downstream skills but does not include design elements."}
-],"summary":{"passed":7,"failed":0,"total":7,"pass_rate":1.0}}

@@ -1,9 +1,0 @@
-{"expectations":[
-{"text":"Output identifies that two changes are mixed into one hypothesis","passed":true,"evidence":"Line 20: 'Dual Intervention.' Line 145: 'Содержит два изменения (лучше разделить).' Lines 107-110: Recommends 4 tests."},
-{"text":"Verdict is NOT valid for experiment design","passed":false,"evidence":"Line 164: 'ГОТОВА К ТЕСТИРОВАНИЮ' (READY FOR TESTING). Line 201: 'РЕКОМЕНДУЕТСЯ К ТЕСТИРОВАНИЮ.' Effectively declares valid for experiment design."},
-{"text":"Output suggests splitting into two separate hypotheses","passed":true,"evidence":"Lines 107-113: Recommends 4 separate tests. Lines 173-176: Three sub-hypotheses provided."},
-{"text":"The 15% effect size is questioned or flagged","passed":true,"evidence":"Lines 42-44: '15% рост — АМБИЦИОЗНО, но достижимо. Более консервативный прогноз: 7-12%.'"},
-{"text":"An improved version of the hypothesis is provided","passed":true,"evidence":"Lines 173-176: Three sub-hypotheses with specific percentages."},
-{"text":"Missing information section is present with specific items","passed":true,"evidence":"Lines 49-61: Metrics table with 7 items. Lines 169-171: 3 validation checkpoints."},
-{"text":"Output does not include experiment design elements such as sample size, test duration, or traffic splits","passed":false,"evidence":"Lines 94-119: Full experiment design with A/B groups, sample sizes (1000-5000), duration (2-4 weeks), significance levels (α=0.05, β=0.20)."}
-],"summary":{"passed":5,"failed":2,"total":7,"pass_rate":0.714}}

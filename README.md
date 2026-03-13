@@ -14,19 +14,56 @@ Think of it as **product management muscle memory for your AI agent.** The same 
 
 ## 🚀 Quick start
 
-**1. Install a domain**
+### Claude Cowork
+
+1. Open **Customize** (bottom-left)
+2. Go to **Browse plugins** → **Personal** → **+**
+3. Select **Add marketplace from GitHub**
+4. Enter: `alexe-ev/product-plugins`
+
+All 15 plugins install automatically, providing both commands and skills.
+
+### Claude Code (CLI)
 
 ```bash
-claude plugin install ai-product-ops/experimentation
+# Step 1: Add the marketplace
+/plugin marketplace add alexe-ev/product-plugins
+
+# Step 2: Install individual plugins
+/plugin install experimentation@product-plugins
+/plugin install data-analytics@product-plugins
+/plugin install product-strategy@product-plugins
+/plugin install product-discovery@product-plugins
+/plugin install product-planning@product-plugins
+/plugin install gtm@product-plugins
+/plugin install marketing-growth@product-plugins
+/plugin install ai-product@product-plugins
+/plugin install business-commercial@product-plugins
+/plugin install customer-success@product-plugins
+/plugin install product-ops@product-plugins
+/plugin install leadership-communication@product-plugins
+/plugin install technical-product@product-plugins
+/plugin install risk-compliance@product-plugins
+/plugin install ux-research@product-plugins
 ```
 
-**2. Use a skill**
+### Other AI Assistants (Skills Only)
+
+The `skills/*/SKILL.md` files follow the universal skill format. Copy skill folders to the appropriate tool directory:
+
+| Tool | Directory | Command |
+|------|-----------|---------|
+| Gemini CLI | `~/.gemini/skills/` | `for plugin in */; do cp -r "$plugin/skills/"* ~/.gemini/skills/ 2>/dev/null; done` |
+| OpenCode | `.opencode/skills/` | `for plugin in */; do mkdir -p .opencode/skills/; cp -r "$plugin/skills/"* .opencode/skills/ 2>/dev/null; done` |
+| Cursor | `.cursor/skills/` | Copy skill folders manually |
+| Codex CLI | `.codex/skills/` | Copy skill folders manually |
+| Kiro | `.kiro/skills/` | Copy skill folders manually |
+
+### Use a skill
 
 ```
 /experimentation:estimate-sample-size
 ```
-
-**3. Follow the prompts**
 
 The skill walks Claude through the right questions, methodology, and output format. If required inputs are missing, it stops and asks — no hallucinated numbers, no guesswork.
 
@@ -81,15 +118,10 @@ No googling, no guessing, no "let me think about that." Each skill walks Claude 
 Install any combination:
 
 ```bash
-claude plugin install ai-product-ops/experimentation
-claude plugin install ai-product-ops/data-analytics
-claude plugin install ai-product-ops/product-strategy
-```
-
-Or install a single skill without the full plugin:
-
-```bash
-cp -r experimentation/skills/estimate-sample-size ~/.claude/skills/
+/plugin marketplace add alexe-ev/product-plugins
+/plugin install experimentation@product-plugins
+/plugin install data-analytics@product-plugins
+/plugin install product-strategy@product-plugins
 ```
 
 <details>

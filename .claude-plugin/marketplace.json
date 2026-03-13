@@ -1,0 +1,87 @@
+{
+  "name": "product-plugins",
+  "owner": {
+    "name": "Evgeny Alexeev"
+  },
+  "metadata": {
+    "description": "121 structured product management skills across 15 domains for Claude Code",
+    "pluginRoot": "./"
+  },
+  "plugins": [
+    {
+      "name": "experimentation",
+      "source": "./experimentation",
+      "description": "Hypothesis design, sample sizing, experiment plans, result analysis, post-test decisions"
+    },
+    {
+      "name": "data-analytics",
+      "source": "./data-analytics",
+      "description": "Metrics frameworks, funnel analysis, dashboards, signal detection, metric diagnosis"
+    },
+    {
+      "name": "product-strategy",
+      "source": "./product-strategy",
+      "description": "Vision, long-term direction, market fit, positioning, competitive strategy, portfolio"
+    },
+    {
+      "name": "product-discovery",
+      "source": "./product-discovery",
+      "description": "Problem framing, user interviews, JTBD, insight synthesis, opportunity identification"
+    },
+    {
+      "name": "product-planning",
+      "source": "./product-planning",
+      "description": "OKRs, roadmapping, prioritization, PRDs, user stories, delivery planning"
+    },
+    {
+      "name": "gtm",
+      "source": "./gtm",
+      "description": "Launch planning, positioning, messaging, pricing, sales battlecards, enablement"
+    },
+    {
+      "name": "marketing-growth",
+      "source": "./marketing-growth",
+      "description": "Growth models, acquisition funnels, lifecycle, onboarding, conversion, channel experiments"
+    },
+    {
+      "name": "ai-product",
+      "source": "./ai-product",
+      "description": "AI feature ideation, model tradeoffs, HITL workflows, quality monitoring, value framing"
+    },
+    {
+      "name": "business-commercial",
+      "source": "./business-commercial",
+      "description": "Business cases, unit economics, LTV/CAC, forecasting, ROI, revenue strategy"
+    },
+    {
+      "name": "customer-success",
+      "source": "./customer-success",
+      "description": "Churn analysis, health scoring, VOC programs, feedback triage, retention playbooks"
+    },
+    {
+      "name": "product-ops",
+      "source": "./product-ops",
+      "description": "Operating cadence, planning processes, tooling, cross-team alignment, wikis"
+    },
+    {
+      "name": "leadership-communication",
+      "source": "./leadership-communication",
+      "description": "Executive narratives, stakeholder mapping, decision frameworks, team rituals"
+    },
+    {
+      "name": "technical-product",
+      "source": "./technical-product",
+      "description": "Platform thinking, architecture-aware prioritization, engineering collaboration, NFRs"
+    },
+    {
+      "name": "risk-compliance",
+      "source": "./risk-compliance",
+      "description": "Risk registers, privacy assessment, ethical frameworks, responsible AI governance"
+    },
+    {
+      "name": "ux-research",
+      "source": "./ux-research",
+      "description": "Research planning, usability testing, journey mapping, experience quality, design handoff"
+    }
+  ]
+}

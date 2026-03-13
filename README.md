@@ -282,26 +282,32 @@ cp -r experimentation/skills/estimate-sample-size ~/.claude/skills/
 
 ## 🏆 Does it actually work?
 
-Skills in the **`experimentation`** domain were benchmarked against a vanilla Claude (same model, no skill) across multiple scenarios: complete inputs, missing inputs, and edge cases like unsafe traffic assumptions.
+All 121 skills were evaluated across 3 independent rounds. Each round used different test cases and evaluation criteria written by a different LLM without access to skill instructions. Claude evaluated responses in all rounds — which matches real-world usage but means results carry some self-evaluation bias.
 
-| Skill | With skill | Without skill | Delta |
-|-------|-----------|---------------|-------|
-| `formulate-experiment-hypothesis` | 100% | 37% | +63pp |
-| `validate-hypothesis-quality` | 100% | 60% | +40pp |
-| `define-success-metrics` | 100% | 71% | +29pp |
-| `estimate-sample-size` | 100% | 87% | +13pp |
+**Overall results across 3 rounds (poor-context inputs):**
 
-Skills score 100% with zero variance across all runs. The baseline varies widely, and the gap widens on harder scenarios.
+| | Round 1 | Round 2 | Round 3 | Avg |
+|--|---------|---------|---------|-----|
+| Avg WITH skill | 95% | 94% | 99% | **96%** |
+| Avg WITHOUT skill | 84% | 54% | 37% | **58%** |
+| Avg delta | +11 pp | +40 pp | +62 pp | **+38 pp** |
 
-> Benchmarks cover the `experimentation` domain. Other domains follow the same skill structure and methodology but have not been formally benchmarked yet.
+The spread across rounds reflects how strictly each LLM wrote the criteria. The average delta of **+38 pp** is the most reliable single number.
 
-What the skill actually prevents:
+**Where skills add the most value:**
 
-- **Fabricated numbers.** Without the skill, the model invents concrete targets ("this will improve conversion by 30%") in 2 out of 3 runs on ambiguous inputs. The skill stops and asks instead.
-- **Scope creep.** Without the skill, a hypothesis prompt sometimes ballooned into a full experiment design (100s response time vs 10-22s). The skill stays on task.
-- **Wrong behavior on missing inputs.** Without the skill, the model confidently commits to a primary metric even when inputs are ambiguous. The skill flags it as provisional and lists what's missing.
+Skills that enforce structured output, block on missing inputs, or guard against specific failure modes consistently outperform vanilla Claude. Strongest results in `risk-compliance`, `gtm` (launch plans, battlecards), `data-analytics`, and `product-ops`.
 
-The biggest gains are on fuzzy inputs — exactly the situations that come up in real product work.
+**Where skills add less:**
+
+Domains where Claude's training already covers the framework well — `experimentation` hypothesis formulation, general `product-strategy` — show smaller gains. Vanilla Claude handles these reasonably without additional guidance.
+
+**What skills prevent in practice:**
+
+- **Hallucinated specifics.** Without a skill, the model invents numbers, thresholds, and recommendations on vague inputs. Skills stop and ask instead.
+- **Skipped prerequisites.** Without a skill, the model proceeds with incomplete inputs. Skills surface what's missing before producing output.
+- **Wrong output format.** Without a skill, responses are conversational. Skills enforce the structure a PM can actually hand off.
+
 
 ---
 
@@ -331,8 +337,3 @@ When adding or editing a skill:
 3. Skills should ask for missing information, not hallucinate it
 4. Keep the scope tight — one skill, one job
 
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).

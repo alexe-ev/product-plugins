@@ -1,9 +1,0 @@
-{"expectations":[
-{"text":"Output identifies that two changes are mixed into one hypothesis","passed":true,"evidence":"Lines 19-23: Two changes listed. Line 106: 'СМЕШАННЫЕ ПЕРЕМЕННЫЕ' (mixed variables)."},
-{"text":"Verdict is NOT valid for experiment design","passed":false,"evidence":"Line 200: 'ХОРОШАЯ ГИПОТЕЗА, АМБИЦИОЗНАЯ ЦЕЛЬ.' Line 205: 'ГОТОВА К ТЕСТИРОВАНИЮ с корректировками' (ready for testing with adjustments)."},
-{"text":"Output suggests splitting into two separate hypotheses","passed":true,"evidence":"Lines 107-113: Recommends 4 tests. Lines 173-176: Three separate sub-hypotheses."},
-{"text":"The 15% effect size is questioned or flagged","passed":true,"evidence":"Lines 42-44: '15% — АМБИЦИОЗНО, 7-12% more conservative.' Line 207: 'Пересмотреть прогноз с 15% на 10-12%.'"},
-{"text":"An improved version of the hypothesis is provided","passed":true,"evidence":"Lines 173-176: Three sub-hypotheses with specific effect sizes."},
-{"text":"Missing information section is present with specific items","passed":true,"evidence":"Lines 49-61: Metrics table. Lines 183-185: Audience definition needed."},
-{"text":"Output does not include experiment design elements such as sample size, test duration, or traffic splits","passed":false,"evidence":"Lines 94-119: Full A/B test design with groups, n≥1000-5000, duration 2-4 weeks, α=0.05, 80% power."}
-],"summary":{"passed":5,"failed":2,"total":7,"pass_rate":0.714}}

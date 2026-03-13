@@ -1,9 +1,0 @@
-{"expectations":[
-{"text":"Output identifies that two changes are mixed into one hypothesis","passed":true,"evidence":"Agent reports: 'Mixed Changes (Critical): hypothesis combines two distinct product changes.'"},
-{"text":"Verdict is NOT valid for experiment design","passed":true,"evidence":"Agent reports: Verdict 'Weak'."},
-{"text":"Output suggests splitting into two separate hypotheses","passed":true,"evidence":"Agent reports: 'should be split into two focused hypotheses.'"},
-{"text":"The 15% effect size is questioned or flagged","passed":true,"evidence":"Agent reports: '15% AOV increase is quantified' but causal mechanism incomplete; effect questioned."},
-{"text":"An improved version of the hypothesis is provided","passed":true,"evidence":"Agent reports: two refined hypothesis versions provided."},
-{"text":"Missing information section is present with specific items","passed":true,"evidence":"Agent reports: 'missing information checklists' present."},
-{"text":"Output does not include experiment design elements such as sample size, test duration, or traffic splits","passed":true,"evidence":"Agent reports output focuses on validation steps, not experiment design."}
-],"summary":{"passed":7,"failed":0,"total":7,"pass_rate":1.0}}

@@ -1,6 +1,0 @@
-{
-  "eval_id": 2,
-  "eval_name": "session-duration",
-  "prompt": "avg session duration: baseline 6.5min, SD 12min, MDE +0.8min, 95%/80%, 15k/week",
-  "assertions": []
-}

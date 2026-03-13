@@ -27,24 +27,24 @@ All 15 plugins install automatically, providing both commands and skills.
 
 ```bash
 # Step 1: Add the marketplace
-claude plugin marketplace add alexe-ev/product-plugins
+/plugin marketplace add alexe-ev/product-plugins
 
 # Step 2: Install individual plugins
-claude plugin install experimentation@product-plugins
-claude plugin install data-analytics@product-plugins
-claude plugin install product-strategy@product-plugins
-claude plugin install product-discovery@product-plugins
-claude plugin install product-planning@product-plugins
-claude plugin install gtm@product-plugins
-claude plugin install marketing-growth@product-plugins
-claude plugin install ai-product@product-plugins
-claude plugin install business-commercial@product-plugins
-claude plugin install customer-success@product-plugins
-claude plugin install product-ops@product-plugins
-claude plugin install leadership-communication@product-plugins
-claude plugin install technical-product@product-plugins
-claude plugin install risk-compliance@product-plugins
-claude plugin install ux-research@product-plugins
+/plugin install experimentation@product-plugins
+/plugin install data-analytics@product-plugins
+/plugin install product-strategy@product-plugins
+/plugin install product-discovery@product-plugins
+/plugin install product-planning@product-plugins
+/plugin install gtm@product-plugins
+/plugin install marketing-growth@product-plugins
+/plugin install ai-product@product-plugins
+/plugin install business-commercial@product-plugins
+/plugin install customer-success@product-plugins
+/plugin install product-ops@product-plugins
+/plugin install leadership-communication@product-plugins
+/plugin install technical-product@product-plugins
+/plugin install risk-compliance@product-plugins
+/plugin install ux-research@product-plugins
 ```
 
 ### Other AI Assistants (Skills Only)
@@ -118,10 +118,10 @@ No googling, no guessing, no "let me think about that." Each skill walks Claude 
 Install any combination:
 
 ```bash
-claude plugin marketplace add alexe-ev/product-plugins
-claude plugin install experimentation@product-plugins
-claude plugin install data-analytics@product-plugins
-claude plugin install product-strategy@product-plugins
+/plugin marketplace add alexe-ev/product-plugins
+/plugin install experimentation@product-plugins
+/plugin install data-analytics@product-plugins
+/plugin install product-strategy@product-plugins
 ```
 
 <details>

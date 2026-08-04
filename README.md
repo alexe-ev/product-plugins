@@ -1,6 +1,8 @@
 # 🧠 AI Product Plugins
 
-[![Skills](https://img.shields.io/badge/skills-121-blue)]() [![Domains](https://img.shields.io/badge/domains-15-green)]() [![License](https://img.shields.io/badge/license-MIT-brightgreen)](#license)
+![Skills](https://img.shields.io/badge/skills-121-blue) ![Domains](https://img.shields.io/badge/domains-15-green) [![License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
+
+Status: stable. 121 skills authored Feb–Mar 2026.
 
 Your AI agent can write code, summarize documents, and answer questions. But ask it to size an experiment, diagnose a metric drop, or build a launch plan — and it wings it. Generic answers, hallucinated numbers, skipped steps.
 
@@ -357,6 +359,10 @@ experimentation/skills/estimate-sample-size/
 Skills don't hallucinate methodology. If required inputs are missing, they stop and ask. If the math is uncertain, they say so.
 
 ---
+
+## Where this sits
+
+Part of [the layer underneath AI products](https://github.com/alexe-ev): the tools measure and route ([ai-economics](https://github.com/alexe-ev/ai-economics), [ai-ab-testing-tool](https://github.com/alexe-ev/ai-ab-testing-tool), [multi-model-router](https://github.com/alexe-ev/multi-model-router), [ml-impact-calculator](https://github.com/alexe-ev/ml-impact-calculator)); this repo packages the PM expertise itself so agents can execute it. Built by the maker of [Whisperly](https://whisperly.io).
 
 ## 🙌 Contributing
 
